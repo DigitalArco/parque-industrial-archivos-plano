@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Sanciones - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        /* Estilos específicos del Listado de Sanciones */
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.25em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-add {
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+        /* Table Section */
+        .table-section {
+            margin-top: 30px;
+        }
+
+        .table-section h3 {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sanctions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .sanctions-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .sanctions-table tbody td {
+            background-color: var(--card-background);
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .sanctions-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        /* Specific badge colors */
+        .status-badge.multa { background-color: #ffe0b2; color: #fb8c00; } /* Orange */
+        .status-badge.apercibimiento { background-color: #bbdefb; color: #2196f3; } /* Blue */
+        .status-badge.clausura { background-color: #ffcdd2; color: #e53935; } /* Red */
+        .status-badge.resuelto { background-color: #c8e6c9; color: #43a047; } /* Green */
+        .status-badge.vigente { background-color: #d4edda; color: var(--success-color); }
+        .status-badge.pendiente { background-color: #e0e0e0; color: #757575; }
+        
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                text-align: center;
+            }
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .table-section h3 {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .table-section h3 .btn-add {
+                margin-top: 10px;
+            }
+            .sanctions-table thead {
+                display: none;
+            }
+            .sanctions-table, .sanctions-table tbody, .sanctions-table tr, .sanctions-table td {
+                display: block;
+                width: 100%;
+            }
+            .sanctions-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .sanctions-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .sanctions-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            .action-link {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar and Top Header (as in other internal pages) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-abogado.html" class="active"><i class="fas fa-gavel"></i> Dashboard Legal</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-documentos.html"><i class="fas fa-file-contract"></i> Documentos</a></li>
+                <li><a href="listado-sanciones.html"><i class="fas fa-exclamation-triangle"></i> Sanciones</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="user-info">
+                    <span>Bienvenido, Abogado Gustavo</span>
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html">Salir</a>
+                </div>
+            </header>
+            <main class="content-area">
+                <div class="main-container">
+                    <h1 class="page-header"><i class="fas fa-exclamation-triangle"></i> Listado y Gestión de Sanciones</h1>
+
+                    <!-- Filter Section -->
+                    <div class="filter-section">
+                        <h3><i class="fas fa-filter"></i> Filtros de Búsqueda</h3>
+                        <div class="filter-grid">
+                            <div class="form-group">
+                                <label for="typeFilter">Tipo de Sanción:</label>
+                                <select id="typeFilter" name="typeFilter">
+                                    <option value="">Todos</option>
+                                    <option value="MULTA">Multa</option>
+                                    <option value="APERCIBIMIENTO">Apercibimiento</option>
+                                    <option value="CLAUSURA">Clausura</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyFilter">Empresa Sancionada:</label>
+                                <select id="companyFilter" name="companyFilter">
+                                    <option value="">Todas</option>
+                                    <option value="EMP001">Metalúrgica ABC S.A.</option>
+                                    <option value="EMP004">Manufacturas X S.A.</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="statusFilter">Estado:</label>
+                                <select id="statusFilter" name="statusFilter">
+                                    <option value="">Todos</option>
+                                    <option value="VIGENTE">Vigente</option>
+                                    <option value="RESUELTO">Resuelto</option>
+                                    <option value="PENDIENTE">Pendiente</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateFrom">Fecha Aplicación Desde:</label>
+                                <input type="date" id="dateFrom" name="dateFrom">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateTo">Fecha Aplicación Hasta:</label>
+                                <input type="date" id="dateTo" name="dateTo">
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="button" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                            <button type="button" class="btn btn-secondary"><i class="fas fa-redo"></i> Limpiar Filtros</button>
+                        </div>
+                    </div>
+
+                    <!-- Sanctions Table Section -->
+                    <div class="table-section">
+                        <h3>
+                            Sanciones Registradas
+                            <a href="carga_sancion.html" class="btn-add"><i class="fas fa-plus"></i> Nueva Sanción</a>
+                        </h3>
+                        <table class="sanctions-table">
+                            <thead>
+                                <tr>
+                                    <th>ID Sanción</th>
+                                    <th>Tipo</th>
+                                    <th>Empresa Sancionada</th>
+                                    <th>Motivo</th>
+                                    <th>Monto ($)</th>
+                                    <th>Fecha Aplicación</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="ID Sanción">SAN-001</td>
+                                    <td data-label="Tipo"><span class="status-badge multa">Multa</span></td>
+                                    <td data-label="Empresa Sancionada">Manufacturas X S.A.</td>
+                                    <td data-label="Motivo">Incumplimiento de Plazo de Obra (10 días vencido)</td>
+                                    <td data-label="Monto ($)">50.000</td>
+                                    <td data-label="Fecha Aplicación">2024-05-15</td>
+                                    <td data-label="Estado"><span class="status-badge vigente">Vigente</span></td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                                        <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="ID Sanción">SAN-002</td>
+                                    <td data-label="Tipo"><span class="status-badge apercibimiento">Apercibimiento</span></td>
+                                    <td data-label="Empresa Sancionada">Logística Y S.R.L.</td>
+                                    <td data-label="Motivo">Desorden en áreas comunes del parque</td>
+                                    <td data-label="Monto ($)">0</td>
+                                    <td data-label="Fecha Aplicación">2024-05-20</td>
+                                    <td data-label="Estado"><span class="status-badge vigente">Vigente</span></td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                                        <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="ID Sanción">SAN-003</td>
+                                    <td data-label="Tipo"><span class="status-badge multa">Multa</span></td>
+                                    <td data-label="Empresa Sancionada">Servicios Z Ltda.</td>
+                                    <td data-label="Motivo">Reincidencia en falta de habilitación municipal</td>
+                                    <td data-label="Monto ($)">100.000</td>
+                                    <td data-label="Fecha Aplicación">2024-04-01</td>
+                                    <td data-label="Estado"><span class="status-badge resuelto">Resuelto</span></td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                                        <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

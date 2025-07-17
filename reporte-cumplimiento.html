@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Cumplimiento de Plazos de Radicación - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        /* Estilos específicos del Reporte */
+        .report-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.25em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .summary-kpis {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .kpi-box {
+            flex: 1;
+            min-width: 180px;
+            background-color: #e6f2ff;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        .kpi-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .kpi-label {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Status specific colors for KPIs */
+        .kpi-box.on-time-status .kpi-value { color: var(--success-color); }
+        .kpi-box.pending-status .kpi-value { color: var(--warning-color); }
+        .kpi-box.overdue-status .kpi-value { color: var(--danger-color); }
+
+        .report-table-section h3 {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .report-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .report-table tbody td {
+            background-color: var(--card-background);
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .report-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        .status-badge.en-plazo { background-color: #d4edda; color: var(--success-color); }
+        .status-badge.vencido { background-color: #f8d7da; color: var(--danger-color); }
+        .status-badge.cumplido { background-color: #cce5ff; color: var(--secondary-color); }
+        .status-badge.aprobada { background-color: #c8e6c9; color: var(--success-color); }
+        .status-badge.rechazada { background-color: #ffcdd2; color: var(--danger-color); }
+        .status-badge.pendiente { background-color: #e0e0e0; color: #757575; }
+        
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .report-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                text-align: center;
+            }
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .kpi-box {
+                flex-basis: 100%;
+            }
+            .report-table thead {
+                display: none;
+            }
+            .report-table, .report-table tbody, .report-table tr, .report-table td {
+                display: block;
+                width: 100%;
+            }
+            .report-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .report-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .report-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            .action-link {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar and Top Header (as in other internal pages) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-abogado.html" class="active"><i class="fas fa-gavel"></i> Dashboard Legal</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-documentos.html"><i class="fas fa-file-contract"></i> Documentos</a></li>
+                <li><a href="listado-sanciones.html"><i class="fas fa-exclamation-triangle"></i> Sanciones</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="user-info">
+                    <span>Bienvenido, Abogado Gustavo</span>
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html">Salir</a>
+                </div>
+            </header>
+            <main class="content-area">
+                <div class="report-container">
+                    <h1 class="page-header"><i class="fas fa-hourglass-end"></i> Reporte de Cumplimiento de Plazos de Radicación</h1>
+
+                    <!-- Filter Section -->
+                    <div class="filter-section">
+                        <h3><i class="fas fa-filter"></i> Filtros de Búsqueda</h3>
+                        <div class="filter-grid">
+                            <div class="form-group">
+                                <label for="statusFilter">Estado de Cumplimiento:</label>
+                                <select id="statusFilter" name="statusFilter">
+                                    <option value="">Todos</option>
+                                    <option value="EN_PLAZO">En Plazo</option>
+                                    <option value="VENCIDO">Vencido</option>
+                                    <option value="CUMPLIDO">Cumplido</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyFilter">Empresa:</label>
+                                <select id="companyFilter" name="companyFilter">
+                                    <option value="">Todas</option>
+                                    <option value="EMP001">Metalúrgica ABC S.A.</option>
+                                    <option value="EMP002">Logística del Norte S.R.L.</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sectorFilter">Sector:</label>
+                                <select id="sectorFilter" name="sectorFilter">
+                                    <option value="">Todos</option>
+                                    <option value="PYMES_1">Pymes 1</option>
+                                    <option value="PYMES_2">Pymes 2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateFrom">Fecha de Vencimiento Desde:</label>
+                                <input type="date" id="dateFrom" name="dateFrom">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateTo">Fecha de Vencimiento Hasta:</label>
+                                <input type="date" id="dateTo" name="dateTo">
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="button" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                            <button type="button" class="btn btn-secondary"><i class="fas fa-redo"></i> Limpiar Filtros</button>
+                        </div>
+                    </div>
+
+                    <div class="summary-kpis">
+                        <div class="kpi-box on-time-status">
+                            <div class="kpi-value">25</div>
+                            <div class="kpi-label">Cronogramas en Plazo</div>
+                        </div>
+                        <div class="kpi-box overdue-status">
+                            <div class="kpi-value">3</div>
+                            <div class="kpi-label">Vencidos (sin prórroga)</div>
+                        </div>
+                        <div class="kpi-box resolved-status">
+                            <div class="kpi-value">18</div>
+                            <div class="kpi-label">Radicaciones Cumplidas</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">92%</div>
+                            <div class="kpi-label">Tasa de Cumplimiento General</div>
+                        </div>
+                    </div>
+
+                    <div class="report-table-section">
+                        <h3><i class="fas fa-list"></i> Detalle de Cronogramas de Obras</h3>
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Parcela</th>
+                                    <th>Plazo Original</th>
+                                    <th>Fecha Inicio Plazo</th>
+                                    <th>Fecha Fin Estimada</th>
+                                    <th>¿Tiene Prórroga?</th>
+                                    <th>Estado Prórroga</th>
+                                    <th>Estado Cumplimiento</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Empresa">Metalúrgica ABC S.A.</td>
+                                    <td data-label="Parcela">08705E-M10-P06</td>
+                                    <td data-label="Plazo Original">3 años</td>
+                                    <td data-label="Fecha Inicio Plazo">2022-02-01</td>
+                                    <td data-label="Fecha Fin Estimada">2025-02-01</td>
+                                    <td data-label="¿Tiene Prórroga?">No</td>
+                                    <td data-label="Estado Prórroga">--</td>
+                                    <td data-label="Estado Cumplimiento"><span class="status-badge en-plazo">EN PLAZO</span></td>
+                                    <td data-label="Acciones">
+                                        <a href="detalle_empresa.html?id=EMP001" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Empresa</a>
+                                        <a href="carga_prorroga.html?crono=CRONO001" class="action-link"><i class="fas fa-plus action-icon"></i> Gestionar Prórroga</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Empresa">Manufacturas X S.A.</td>
+                                    <td data-label="Parcela">08705E-F50-P03</td>
+                                    <td data-label="Plazo Original">3 años</td>
+                                    <td data-label="Fecha Inicio Plazo">2021-12-01</td>
+                                    <td data-label="Fecha Fin Estimada">2024-01-01</td>
+                                    <td data-label="¿Tiene Prórroga?">No</td>
+                                    <td data-label="Estado Prórroga">--</td>
+                                    <td data-label="Estado Cumplimiento"><span class="status-badge vencido">VENCIDO</span></td>
+                                    <td data-label="Acciones">
+                                        <a href="detalle_empresa.html?id=EMP004" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Empresa</a>
+                                        <a href="carga_prorroga.html?crono=CRONO002" class="action-link"><i class="fas fa-plus action-icon"></i> Gestionar Prórroga</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Empresa">Logística del Norte S.R.L.</td>
+                                    <td data-label="Parcela">08705E-F50-P02</td>
+                                    <td data-label="Plazo Original">3 años</td>
+                                    <td data-label="Fecha Inicio Plazo">2020-05-10</td>
+                                    <td data-label="Fecha Fin Estimada">2023-05-10</td>
+                                    <td data-label="¿Tiene Prórroga?">Sí</td>
+                                    <td data-label="Estado Prórroga"><span class="status-badge aprobada">APROBADA</span></td>
+                                    <td data-label="Estado Cumplimiento"><span class="status-badge cumplido">CUMPLIDO</span></td>
+                                    <td data-label="Acciones">
+                                        <a href="detalle_empresa.html?id=EMP002" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Empresa</a>
+                                        <a href="carga_prorroga.html?crono=CRONO003" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Prórroga</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

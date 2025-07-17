@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Orden de Trabajo - OT-001 - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background-color: #e6f2ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .order-summary-info {
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+
+        .order-summary-info h2 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+        }
+        .order-summary-info p {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+        .order-summary-info strong {
+            font-weight: bold;
+        }
+        .order-summary-info .status-badge {
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+
+        .order-summary-actions {
+            flex-shrink: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #004085; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: #218838; }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-button {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: bold;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-right: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .section-subtitle {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .detail-item strong {
+            display: inline-block;
+            width: 250px; /* Adjust as needed for alignment */
+            color: var(--text-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .data-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .data-table tbody td {
+            background-color: var(--card-background);
+            padding: 8px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.85em;
+        }
+
+        .data-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        /* Specific badge colors */
+        .status-badge.pendiente { background-color: #e0e0e0; color: #757575; }
+        .status-badge.en-progreso { background-color: #ffe0b2; color: #fb8c00; }
+        .status-badge.finalizada { background-color: #c8e6c9; color: var(--success-color); }
+        .status-badge.cancelada { background-color: #ffcdd2; color: var(--danger-color); }
+        /* For linked reclamo status */
+        .status-badge.abierto { background-color: #ffe0b2; color: #fb8c00; } /* Orange */
+        .status-badge.resuelto { background-color: #c8e6c9; color: #43a047; } /* Green */
+
+
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .order-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .order-summary-info {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .order-summary-info h2 {
+                font-size: 1.5em;
+            }
+            .order-summary-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 5px;
+            }
+            .btn {
+                width: 100%;
+            }
+            .tabs {
+                flex-wrap: wrap;
+                margin-bottom: 15px;
+            }
+            .tab-button {
+                flex-grow: 1;
+                margin-right: 0;
+                margin-bottom: 5px;
+                border-radius: var(--border-radius);
+            }
+            .tab-button.active {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+            }
+            .section-subtitle {
+                font-size: 1.1em;
+            }
+            .detail-item strong {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .data-table thead {
+                display: none;
+            }
+            .data-table, .data-table tbody, .data-table tr, .data-table td {
+                display: block;
+                width: 100%;
+            }
+            .data-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .data-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .data-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-top: 5px;
+                margin-left: 0;
+            }
+            .action-link {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-clipboard-list"></i> Detalle de Orden de Trabajo</h1>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <div class="order-summary-info">
+                <h2>OT-001: Reparar bache en Calle 5</h2>
+                <p><strong>Responsable Asignado:</strong> Juan Pérez</p>
+                <p><strong>Estado:</strong> <span class="status-badge en-progreso">En Progreso</span></p>
+                <p><strong>Fecha Asignación:</strong> 2024-05-20</p>
+            </div>
+            <div class="order-summary-actions">
+                <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Editar OT</a>
+                <a href="#" class="btn btn-success"><i class="fas fa-check-circle"></i> Marcar como Finalizada</a>
+            </div>
+        </div>
+
+        <!-- Tabs for Order Details -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'generales')">Datos Generales</button>
+            <button class="tab-button" onclick="openTab(event, 'historial')">Historial de Tarea</button>
+            <button class="tab-button" onclick="openTab(event, 'notas')">Notas</button>
+        </div>
+
+        <!-- Tab Content: Datos Generales -->
+        <div id="generales" class="tab-content">
+            <div class="section-subtitle">Información Básica de la Orden</div>
+            <div class="detail-item"><strong>Descripción de Tarea:</strong> Reparación de bache profundo en Calle 5, cerca de la intersección con Calle 3. Requiere maquinaria pesada.</div>
+            <div class="detail-item"><strong>Fecha Límite Sugerida:</strong> 2024-05-30</div>
+            <div class="detail-item"><strong>Costo Estimado:</strong> $15.000</div>
+            <div class="detail-item"><strong>Costo Real Actual:</strong> $5.000</div>
+            <div class="detail-item"><strong>Fecha Finalización Real:</strong> --</div>
+            <div class="detail-item"><strong>Vinculado a Reclamo:</strong> Sí (Reclamo ID #1001: "Bache en Calle Central") <a href="reporte_reclamos.html" class="action-link" style="margin-left: 15px;"><i class="fas fa-eye"></i> Ver Reclamo</a></div>
+            <div class="detail-item"><strong>Activo Afectado:</strong> Tramo Calle 5 (entre Calle A y B) <a href="detalle_activo.html" class="action-link" style="margin-left: 15px;"><i class="fas fa-eye"></i> Ver Activo</a></div>
+        </div>
+
+        <!-- Tab Content: Historial de Tarea (Oculto inicialmente) -->
+        <div id="historial" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Eventos en el Proceso de la Orden de Trabajo</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Fecha Evento</th>
+                        <th>Estado Anterior</th>
+                        <th>Nuevo Estado</th>
+                        <th>Descripción</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Fecha Evento">2024-05-20</td>
+                        <td data-label="Estado Anterior">--</td>
+                        <td data-label="Nuevo Estado"><span class="status-badge pendiente">Pendiente</span></td>
+                        <td data-label="Descripción">Orden de trabajo generada y asignada.</td>
+                        <td data-label="Usuario">Secretaria Ana</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha Evento">2024-05-21</td>
+                        <td data-label="Estado Anterior"><span class="status-badge pendiente">Pendiente</span></td>
+                        <td data-label="Nuevo Estado"><span class="status-badge en-progreso">En Progreso</span></td>
+                        <td data-label="Descripción">Equipo de mantenimiento inició los trabajos de señalización y preparación.</td>
+                        <td data-label="Usuario">Juan Pérez</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Notas (Oculto inicialmente) -->
+        <div id="notas" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Notas Adicionales sobre la Orden de Trabajo</div>
+            <div class="detail-item">
+                <p><strong>2024-05-21 (Juan Pérez):</strong> Se detectó que el bache es más grande de lo estimado. Se requerirán 2 bolsas adicionales de asfalto. Presupuesto ajustado a $15.000.</p>
+            </div>
+            <a href="#" class="btn btn-primary" style="margin-top:15px;"><i class="fas fa-plus"></i> Añadir Nota</a>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open the first tab on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-button.active').click();
+        });
+    </script>
+</body>
+</html>

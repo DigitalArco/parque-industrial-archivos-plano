@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Boleto de Compra Venta - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .form-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="checkbox"] {
+            margin-top: 5px;
+            margin-right: 8px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .form-header {
+                font-size: 1.6em;
+            }
+            .form-section-title {
+                font-size: 1.1em;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .btn-secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-header"><i class="fas fa-file-contract"></i> Carga de Boleto de Compra Venta</h1>
+
+        <form action="#" method="post">
+            <div class="form-section-title">Datos Generales del Boleto</div>
+            
+            <div class="form-group">
+                <label for="numeroBoleto">Número de Boleto:</label>
+                <input type="text" id="numeroBoleto" name="numeroBoleto" placeholder="Ej: BCV-2024-001" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaFirma">Fecha de Firma:</label>
+                <input type="date" id="fechaFirma" name="fechaFirma" required>
+            </div>
+
+            <div class="form-group">
+                <label for="precioAcordado">Precio Acordado ($):</label>
+                <input type="number" id="precioAcordado" name="precioAcordado" step="0.01" min="0" placeholder="Ej: 5000000.00" required>
+            </div>
+
+            <div class="form-group">
+                <label for="estadoPago">Estado de Pago del Boleto:</label>
+                <select id="estadoPago" name="estadoPago" required>
+                    <option value="TOTALMENTE_PAGADO">TOTALMENTE PAGADO</option>
+                    <option value="PAGOS_PENDIENTES">PAGOS PENDIENTES</option>
+                    <option value="ANULADO">ANULADO</option>
+                </select>
+                <div class="info-text">Indica si el boleto ha sido saldado o quedan pagos pendientes.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaVencimiento">Fecha de Vencimiento del Boleto (Opcional):</label>
+                <input type="date" id="fechaVencimiento" name="fechaVencimiento">
+                <div class="info-text">Fecha límite para la escrituración o cumplimiento de condiciones.</div>
+            </div>
+
+            <div class="form-section-title">Asociación a Empresa y Parcela</div>
+            
+            <div class="form-group">
+                <label for="empresaPropietaria">Empresa Propietaria (Compradora):</label>
+                <select id="empresaPropietaria" name="empresaPropietaria" required>
+                    <option value="">-- Seleccione la Empresa Propietaria --</option>
+                    <option value="EMP001">Metalúrgica ABC S.A.</option>
+                    <option value="EMP002">Constructora del Sur Ltda.</option>
+                    <!-- Opciones cargadas dinámicamente desde la base de datos de Empresas Propietarias -->
+                </select>
+                <div class="info-text">Empresa que adquiere la parcela.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="parcelaVendida">Parcela Vendida:</label>
+                <select id="parcelaVendida" name="parcelaVendida" required>
+                    <option value="">-- Seleccione la Parcela --</option>
+                    <option value="PARC001">08705E-01-01 (Actualmente Disponible)</option>
+                    <option value="PARC002">08705E-F50-P02 (Actualmente Disponible)</option>
+                    <!-- Opciones cargadas dinámicamente desde la base de datos de Parcelas disponibles o previamente asociadas al boleto -->
+                </select>
+                <div class="info-text">Parcela sobre la cual se realiza la compraventa.</div>
+            </div>
+
+            <div class="form-section-title">Estado de Escrituración</div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="escrituraRealizada" name="escrituraRealizada">
+                    Escritura Realizada
+                </label>
+                <div class="info-text">Marque si la escritura traslativa de dominio ya se ha formalizado.</div>
+            </div>
+
+            <div class="form-group" id="escritura-date-group" style="display: none;">
+                <label for="fechaEscritura">Fecha de Escritura:</label>
+                <input type="date" id="fechaEscritura" name="fechaEscritura">
+            </div>
+
+            <div class="form-group" id="escribano-group" style="display: none;">
+                <label for="escribanoInterviniente">Escribano Interviniente:</label>
+                <input type="text" id="escribanoInterviniente" name="escribanoInterviniente" placeholder="Nombre del escribano">
+            </div>
+
+            <div class="form-group" id="numeroEscritura-group" style="display: none;">
+                <label for="numeroEscritura">Número de Escritura:</label>
+                <input type="text" id="numeroEscritura" name="numeroEscritura" placeholder="Número de registro de la escritura">
+            </div>
+
+            <div class="form-section-title">Notas Adicionales</div>
+            <div class="form-group">
+                <label for="notas">Notas sobre el Boleto:</label>
+                <textarea id="notas" name="notas" placeholder="Cualquier observación relevante sobre este boleto o la transacción."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Boleto</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const escrituraCheckbox = document.getElementById('escrituraRealizada');
+            const escrituraDateGroup = document.getElementById('escritura-date-group');
+            const escribanoGroup = document.getElementById('escribano-group');
+            const numeroEscrituraGroup = document.getElementById('numeroEscritura-group');
+
+            function toggleEscrituraFields() {
+                if (escrituraCheckbox.checked) {
+                    escrituraDateGroup.style.display = 'block';
+                    escribanoGroup.style.display = 'block';
+                    numeroEscrituraGroup.style.display = 'block';
+                } else {
+                    escrituraDateGroup.style.display = 'none';
+                    escribanoGroup.style.display = 'none';
+                    numeroEscrituraGroup.style.display = 'none';
+                }
+            }
+
+            escrituraCheckbox.addEventListener('change', toggleEscrituraFields);
+
+            // Initial call to set correct state on page load
+            toggleEscrituraFields();
+        });
+    </script>
+</body>
+</html>

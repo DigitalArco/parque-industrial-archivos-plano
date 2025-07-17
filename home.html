@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMIRSA - Parque Industrial y Comercial de Ramallo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .header-top {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .header-top a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar {
+            background-color: var(--card-background);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .navbar .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .navbar .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 25px;
+            transition: color 0.2s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 86, 179, 0.7), rgba(0, 86, 179, 0.7)), url('https://via.placeholder.com/1500x500?text=Parque+Industrial+COMIRSA') center center / cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-section p {
+            font-size: 1.4em;
+            max-width: 800px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn-primary-hero {
+            background-color: var(--success-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary-hero:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card i {
+            font-size: 3em;
+            color: var(--secondary-color);
+        }
+
+        .card h3 {
+            font-size: 1.4em;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .news-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .news-item {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .news-item .date {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .news-item .date span {
+            display: block;
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+
+        .news-item .content h4 {
+            margin: 0 0 5px 0;
+            color: var(--secondary-color);
+            font-size: 1.1em;
+        }
+
+        .news-item .content p {
+            margin: 0;
+            font-size: 0.95em;
+            color: var(--text-muted);
+        }
+
+        .news-item .content a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .contact-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .contact-section h2 {
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item i {
+            font-size: 2.5em;
+            color: white;
+        }
+
+        .contact-item p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .navbar .nav-links {
+                margin-top: 15px;
+            }
+            .navbar .nav-links a {
+                margin: 0 10px;
+                font-size: 0.9em;
+            }
+            .hero-section {
+                padding: 60px 15px;
+            }
+            .hero-section h1 {
+                font-size: 2.5em;
+            }
+            .hero-section p {
+                font-size: 1.1em;
+            }
+            .btn-primary-hero {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+            .section-title {
+                font-size: 1.6em;
+            }
+            .cards-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .news-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .news-item .date {
+                margin-bottom: 10px;
+            }
+            .contact-section {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-top">
+        <span><i class="fas fa-phone-alt"></i> +54 9 3407 421001</span> | <span><i class="fas fa-envelope"></i> info@comirsa.com.ar</span>
+    </div>
+    <header class="navbar">
+        <div class="logo">COMIRSA</div>
+        <nav class="nav-links">
+            <a href="#vision">Nuestra Visión</a>
+            <a href="#ventajas">Ventajas</a>
+            <a href="#noticias">Noticias</a>
+            <a href="#contacto">Contacto</a>
+            <a href="#acceso" class="btn-primary-small">Acceso al Sistema</a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <h1>COMIRSA: El Corazón Industrial de la Región</h1>
+        <p>Innovación, Eficiencia y Conectividad para tu Empresa en el Parque Industrial y Comercial de Ramallo.</p>
+        <a href="login.html" class="btn-primary-hero">Acceder al Sistema <i class="fas fa-sign-in-alt"></i></a>
+    </section>
+
+    <section id="vision" class="content-section">
+        <h2 class="section-title">Nuestra Visión</h2>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto 30px auto;">
+            <p>En COMIRSA, estamos transformando el futuro industrial. Nuestro compromiso es ser un Parque Modelo, impulsando el desarrollo económico a través de una gestión eficiente, transparente y orientada a la excelencia.</p>
+            <p>Impulsados por una nueva era de digitalización, nuestro sistema de gestión integral (ERP) será el cerebro que conecte cada operación, cada empresa y cada infraestructura, garantizando un ecosistema productivo de primer nivel.</p>
+        </div>
+    </section>
+
+    <section id="ventajas" class="content-section">
+        <h2 class="section-title">Ventajas de Radicarse en COMIRSA</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <i class="fas fa-globe"></i>
+                <h3>Ubicación Estratégica</h3>
+                <p>Acceso directo a la Hidrovía Paraná-Paraguay y las principales rutas, con el nuevo Puerto de Contenedores de Ramallo.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-cogs"></i>
+                <h3>Infraestructura de Calidad</h3>
+                <p>Calles, iluminación, seguridad perimetral y servicios comunes con mantenimiento proactivo y gestión digitalizada.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-handshake"></i>
+                <h3>Gestión Transparente y Eficiente</h3>
+                <p>Procesos administrativos ágiles, control de cumplimiento y canales claros para tus solicitudes y reclamos.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Crecimiento Sostenible</h3>
+                <p>Forma parte de un ecosistema que planifica su desarrollo a largo plazo, garantizando estabilidad y oportunidades.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="noticias" class="content-section">
+        <h2 class="section-title">Noticias y Novedades</h2>
+        <ul class="news-list">
+            <li class="news-item">
+                <div class="date">25<br><span>MAY</span></div>
+                <div class="content">
+                    <h4>Inicia Fase de Repavimentación en Av. Energía</h4>
+                    <p>Comienzan las obras de mejora vial en el sector Pymes 2, parte del plan anual de mantenimiento.</p>
+                    <a href="#">Leer más</a>
+                </div>
+            </li>
+            <li class="news-item">
+                <div class="date">18<br><span>MAY</span></div>
+                <div class="content">
+                    <h4>Nuevo Sistema de Gestión: Avances Significativos</h4>
+                    <p>El proyecto ERP de COMIRSA completa su fase de diseño de ontología, preparando su implementación.</p>
+                    <a href="#">Leer más</a>
+                </div>
+            </li>
+            <li class="news-item">
+                <div class="date">10<br><span>MAY</span></div>
+                <div class="content">
+                    <h4>Charla de Seguridad y Riesgos Laborales</h4>
+                    <p>Convocatoria a todas las empresas radicadas para capacitación en prevención de accidentes.</p>
+                    <a href="#">Leer más</a>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section id="contacto" class="contact-section">
+        <h2 class="section-title" style="color: white;">Contáctenos</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>Parque Industrial y Comercial de Ramallo</p>
+                <p>Ruta Nacional 9, Km 223 (Ramallo, Bs. As.)</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <p>+54 9 3407 421001</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <p>info@comirsa.com.ar</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 COMIRSA. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

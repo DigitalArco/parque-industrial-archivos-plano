@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Objetivo Estratégico - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .form-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .form-header {
+                font-size: 1.6em;
+            }
+            .form-section-title {
+                font-size: 1.1em;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .btn-secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-header"><i class="fas fa-bullseye"></i> Nuevo Objetivo Estratégico</h1>
+
+        <form action="#" method="post">
+            <div class="form-section-title">Información del Objetivo</div>
+            
+            <div class="form-group">
+                <label for="planEstrategico">Plan Estratégico Asociado:</label>
+                <select id="planEstrategico" name="planEstrategico" required>
+                    <option value="PQ2025-2030">Plan Quinquenal 2025-2030</option>
+                    <!-- En un sistema real, se podrían listar planes activos -->
+                </select>
+                <div class="info-text">El objetivo se vinculará a este plan estratégico principal.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcionObjetivo">Descripción del Objetivo:</label>
+                <textarea id="descripcionObjetivo" name="descripcionObjetivo" placeholder="Ej: Alcanzar el 95% de ocupación neta del parque para fines del quinquenio." required></textarea>
+                <div class="info-text">Describa la meta ambiciosa y a largo plazo.</div>
+            </div>
+
+            <div class="form-section-title">Definición de Métrica (KPI)</div>
+            
+            <div class="form-group">
+                <label for="kpiAsociado">KPI Asociado:</label>
+                <select id="kpiAsociado" name="kpiAsociado" required>
+                    <option value="">-- Seleccione un KPI --</option>
+                    <option value="TASA_OCUPACION">Tasa de Ocupación Neta (%)</option>
+                    <option value="CALLS_PAVIMENTADAS">Porcentaje de Calles Pavimentadas (%)</option>
+                    <option value="ILUM_LED">Porcentaje de Iluminación LED (%)</option>
+                    <option value="EMPRESAS_LOGISTICAS">N° de Empresas Logísticas Radicadas</option>
+                    <option value="RECLAMOS_RESUELTOS">Tiempo Promedio de Resolución de Reclamos (horas)</option>
+                    <!-- Opciones de KPIs predefinidos -->
+                </select>
+                <div class="info-text">Métrica clave que se utilizará para medir el progreso de este objetivo.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="metaNumerica">Meta Numérica:</label>
+                <input type="number" id="metaNumerica" name="metaNumerica" step="0.01" min="0" placeholder="Ej: 95.00 (para %) o 10 (para N° de empresas)">
+                <div class="info-text">El valor objetivo que se espera alcanzar para el KPI.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaLimiteObjetivo">Fecha Límite para el Objetivo:</label>
+                <input type="date" id="fechaLimiteObjetivo" name="fechaLimiteObjetivo" required>
+                <div class="info-text">Fecha para la cual se espera haber alcanzado la meta.</div>
+            </div>
+
+            <div class="form-section-title">Notas Adicionales</div>
+            <div class="form-group">
+                <label for="notas">Notas sobre el Objetivo:</label>
+                <textarea id="notas" name="notas" placeholder="Cualquier observación relevante sobre este objetivo estratégico."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Objetivo</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Optional: Set default end date for quinquenal plan (e.g., 5 years from now)
+            const today = new Date();
+            const futureDate = new Date(today.getFullYear() + 5, today.getMonth(), today.getDate());
+            const yyyy = futureDate.getFullYear();
+            const mm = String(futureDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(futureDate.getDate()).padStart(2, '0');
+            document.getElementById('fechaLimiteObjetivo').value = `${yyyy}-${mm}-${dd}`;
+        });
+    </script>
+</body>
+</html>

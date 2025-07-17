@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Nueva Parcela - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .form-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .form-group .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+            .form-header {
+                font-size: 1.6em;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .btn-secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-secretaria.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-activos.html"><i class="fas fa-hammer"></i> Activos</a></li>
+                <li><a href="listado-solicitudes.html"><i class="fas fa-handshake"></i> Solicitudes</a></li>
+                <li><a href="listado-ordenes.html"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a></li>
+            </ul>
+        </aside>
+    <div class="form-container">
+        <h1 class="form-header"><i class="fas fa-map-marker-alt"></i> Carga de Nueva Parcela</h1>
+
+        <form action="#" method="post">
+            <div class="form-section-title">Datos Catastrales Generales</div>
+            <div class="form-group">
+                <label for="partido">Partido:</label>
+                <input type="text" id="partido" name="partido" value="87 (Ramallo)" readonly>
+                <div class="info-text">Este valor es fijo para COMIRSA.</div>
+            </div>
+            <div class="form-group">
+                <label for="circunscripcion">Circunscripción:</label>
+                <input type="text" id="circunscripcion" name="circunscripcion" value="5" readonly>
+                <div class="info-text">Este valor es fijo para COMIRSA.</div>
+            </div>
+            <div class="form-group">
+                <label for="seccion">Sección:</label>
+                <input type="text" id="seccion" name="seccion" value="E" readonly>
+                <div class="info-text">Este valor es fijo para COMIRSA.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="nomenclaturaCompleta">Nomenclatura Catastral Completa:</label>
+                <input type="text" id="nomenclaturaCompleta" name="nomenclaturaCompleta" placeholder="Ej: 087050E00000005000000002" required>
+                <div class="info-text">Identificador único y oficial de la parcela.</div>
+            </div>
+            <div class="form-group">
+                <label for="partidaArba">N° de Partida ARBA:</label>
+                <input type="text" id="partidaArba" name="partidaArba" placeholder="Ej: 22045">
+            </div>
+            <div class="form-group">
+                <label for="superficieM2">Superficie (m²):</label>
+                <input type="number" id="superficieM2" name="superficieM2" step="0.01" min="0" placeholder="Ej: 2097.50" required>
+            </div>
+            <div class="form-group">
+                <label for="estadoCatastral">Estado Catastral:</label>
+                <select id="estadoCatastral" name="estadoCatastral" required>
+                    <option value="ACTIVA">ACTIVA</option>
+                    <option value="INACTIVA_SUBDIVIDIDA">INACTIVA (Subdividida)</option>
+                    <option value="INACTIVA_FUSIONADA">INACTIVA (Fusionada)</option>
+                    <option value="INACTIVA_REEMPLAZADA">INACTIVA (Reemplazada)</option>
+                </select>
+                <div class="info-text">Indica la situación actual de la parcela en el catastro.</div>
+            </div>
+            <div class="form-group">
+                <label for="wktGeometry">Geometría WKT (Opcional):</label>
+                <textarea id="wktGeometry" name="wktGeometry" placeholder="MULTIPOLYGON(((-6695444.48...)))"></textarea>
+                <div class="info-text">Representación geográfica de la parcela (útil para mapas).</div>
+            </div>
+
+            <div class="form-section-title">Asociación Jerárquica y Comercial</div>
+            <div class="form-group">
+                <label>La parcela deriva de:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="parentType" value="fraccion" checked> Fracción</label>
+                    <label><input type="radio" name="parentType" value="manzana"> Manzana</label>
+                </div>
+            </div>
+            <div class="form-group" id="fraccion-select-group">
+                <label for="parentFraccion">Seleccionar Fracción Padre:</label>
+                <select id="parentFraccion" name="parentFraccion">
+                    <option value="">-- Seleccione una Fracción --</option>
+                    <option value="F_50">F-50 (Fracción 50)</option>
+                    <option value="F_51">F-51 (Fracción 51)</option>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <div class="info-text">La fracción a la que pertenece esta parcela.</div>
+            </div>
+            <div class="form-group" id="manzana-select-group" style="display: none;">
+                <label for="parentManzana">Seleccionar Manzana Padre:</label>
+                <select id="parentManzana" name="parentManzana">
+                    <option value="">-- Seleccione una Manzana --</option>
+                    <option value="M_10">M-10 (Manzana 10)</option>
+                    <option value="M_11">M-11 (Manzana 11)</option>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <div class="info-text">La manzana a la que pertenece esta parcela.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="parqueIndustrial">Parque Industrial:</label>
+                <select id="parqueIndustrial" name="parqueIndustrial" required>
+                    <option value="COMIRSA">COMIRSA (Complejo Industrial Ramallo-San Nicolás)</option>
+                    <!-- En un sistema real, pueden haber más opciones si se gestionan varios parques -->
+                </select>
+                <div class="info-text">Parque al que pertenece la parcela.</div>
+            </div>
+            <div class="form-group">
+                <label for="sectorComercial">Sector Comercial:</label>
+                <select id="sectorComercial" name="sectorComercial" required>
+                    <option value="">-- Seleccione un Sector --</option>
+                    <option value="PYMES_1">Pymes 1</option>
+                    <option value="PYMES_2">Pymes 2</option>
+                </select>
+                <div class="info-text">Sector dentro de COMIRSA (ej. Pymes 1, Pymes 2).</div>
+            </div>
+            <div class="form-group">
+                <label for="estadoComercial">Estado Comercial:</label>
+                <select id="estadoComercial" name="estadoComercial" required>
+                    <option value="DISPONIBLE">DISPONIBLE (Para Venta/Alquiler)</option>
+                    <option value="VENDIDA">VENDIDA</option>
+                    <option value="ALQUILADA">ALQUILADA</option>
+                </select>
+                <div class="info-text">Estado actual de la parcela en el mercado.</div>
+            </div>
+
+            <div class="form-group" id="propietario-group">
+                <label for="propietario">Propietario (Empresa, si ya está vendida):</label>
+                <select id="propietario" name="propietario">
+                    <option value="">-- Seleccione un Propietario (Opcional) --</option>
+                    <option value="EMP001">Metalúrgica ABC S.A.</option>
+                    <option value="EMP002">Logística del Norte S.R.L.</option>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <div class="info-text">Solo si el estado comercial es 'VENDIDA'.</div>
+            </div>
+
+            <div class="form-section-title">Notas Adicionales</div>
+            <div class="form-group">
+                <label for="notas">Notas:</label>
+                <textarea id="notas" name="notas" placeholder="Cualquier observación relevante sobre la parcela."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Parcela</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const parentTypeRadios = document.querySelectorAll('input[name="parentType"]');
+            const fraccionSelectGroup = document.getElementById('fraccion-select-group');
+            const manzanaSelectGroup = document.getElementById('manzana-select-group');
+            const estadoComercialSelect = document.getElementById('estadoComercial');
+            const propietarioGroup = document.getElementById('propietario-group');
+
+            function toggleParentSelect() {
+                if (document.querySelector('input[name="parentType"]:checked').value === 'fraccion') {
+                    fraccionSelectGroup.style.display = 'block';
+                    manzanaSelectGroup.style.display = 'none';
+                    document.getElementById('parentManzana').value = ''; // Clear selection if hidden
+                } else {
+                    fraccionSelectGroup.style.display = 'none';
+                    manzanaSelectGroup.style.display = 'block';
+                    document.getElementById('parentFraccion').value = ''; // Clear selection if hidden
+                }
+            }
+
+            function togglePropietarioVisibility() {
+                if (estadoComercialSelect.value === 'VENDIDA') {
+                    propietarioGroup.style.display = 'block';
+                } else {
+                    propietarioGroup.style.display = 'none';
+                    document.getElementById('propietario').value = ''; // Clear selection if not applicable
+                }
+            }
+
+            parentTypeRadios.forEach(radio => {
+                radio.addEventListener('change', toggleParentSelect);
+            });
+
+            estadoComercialSelect.addEventListener('change', togglePropietarioVisibility);
+
+            // Initial calls to set correct state on page load
+            toggleParentSelect();
+            togglePropietarioVisibility();
+        });
+    </script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Solicitud de Servicio - SR-001 - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Request Summary */
+        .request-summary {
+            background-color: #e6f2ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .request-summary-info {
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+
+        .request-summary-info h2 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+        }
+        .request-summary-info p {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+        .request-summary-info strong {
+            font-weight: bold;
+        }
+        .request-summary-info .status-badge {
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+
+        .request-summary-actions {
+            flex-shrink: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #004085; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5a6268; }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-button {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: bold;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-right: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .section-subtitle {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .detail-item strong {
+            display: inline-block;
+            width: 250px; /* Adjust as needed for alignment */
+            color: var(--text-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .data-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .data-table tbody td {
+            background-color: var(--card-background);
+            padding: 8px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.85em;
+        }
+
+        .data-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        /* Specific badge colors */
+        .status-badge.pendiente { background-color: #e0e0e0; color: #757575; }
+        .status-badge.aprobada { background-color: #c8e6c9; color: var(--success-color); }
+        .status-badge.rechazada { background-color: #ffcdd2; color: var(--danger-color); }
+        .status-badge.en-progreso { background-color: #ffe0b2; color: #fb8c00; }
+        .status-badge.conectado { background-color: #d1ecf1; color: var(--info-color); }
+        .status-badge.cancelada { background-color: #f8d7da; color: var(--danger-color); }
+        .status-badge.pendiente-pago { background-color: #ffd699; color: #cc8400; } /* Darker yellow */
+
+
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .request-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .request-summary-info {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .request-summary-info h2 {
+                font-size: 1.5em;
+            }
+            .request-summary-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 5px;
+            }
+            .btn {
+                width: 100%;
+            }
+            .tabs {
+                flex-wrap: wrap;
+                margin-bottom: 15px;
+            }
+            .tab-button {
+                flex-grow: 1;
+                margin-right: 0;
+                margin-bottom: 5px;
+                border-radius: var(--border-radius);
+            }
+            .tab-button.active {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+            }
+            .section-subtitle {
+                font-size: 1.1em;
+            }
+            .detail-item strong {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .data-table thead {
+                display: none;
+            }
+            .data-table, .data-table tbody, .data-table tr, .data-table td {
+                display: block;
+                width: 100%;
+            }
+            .data-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .data-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .data-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-top: 5px;
+                margin-left: 0;
+            }
+            .action-link {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-handshake"></i> Detalle de Solicitud de Servicio</h1>
+
+        <!-- Request Summary -->
+        <div class="request-summary">
+            <div class="request-summary-info">
+                <h2>Solicitud de Conexión Eléctrica - SR-002</h2>
+                <p><strong>Empresa Solicitante:</strong> Logística del Norte S.R.L. <a href="detalle_empresa.html?id=EMP002" class="action-link" style="margin-left: 15px;"><i class="fas fa-eye"></i> Ver Ficha</a></p>
+                <p><strong>Parcela de Destino:</strong> 08705E-F50-P02 <a href="detalle_parcela.html?id=PARC002" class="action-link" style="margin-left: 15px;"><i class="fas fa-eye"></i> Ver Parcela</a></p>
+                <p><strong>Estado Actual:</strong> <span class="status-badge en-progreso">En Progreso</span></p>
+            </div>
+            <div class="request-summary-actions">
+                <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Editar Solicitud</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-check-circle"></i> Marcar como Conectado</a>
+            </div>
+        </div>
+
+        <!-- Tabs for Request Details -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'generales')">Datos Generales</button>
+            <button class="tab-button" onclick="openTab(event, 'historial')">Historial de Gestión</button>
+            <button class="tab-button" onclick="openTab(event, 'notas')">Notas Internas</button>
+        </div>
+
+        <!-- Tab Content: Datos Generales -->
+        <div id="generales" class="tab-content">
+            <div class="section-subtitle">Información Básica de la Solicitud</div>
+            <div class="detail-item"><strong>Tipo de Servicio:</strong> Conexión Eléctrica</div>
+            <div class="detail-item"><strong>Fecha de Solicitud:</strong> 2024-05-20</div>
+            <div class="detail-item"><strong>Descripción del Pedido:</strong> La empresa requiere la conexión de la energía eléctrica trifásica para su nueva nave industrial.</div>
+            <div class="detail-item"><strong>Número de Solicitud Interno:</strong> SR-002</div>
+            <div class="detail-item"><strong>Fecha de Conexión Efectiva:</strong> --</div>
+            <div class="detail-item"><strong>Número de Medidor:</strong> --</div>
+        </div>
+
+        <!-- Tab Content: Historial de Gestión (Oculto inicialmente) -->
+        <div id="historial" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Eventos en el Proceso de la Solicitud</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Fecha Evento</th>
+                        <th>Estado Anterior</th>
+                        <th>Nuevo Estado</th>
+                        <th>Descripción</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Fecha Evento">2024-05-20</td>
+                        <td data-label="Estado Anterior">--</td>
+                        <td data-label="Nuevo Estado"><span class="status-badge pendiente">PENDIENTE</span></td>
+                        <td data-label="Descripción">Solicitud recibida y registrada por la secretaria.</td>
+                        <td data-label="Usuario">Secretaria Ana</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha Evento">2024-05-21</td>
+                        <td data-label="Estado Anterior"><span class="status-badge pendiente">PENDIENTE</span></td>
+                        <td data-label="Nuevo Estado"><span class="status-badge aprobada">APROBADA</span></td>
+                        <td data-label="Descripción">Solicitud aprobada por gerencia de operaciones.</td>
+                        <td data-label="Usuario">Gerente Sergio Romá</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha Evento">2024-05-22</td>
+                        <td data-label="Estado Anterior"><span class="status-badge aprobada">APROBADA</span></td>
+                        <td data-label="Nuevo Estado"><span class="status-badge en-progreso">EN PROGRESO</span></td>
+                        <td data-label="Descripción">Derivado a equipo técnico para coordinación con prestadora.</td>
+                        <td data-label="Usuario">Secretaria Ana</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Notas (Oculto inicialmente) -->
+        <div id="notas" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Notas Adicionales sobre la Solicitud</div>
+            <div class="detail-item">
+                <p><strong>2024-05-21 (Secretaria):</strong> Se envió correo a Logística del Norte S.R.L. informando aprobación y próximos pasos.</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>2024-05-22 (Personal Mantenimiento):</strong> Se coordinó visita de factibilidad con EDENOR para el 2024-05-29.</p>
+            </div>
+            <a href="#" class="btn btn-primary" style="margin-top:15px;"><i class="fas fa-plus"></i> Añadir Nota</a>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open the first tab on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-button.active').click();
+        });
+    </script>
+</body>
+</html>

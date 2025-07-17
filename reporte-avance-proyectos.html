@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Avance de Proyectos - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        /* Estilos específicos del Reporte de Avance de Proyectos */
+        .report-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.25em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .summary-kpis {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .kpi-box {
+            flex: 1;
+            min-width: 180px;
+            background-color: #e6f2ff;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        .kpi-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .kpi-label {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Status specific colors for KPIs */
+        .kpi-box.total-projects .kpi-value { color: var(--primary-color); }
+        .kpi-box.on-track-status .kpi-value { color: var(--success-color); }
+        .kpi-box.budget-status .kpi-value { color: var(--danger-color); }
+
+        .report-table-section h3 {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .report-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .report-table tbody td {
+            background-color: var(--card-background);
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .report-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        .status-badge.planificado { background-color: #bbdefb; color: #2196f3; }
+        .status-badge.en-ejecucion { background-color: #ffe0b2; color: #fb8c00; }
+        .status-badge.finalizado { background-color: #c8e6c9; color: #43a047; }
+        .status-badge.cancelado { background-color: #ffcdd2; color: #e53935; }
+        .status-badge.en-pausa { background-color: #e0e0e0; color: #757575; }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+            font-size: 0.8em;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .report-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                text-align: center;
+            }
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .kpi-box {
+                flex-basis: 100%;
+            }
+            .report-table thead {
+                display: none;
+            }
+            .report-table, .report-table tbody, .report-table tr, .report-table td {
+                display: block;
+                width: 100%;
+            }
+            .report-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .report-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .report-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            .action-link {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar and Top Header (as in other internal pages) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-gerente.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-activos.html"><i class="fas fa-hammer"></i> Activos</a></li>
+                <li><a href="listado-solicitudes.html"><i class="fas fa-handshake"></i> Solicitudes</a></li>
+                <li><a href="listado-ordenes.html"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a></li>
+                <li><a href="planes.html"><i class="fas fa-calendar-alt"></i> Planificación</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="user-info">
+                    <span>Bienvenido, Sergio Romá (Gerente)</span>
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html">Salir</a>
+                </div>
+            </header>
+            <main class="content-area">
+                <div class="report-container">
+                    <h1 class="page-header"><i class="fas fa-tasks"></i> Reporte de Avance de Proyectos</h1>
+
+                    <!-- Filter Section -->
+                    <div class="filter-section">
+                        <h3><i class="fas fa-filter"></i> Filtros de Búsqueda</h3>
+                        <div class="filter-grid">
+                            <div class="form-group">
+                                <label for="planFilter">Plan Estratégico:</label>
+                                <select id="planFilter" name="planFilter">
+                                    <option value="">Todos</option>
+                                    <option value="PQ2025-2030">Plan Quinquenal 2025-2030</option>
+                                    <option value="PA2024">Plan Anual 2024</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="objectiveFilter">Objetivo Asociado:</label>
+                                <select id="objectiveFilter" name="objectiveFilter">
+                                    <option value="">Todos</option>
+                                    <option value="OBJ001">Alcanzar 95% Ocupación</option>
+                                    <option value="OBJ002">Modernizar Infraestructura</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="statusFilter">Estado del Proyecto:</label>
+                                <select id="statusFilter" name="statusFilter">
+                                    <option value="">Todos</option>
+                                    <option value="PLANIFICADO">Planificado</option>
+                                    <option value="EN_EJECUCION">En Ejecución</option>
+                                    <option value="FINALIZADO">Finalizado</option>
+                                    <option value="CANCELADO">Cancelado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="priorityFilter">Prioridad:</label>
+                                <select id="priorityFilter" name="priorityFilter">
+                                    <option value="">Todas</option>
+                                    <option value="CRITICA">Crítica</option>
+                                    <option value="ALTA">Alta</option>
+                                    <option value="MEDIA">Media</option>
+                                    <option value="BAJA">Baja</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateFrom">Fecha de Inicio Desde:</label>
+                                <input type="date" id="dateFrom" name="dateFrom">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateTo">Fecha de Inicio Hasta:</label>
+                                <input type="date" id="dateTo" name="dateTo">
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="button" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                            <button type="button" class="btn btn-secondary"><i class="fas fa-redo"></i> Limpiar Filtros</button>
+                        </div>
+                    </div>
+
+                    <div class="summary-kpis">
+                        <div class="kpi-box total-projects">
+                            <div class="kpi-value">15</div>
+                            <div class="kpi-label">Proyectos Totales</div>
+                        </div>
+                        <div class="kpi-box on-track-status">
+                            <div class="kpi-value">12</div>
+                            <div class="kpi-label">Proyectos en Curso / Finalizados</div>
+                        </div>
+                        <div class="kpi-box budget-status">
+                            <div class="kpi-value">$20M</div>
+                            <div class="kpi-label">Presupuesto Comprometido (Total)</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">3</div>
+                            <div class="kpi-label">Proyectos Críticos</div>
+                        </div>
+                    </div>
+
+                    <div class="report-table-section">
+                        <h3><i class="fas fa-list"></i> Detalle de Proyectos</h3>
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del Proyecto</th>
+                                    <th>Objetivo Asociado</th>
+                                    <th>Presupuesto Asignado</th>
+                                    <th>Costo Actual</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin Estimada</th>
+                                    <th>Estado</th>
+                                    <th>Avance (%)</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Nombre del Proyecto">Implementación Fase 1 del ERP</td>
+                                    <td data-label="Objetivo Asociado">Gestión Eficiente</td>
+                                    <td data-label="Presupuesto Asignado">$3.000.000/mes</td>
+                                    <td data-label="Costo Actual">$6.000.000</td>
+                                    <td data-label="Fecha Inicio">2024-03-01</td>
+                                    <td data-label="Fecha Fin Estimada">2024-09-30</td>
+                                    <td data-label="Estado"><span class="status-badge en-ejecucion">En Ejecución</span></td>
+                                    <td data-label="Avance (%)">
+                                        <div class="progress-bar-container">
+                                            <div class="progress-bar" style="width: 75%;">75%</div>
+                                        </div>
+                                    </td>
+                                    <td data-label="Acciones">
+                                        <a href="tareas_asociadas.html?proj=PROJ001" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Tareas</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Nombre del Proyecto">Repavimentación Calle 7 y Desagües</td>
+                                    <td data-label="Objetivo Asociado">Modernizar Infraestructura</td>
+                                    <td data-label="Presupuesto Asignado">$5.000.000</td>
+                                    <td data-label="Costo Actual">$250.000</td>
+                                    <td data-label="Fecha Inicio">2024-09-01</td>
+                                    <td data-label="Fecha Fin Estimada">2024-11-30</td>
+                                    <td data-label="Estado"><span class="status-badge planificado">Planificado</span></td>
+                                    <td data-label="Avance (%)">
+                                        <div class="progress-bar-container">
+                                            <div class="progress-bar" style="width: 5%; background-color: #bbdefb;">5%</div>
+                                        </div>
+                                    </td>
+                                    <td data-label="Acciones">
+                                        <a href="tareas_asociadas.html?proj=PROJ002" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Tareas</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Nombre del Proyecto">Estudio de Factibilidad Nuevo Sector Logístico</td>
+                                    <td data-label="Objetivo Asociado">Consolidar Hub Logístico</td>
+                                    <td data-label="Presupuesto Asignado">$1.200.000</td>
+                                    <td data-label="Costo Actual">$1.200.000</td>
+                                    <td data-label="Fecha Inicio">2024-01-10</td>
+                                    <td data-label="Fecha Fin Estimada">2024-05-15</td>
+                                    <td data-label="Estado"><span class="status-badge finalizado">Finalizado</span></td>
+                                    <td data-label="Avance (%)">
+                                        <div class="progress-bar-container">
+                                            <div class="progress-bar" style="width: 100%;">100%</div>
+                                        </div>
+                                    </td>
+                                    <td data-label="Acciones">
+                                        <a href="tareas_asociadas.html?proj=PROJ003" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Tareas</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

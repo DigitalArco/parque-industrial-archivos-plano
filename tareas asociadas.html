@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas del Proyecto - Repavimentación Calle 7 y Desagües - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .project-overview {
+            background-color: #e6f2ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+        }
+
+        .project-overview h2 {
+            font-size: 1.6em;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .project-overview p {
+            margin: 0 0 5px 0;
+            color: var(--text-color);
+            font-size: 1em;
+        }
+        .project-overview strong {
+            font-weight: bold;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 25px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 25px;
+            font-size: 0.9em;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title .btn-add {
+            background-color: var(--success-color);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .section-title .btn-add:hover {
+            background-color: #218838;
+        }
+
+        .tasks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .tasks-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .tasks-table tbody td {
+            background-color: var(--card-background);
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .tasks-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        .status-badge.pendiente { background-color: #e0e0e0; color: #757575; } /* Gray */
+        .status-badge.en-progreso { background-color: #ffe0b2; color: #fb8c00; } /* Orange */
+        .status-badge.completada { background-color: #c8e6c9; color: #43a047; } /* Green */
+        
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .section-title {
+                font-size: 1.3em;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .section-title .btn-add {
+                margin-top: 10px;
+            }
+            .tasks-table thead {
+                display: none; /* Hide table header on small screens */
+            }
+            .tasks-table, .tasks-table tbody, .tasks-table tr, .tasks-table td {
+                display: block; /* Make table elements stack */
+                width: 100%;
+            }
+            .tasks-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .tasks-table td {
+                text-align: right;
+                padding-left: 50%; /* Space for pseudo-element label */
+                position: relative;
+            }
+            .tasks-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-tasks"></i> Tareas del Proyecto</h1>
+
+        <div class="project-overview">
+            <h2>Proyecto: Repavimentación Calle 7 y Desagües</h2>
+            <p><strong>Objetivo Asociado:</strong> Modernizar la Infraestructura Vial y de Iluminación</p>
+            <p><strong>Descripción:</strong> Proyecto para repavimentar la Calle 7 completa y renovar el sistema de desagües pluviales en esa área.</p>
+            <p><strong>Fechas:</strong> Inicio: 2024-09-01 | Fin Previsto: 2024-11-30</p>
+            <p><strong>Presupuesto Asignado:</strong> $5.000.000 | <strong>Costo Actual:</strong> $250.000</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 5%;">5% completado</div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            Lista de Tareas
+            <button class="btn-add"><i class="fas fa-plus"></i> Nueva Tarea</button>
+        </div>
+
+        <table class="tasks-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción de la Tarea</th>
+                    <th>Responsable</th>
+                    <th>Estado</th>
+                    <th>Fecha Vencimiento</th>
+                    <th>Costo Estimado</th>
+                    <th>Costo Real</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="ID">T-001</td>
+                    <td data-label="Descripción de la Tarea">Estudio topográfico y de suelos</td>
+                    <td data-label="Responsable">Ing. Civil (Externo)</td>
+                    <td data-label="Estado"><span class="status-badge completada">Completada</span></td>
+                    <td data-label="Fecha Vencimiento">2024-09-15</td>
+                    <td data-label="Costo Estimado">$50.000</td>
+                    <td data-label="Costo Real">$55.000</td>
+                    <td data-label="Acciones"><a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td data-label="ID">T-002</td>
+                    <td data-label="Descripción de la Tarea">Aprobación de planos municipales</td>
+                    <td data-label="Responsable">Abogado Gustavo</td>
+                    <td data-label="Estado"><span class="status-badge en-progreso">En Progreso</span></td>
+                    <td data-label="Fecha Vencimiento">2024-10-01</td>
+                    <td data-label="Costo Estimado">$0</td>
+                    <td data-label="Costo Real">$0</td>
+                    <td data-label="Acciones"><a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td data-label="ID">T-003</td>
+                    <td data-label="Descripción de la Tarea">Licitación de empresa constructora</td>
+                    <td data-label="Responsable">Gerencia</td>
+                    <td data-label="Estado"><span class="status-badge pendiente">Pendiente</span></td>
+                    <td data-label="Fecha Vencimiento">2024-10-15</td>
+                    <td data-label="Costo Estimado">$0</td>
+                    <td data-label="Costo Real">$0</td>
+                    <td data-label="Acciones"><a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td data-label="ID">T-004</td>
+                    <td data-label="Descripción de la Tarea">Compra de materiales (asfalto, caños)</td>
+                    <td data-label="Responsable">Compras</td>
+                    <td data-label="Estado"><span class="status-badge pendiente">Pendiente</span></td>
+                    <td data-label="Fecha Vencimiento">2024-11-01</td>
+                    <td data-label="Costo Estimado">$2.000.000</td>
+                    <td data-label="Costo Real">$0</td>
+                    <td data-label="Acciones"><a href="#" class="action-link">Editar</a></td>
+                </tr>
+                <tr>
+                    <td data-label="ID">T-005</td>
+                    <td data-label="Descripción de la Tarea">Ejecución de obra de repavimentación</td>
+                    <td data-label="Responsable">Empresa Constructora</td>
+                    <td data-label="Estado"><span class="status-badge pendiente">Pendiente</span></td>
+                    <td data-label="Fecha Vencimiento">2024-11-20</td>
+                    <td data-label="Costo Estimado">$2.500.000</td>
+                    <td data-label="Costo Real">$0</td>
+                    <td data-label="Acciones"><a href="#" class="action-link">Editar</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

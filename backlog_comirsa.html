@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backlog del Proyecto ERP COMIRSA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --epic-header-bg: #e9f2ff;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+            padding-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .vision-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: var(--border-radius);
+        }
+
+        .vision-box p {
+            margin: 0;
+            font-style: italic;
+            color: var(--text-color);
+        }
+
+        .epic-section {
+            margin-bottom: 40px;
+        }
+
+        .epic-header {
+            background-color: var(--epic-header-bg);
+            color: var(--primary-color);
+            padding: 15px 25px;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            font-size: 1.6em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .epic-content {
+            background-color: var(--card-background);
+            padding: 25px;
+            border-bottom-left-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            border: 1px solid #e9ecef;
+            border-top: none;
+        }
+
+        .epic-content h3 {
+            font-size: 1.2em;
+            color: var(--text-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .user-story-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user-story-item {
+            background-color: #fcfdff;
+            border: 1px solid #e2eaf0;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .user-story-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .user-story-item strong {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .user-story-item .role {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .user-story-item .description {
+            color: var(--text-color);
+        }
+
+        .user-story-item .benefit {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .epic-header {
+                font-size: 1.4em;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .user-story-item {
+                padding: 15px;
+            }
+            .user-story-item strong, .user-story-item .role {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Backlog del Proyecto ERP COMIRSA</h1>
+        <p class="subtitle">Hoja de Ruta para el Desarrollo del Sistema de Gestión Integral</p>
+
+        <div class="vision-box">
+            <p><strong>Visión:</strong> Transformar la gestión de COMIRSA en un modelo de eficiencia, transparencia y estrategia a través de un sistema integral basado en datos.</p>
+        </div>
+
+        <!-- Épica 1: Gestión de Datos Maestros -->
+        <div class="epic-section">
+            <div class="epic-header">
+                <i class="fas fa-database"></i> Épica 1: Gestión de Datos Maestros
+            </div>
+            <div class="epic-content">
+                <h3><i class="fas fa-bullseye"></i> Objetivo:</h3>
+                <p>Establecer la base de datos centralizada de todas las entidades fundamentales del parque.</p>
+                <ul class="user-story-list">
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar y actualizar la ficha completa de una Empresa</strong> (Propietaria o Inquilina), incluyendo Razón Social, CUIT, nombre de fantasía, actividad, contactos y domicilio legal,</span>
+                        <span class="benefit">para mantener un registro centralizado y actualizado.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar y actualizar los datos de una Unidad Catastral</strong> (Fracción, Manzana o Parcela), incluyendo su nomenclatura catastral, superficie, número de partida y estado comercial (disponible, vendida, alquilada),</span>
+                        <span class="benefit">para tener un inventario preciso del terreno.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>vincular una Parcela a su Empresa Propietaria y/o a sus múltiples Empresas Inquilinas</strong>,</span>
+                        <span class="benefit">para saber quién posee o utiliza cada unidad de terreno.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar la subdivisión o fusión de Unidades Catastrales</strong>,</span>
+                        <span class="benefit">para mantener un historial preciso de las transformaciones del terreno.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar los Activos Gestionables del parque</strong> (calles, luminarias, espacios verdes), incluyendo su tipo, ubicación y estado de conservación,</span>
+                        <span class="benefit">para tener un inventario de mantenimiento.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Épica 2: Gestión Operativa del Parque -->
+        <div class="epic-section">
+            <div class="epic-header">
+                <i class="fas fa-cogs"></i> Épica 2: Gestión Operativa del Parque
+            </div>
+            <div class="epic-content">
+                <h3><i class="fas fa-bullseye"></i> Objetivo:</h3>
+                <p>Digitalizar y optimizar los procesos operativos diarios del parque.</p>
+                <ul class="user-story-list">
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar nuevas Solicitudes de Servicio</strong> (ej. conexión de agua, gas, luz) de parte de una Empresa, y <strong>actualizar su estado</strong> (ej. Conectado, Rechazado),</span>
+                        <span class="benefit">para un seguimiento claro de los servicios.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar nuevos Reclamos o Incidencias</strong> (ej. baches, luminarias rotas) de parte de una Empresa, y <strong>asignarlos a un responsable</strong>,</span>
+                        <span class="benefit">para gestionar las solicitudes de mantenimiento.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Personal de Mantenimiento,</strong>
+                        <span class="description">quiero poder <strong>consultar mis Órdenes de Trabajo asignadas</strong> y <strong>actualizar su estado</strong> (ej. En Progreso, Finalizada),</span>
+                        <span class="benefit">para gestionar mis tareas diarias.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar la Presentación de Planos o Documentos de Proyecto</strong> por parte de una Empresa, y <strong>actualizar su estado de aprobación</strong>,</span>
+                        <span class="benefit">para un control de los proyectos en el parque.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Épica 3: Gestión de Cumplimiento y Control Estratégico -->
+        <div class="epic-section">
+            <div class="epic-header">
+                <i class="fas fa-chart-line"></i> Épica 3: Gestión de Cumplimiento y Control Estratégico
+            </div>
+            <div class="epic-content">
+                <h3><i class="fas fa-bullseye"></i> Objetivo:</h3>
+                <p>Monitorear el cumplimiento de obligaciones y plazos, y proveer visibilidad para la toma de decisiones estratégicas.</p>
+                <ul class="user-story-list">
+                    <li class="user-story-item">
+                        <strong class="role">Como Secretaria,</strong>
+                        <span class="description">quiero poder <strong>registrar el estado de pago de las Obligaciones Económicas</strong> (ej. expensas, cánones de alquiler), indicando si están pagadas o pendientes y su referencia externa (sin replicar la contabilidad),</span>
+                        <span class="benefit">para monitorear la situación financiera de cada Empresa.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Gerente,</strong>
+                        <span class="description">quiero <strong>recibir alertas automáticas</strong> sobre Obligaciones Económicas vencidas o Plazos de Radicación próximos a vencer/incumplidos,</span>
+                        <span class="benefit">para una gestión proactiva.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Abogado,</strong>
+                        <span class="description">quiero poder <strong>registrar la Escrituración de una Parcela</strong> y gestionar la `Prorroga` (1 año) de los `Cronogramas de Obras`,</span>
+                        <span class="benefit">para controlar el cumplimiento legal de la radicación industrial.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Gerente,</strong>
+                        <span class="description">quiero poder <strong>visualizar un Tablero de Comando</strong> con KPIs clave (Tasa de Ocupación, Reclamos Abiertos, Avance de Proyectos Estratégicos),</span>
+                        <span class="benefit">para una visión integral y rápida del desempeño del parque.</span>
+                    </li>
+                    <li class="user-story-item">
+                        <strong class="role">Como Gerente,</strong>
+                        <span class="description">quiero poder <strong>definir y gestionar Planes Estratégicos (Quinquenales) y Objetivos Anuales</strong>, y <strong>vincularlos a Proyectos de Desarrollo</strong> con su presupuesto y avance,</span>
+                        <span class="benefit">para una planificación a largo plazo.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 COMIRSA. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>

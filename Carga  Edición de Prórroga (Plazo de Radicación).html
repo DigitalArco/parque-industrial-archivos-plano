@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Prórroga de Radicación - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .form-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="checkbox"] {
+            margin-top: 5px;
+            margin-right: 8px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .alert-info {
+            background-color: #d1ecf1;
+            border-left: 4px solid var(--info-color);
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+        .alert-info strong {
+            color: #0c5460;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .form-header {
+                font-size: 1.6em;
+            }
+            .form-section-title {
+                font-size: 1.1em;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .btn-secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-header"><i class="fas fa-calendar-plus"></i> Carga de Prórroga de Radicación</h1>
+
+        <form action="#" method="post">
+            <div class="form-section-title">Datos del Cronograma de Obras</div>
+            
+            <div class="form-group">
+                <label for="cronogramaObras">Cronograma de Obras a Prorrogar:</label>
+                <select id="cronogramaObras" name="cronogramaObras" required>
+                    <option value="">-- Seleccione un Cronograma de Obras --</option>
+                    <option value="CRONO001">Construcción Nave Principal - Metalúrgica ABC S.A. (Vence: 2025-02-01)</option>
+                    <option value="CRONO002">Ampliación Depósito - Logística del Norte S.R.L. (Vence: 2024-06-30)</option>
+                    <!-- Opciones cargadas dinámicamente: solo cronogramas activos y que no tengan prórroga aprobada -->
+                </select>
+                <div class="info-text">Seleccione el cronograma de obra cuyo plazo desea extender.</div>
+            </div>
+
+            <div class="alert-info">
+                <strong>Plazo Original:</strong> 3 años (hasta 2025-02-01)<br>
+                <strong>Empresa:</strong> Metalúrgica ABC S.A.
+            </div>
+
+            <div class="form-section-title">Detalles de la Prórroga</div>
+            
+            <div class="form-group">
+                <label for="diasAdicionales">Días Adicionales de Prórroga:</label>
+                <input type="number" id="diasAdicionales" name="diasAdicionales" value="365" readonly required>
+                <div class="info-text">La prórroga estándar es de 1 año (365 días).</div>
+            </div>
+
+            <div class="form-group">
+                <label for="nuevaFechaFin">Nueva Fecha de Fin del Cronograma (Estimada):</label>
+                <input type="date" id="nuevaFechaFin" name="nuevaFechaFin" value="2026-02-01" readonly required>
+                <div class="info-text">Esta fecha se calculará automáticamente.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaSolicitud">Fecha de Solicitud de Prórroga:</label>
+                <input type="date" id="fechaSolicitud" name="fechaSolicitud" required>
+            </div>
+
+            <div class="form-group">
+                <label for="motivoSolicitud">Motivo de la Solicitud (Descripción):</label>
+                <textarea id="motivoSolicitud" name="motivoSolicitud" placeholder="Describa los motivos por los cuales se solicita la prórroga. Ej: Retrasos en importación de maquinaria por pandemia."></textarea>
+            </div>
+
+            <div class="form-section-title">Aprobación del Directorio</div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="esAprobadaPorDirectorio" name="esAprobadaPorDirectorio">
+                    Es Aprobada por Directorio
+                </label>
+                <div class="info-text">Marque solo si la prórroga ha sido formalmente aprobada por el Directorio de COMIRSA.</div>
+            </div>
+
+            <div class="form-group" id="fechaAprobacionGroup" style="display: none;">
+                <label for="fechaAprobacion">Fecha de Aprobación por Directorio:</label>
+                <input type="date" id="fechaAprobacion" name="fechaAprobacion">
+            </div>
+
+            <div class="form-section-title">Notas Adicionales</div>
+            <div class="form-group">
+                <label for="notas">Notas sobre la Prórroga:</label>
+                <textarea id="notas" name="notas" placeholder="Cualquier observación relevante sobre este proceso de prórroga."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Prórroga</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-fill Fecha de Solicitud with today's date
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('fechaSolicitud').value = `${yyyy}-${mm}-${dd}`;
+
+            const esAprobadaCheckbox = document.getElementById('esAprobadaPorDirectorio');
+            const fechaAprobacionGroup = document.getElementById('fechaAprobacionGroup');
+
+            function toggleAprobacionFields() {
+                if (esAprobadaCheckbox.checked) {
+                    fechaAprobacionGroup.style.display = 'block';
+                    // Auto-fill fechaAprobacion with today's date if checked
+                    document.getElementById('fechaAprobacion').value = `${yyyy}-${mm}-${dd}`;
+                } else {
+                    fechaAprobacionGroup.style.display = 'none';
+                    document.getElementById('fechaAprobacion').value = '';
+                }
+            }
+
+            esAprobadaCheckbox.addEventListener('change', toggleAprobacionFields);
+
+            // Initial call to set correct state on page load
+            toggleAprobacionFields();
+        });
+    </script>
+</body>
+</html>

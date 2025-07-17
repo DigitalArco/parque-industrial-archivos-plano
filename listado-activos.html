@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Activos del Parque - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.25em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-add {
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+        /* Table Section */
+        .table-section {
+            margin-top: 30px;
+        }
+
+        .table-section h3 {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .assets-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .assets-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .assets-table tbody td {
+            background-color: var(--card-background);
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .assets-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        .status-badge.bueno { background-color: #d4edda; color: var(--success-color); }
+        .status-badge.regular { background-color: #fff3cd; color: var(--warning-color); }
+        .status-badge.malo { background-color: #f8d7da; color: var(--danger-color); }
+        .status-badge.requiere-reparacion { background-color: #cce5ff; color: var(--secondary-color); }
+        
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                text-align: center;
+            }
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .table-section h3 {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .table-section h3 .btn-add {
+                margin-top: 10px;
+            }
+            .assets-table thead {
+                display: none; /* Hide table header on small screens */
+            }
+            .assets-table, .assets-table tbody, .assets-table tr, .assets-table td {
+                display: block; /* Make table elements stack */
+                width: 100%;
+            }
+            .assets-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .assets-table td {
+                text-align: right;
+                padding-left: 50%; /* Space for pseudo-element label */
+                position: relative;
+            }
+            .assets-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            .action-link {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-secretaria.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-activos.html"><i class="fas fa-hammer"></i> Activos</a></li>
+                <li><a href="listado-solicitudes.html"><i class="fas fa-handshake"></i> Solicitudes</a></li>
+                <li><a href="listado-ordenes.html"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a></li>
+            </ul>
+        </aside>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-hammer"></i> Listado y Gestión de Activos del Parque</h1>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h3><i class="fas fa-filter"></i> Filtros de Búsqueda</h3>
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label for="searchNameCode">Nombre / Código:</label>
+                    <input type="text" id="searchNameCode" name="searchNameCode" placeholder="Buscar por Nombre o Código">
+                </div>
+                <div class="form-group">
+                    <label for="typeFilter">Tipo de Activo:</label>
+                    <select id="typeFilter" name="typeFilter">
+                        <option value="">Todos</option>
+                        <option value="CALLE">Calle</option>
+                        <option value="LUMINARIA">Luminaria</option>
+                        <option value="ESPACIO_VERDE">Espacio Verde</option>
+                        <option value="SEGURIDAD">Seguridad</option>
+                        <option value="OTRO">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusFilter">Estado de Conservación:</label>
+                    <select id="statusFilter" name="statusFilter">
+                        <option value="">Todos</option>
+                        <option value="BUENO">Bueno</option>
+                        <option value="REGULAR">Regular</option>
+                        <option value="MALO">Malo</option>
+                        <option value="REQUIERE_REPARACION">Requiere Reparación</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sectorFilter">Sector Comercial:</label>
+                    <select id="sectorFilter" name="sectorFilter">
+                        <option value="">Todos</option>
+                        <option value="PYMES_1">Pymes 1</option>
+                        <option value="PYMES_2">Pymes 2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="responsibilityFilter">Responsabilidad Mantenimiento:</label>
+                    <select id="responsibilityFilter" name="responsibilityFilter">
+                        <option value="">Todos</option>
+                        <option value="PROPIO">Propio COMIRSA</option>
+                        <option value="EXTERNALIZADO_CONTRATO">Externalizado (Contrato)</option>
+                        <option value="EXTERNALIZADO_CONVENIO">Externalizado (Convenio)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button type="button" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                <button type="button" class="btn btn-secondary"><i class="fas fa-redo"></i> Limpiar Filtros</button>
+            </div>
+        </div>
+
+        <!-- Assets Table Section -->
+        <div class="table-section">
+            <h3>
+                Activos Registrados
+                <a href="#" class="btn-add"><i class="fas fa-plus"></i> Nuevo Activo</a>
+            </h3>
+            <table class="assets-table">
+                <thead>
+                    <tr>
+                        <th>Nombre del Activo</th>
+                        <th>Tipo</th>
+                        <th>Ubicación</th>
+                        <th>Responsabilidad</th>
+                        <th>Estado</th>
+                        <th>Último Mant.</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nombre del Activo">Luminaria Calle Central - Poste 15</td>
+                        <td data-label="Tipo">Luminaria</td>
+                        <td data-label="Ubicación">Av. Roca, Sector Pymes 2</td>
+                        <td data-label="Responsabilidad">Propio COMIRSA</td>
+                        <td data-label="Estado"><span class="status-badge malo">Malo</span></td>
+                        <td data-label="Último Mant.">2023-10-01</td>
+                        <td data-label="Acciones">
+                            <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nombre del Activo">Tramo Calle 7 (entre Calle A y B)</td>
+                        <td data-label="Tipo">Calle</td>
+                        <td data-label="Ubicación">Sector Pymes 1</td>
+                        <td data-label="Responsabilidad">Propio COMIRSA</td>
+                        <td data-label="Estado"><span class="status-badge requiere-reparacion">Requiere Reparación</span></td>
+                        <td data-label="Último Mant.">2024-03-10</td>
+                        <td data-label="Acciones">
+                            <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nombre del Activo">Cortina Forestal Límite Este</td>
+                        <td data-label="Tipo">Espacio Verde</td>
+                        <td data-label="Ubicación">Límite Este del Parque</td>
+                        <td data-label="Responsabilidad">Propio COMIRSA</td>
+                        <td data-label="Estado"><span class="status-badge bueno">Bueno</span></td>
+                        <td data-label="Último Mant.">2024-04-20</td>
+                        <td data-label="Acciones">
+                            <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nombre del Activo">Acceso Principal - Portón 1</td>
+                        <td data-label="Tipo">Seguridad</td>
+                        <td data-label="Ubicación">Entrada Principal</td>
+                        <td data-label="Responsabilidad">Propio COMIRSA</td>
+                        <td data-label="Estado"><span class="status-badge regular">Regular</span></td>
+                        <td data-label="Último Mant.">2024-02-15</td>
+                        <td data-label="Acciones">
+                            <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nombre del Activo">Av. Ramallo (Tramo Norte)</td>
+                        <td data-label="Tipo">Calle</td>
+                        <td data-label="Ubicación">Fuera del Perímetro del Parque</td>
+                        <td data-label="Responsabilidad">Externalizado (Convenio)</td>
+                        <td data-label="Estado"><span class="status-badge requiere-reparacion">Requiere Reparación</span></td>
+                        <td data-label="Último Mant.">2023-11-05</td>
+                        <td data-label="Acciones">
+                            <a href="#" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="#" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+	</div>
+    </div>
+</body>
+</html>

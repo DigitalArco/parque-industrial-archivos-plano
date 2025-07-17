@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Pago - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .form-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .current-debt-info {
+            background-color: #e6f2ff;
+            border-left: 4px solid var(--info-color);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: var(--primary-color);
+        }
+        .current-debt-info strong {
+            font-size: 1.1em;
+            color: var(--text-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .form-header {
+                font-size: 1.6em;
+            }
+            .form-section-title {
+                font-size: 1.1em;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .btn-secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-header"><i class="fas fa-money-check-alt"></i> Registrar Pago</h1>
+
+        <form action="#" method="post">
+            <div class="form-section-title">Datos de la Empresa y Obligación</div>
+            
+            <div class="form-group">
+                <label for="empresaPagadora">Empresa Pagadora:</label>
+                <select id="empresaPagadora" name="empresaPagadora" required>
+                    <option value="">-- Seleccione la Empresa --</option>
+                    <option value="EMP001">Metalúrgica ABC S.A.</option>
+                    <option value="EMP002">Logística del Norte S.R.L.</option>
+                    <option value="EMP003">Manufacturas del Sur Ltda.</option>
+                    <!-- Opciones cargadas dinámicamente desde la base de datos de Empresas -->
+                </select>
+                <div class="info-text">Empresa que realiza el pago.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoObligacion">Tipo de Obligación:</label>
+                <select id="tipoObligacion" name="tipoObligacion" required>
+                    <option value="">-- Seleccione el Tipo --</option>
+                    <option value="EXPENSA">Expensa</option>
+                    <option value="ALQUILER">Alquiler</option>
+                    <option value="ADQUISICION">Adquisición de Parcela</option>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="obligacionPagar">Obligación a Pagar (Detalle):</label>
+                <select id="obligacionPagar" name="obligacionPagar" required>
+                    <option value="">-- Seleccione la Obligación --</option>
+                    <!-- Estas opciones se cargarían dinámicamente según la empresa y tipo de obligación seleccionados -->
+                    <option value="OBL001">Expensa Jun 2024 - Monto: $15.000 (Pendiente)</option>
+                    <option value="OBL002">Alquiler Nave 3 Jul 2024 - Monto: $80.000 (Vencida)</option>
+                    <option value="OBL003">Cuota #5 Adquisición Parcela 08705E-01-01 - Monto: $500.000 (Pendiente)</option>
+                </select>
+                <div class="info-text">Obligación específica a la que se imputa este pago.</div>
+                <div class="current-debt-info" id="current-debt-info" style="display: none;">
+                    Monto adeudado actual: <strong>$15.000</strong> - Estado: <span style="color:var(--danger-color); font-weight:bold;">Vencido</span>
+                </div>
+            </div>
+
+            <div class="form-section-title">Detalle del Pago</div>
+            
+            <div class="form-group">
+                <label for="fechaPagoEfectivo">Fecha de Pago Efectivo:</label>
+                <input type="date" id="fechaPagoEfectivo" name="fechaPagoEfectivo" required>
+                <div class="info-text">Fecha en que el pago fue realizado y/o registrado en el sistema externo.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="montoPagado">Monto Pagado ($):</label>
+                <input type="number" id="montoPagado" name="montoPagado" step="0.01" min="0" placeholder="Ej: 15000.00" required>
+            </div>
+
+            <div class="form-group">
+                <label for="idTransaccionContable">Referencia Sistema Contable (ID Externo):</label>
+                <input type="text" id="idTransaccionContable" name="idTransaccionContable" placeholder="Ej: REC-2024-00123, Transf-ABC-555">
+                <div class="info-text">ID o referencia del pago en el sistema contable externo de COMIRSA.</div>
+            </div>
+
+            <div class="form-section-title">Notas Internas</div>
+            <div class="form-group">
+                <label for="notasInternas">Notas sobre el Pago:</label>
+                <textarea id="notasInternas" name="notasInternas" placeholder="Observaciones adicionales sobre este pago."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Pago</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-fill Fecha de Pago Efectivo with today's date
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('fechaPagoEfectivo').value = `${yyyy}-${mm}-${dd}`;
+
+            const obligacionPagarSelect = document.getElementById('obligacionPagar');
+            const currentDebtInfo = document.getElementById('current-debt-info');
+
+            // Simulate dynamic update of debt info based on selected obligation
+            obligacionPagarSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption.value) {
+                    const textContent = selectedOption.textContent;
+                    const regex = /Monto: (\$[\d\.,]+) \((.+)\)/;
+                    const match = textContent.match(regex);
+
+                    if (match) {
+                        const monto = match[1];
+                        const estado = match[2];
+                        currentDebtInfo.innerHTML = `Monto adeudado actual: <strong>${monto}</strong> - Estado: <span style="color: ${estado === 'Vencida' ? 'var(--danger-color)' : 'var(--text-color)'}; font-weight:bold;">${estado}</span>`;
+                        currentDebtInfo.style.display = 'block';
+                    } else {
+                        currentDebtInfo.style.display = 'none';
+                    }
+                } else {
+                    currentDebtInfo.style.display = 'none';
+                }
+            });
+
+            // Trigger change on load if an option is pre-selected
+            if (obligacionPagarSelect.value) {
+                obligacionPagarSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+</html>

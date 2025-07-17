@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Activo - Luminaria Calle Central Poste 15 - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Asset Summary */
+        .asset-summary {
+            background-color: #e6f2ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .asset-summary-info {
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+
+        .asset-summary-info h2 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+        }
+        .asset-summary-info p {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+        .asset-summary-info strong {
+            font-weight: bold;
+        }
+        .asset-summary-info .status-badge {
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+
+        .asset-summary-actions {
+            flex-shrink: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #004085; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5a6268; }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-button {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: bold;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-right: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .section-subtitle {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .detail-item strong {
+            display: inline-block;
+            width: 250px; /* Adjust as needed for alignment */
+            color: var(--text-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .data-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .data-table tbody td {
+            background-color: var(--card-background);
+            padding: 8px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.85em;
+        }
+
+        .data-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        /* Specific badge colors */
+        .status-badge.bueno { background-color: #d4edda; color: var(--success-color); }
+        .status-badge.regular { background-color: #fff3cd; color: var(--warning-color); }
+        .status-badge.malo { background-color: #f8d7da; color: var(--danger-color); }
+        .status-badge.requiere-reparacion { background-color: #cce5ff; color: var(--secondary-color); }
+        .status-badge.abierto { background-color: #ffe0b2; color: #fb8c00; }
+        .status-badge.resuelto { background-color: #c8e6c9; color: #43a047; }
+
+
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .asset-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .asset-summary-info {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .asset-summary-info h2 {
+                font-size: 1.5em;
+            }
+            .asset-summary-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 5px;
+            }
+            .btn {
+                width: 100%;
+            }
+            .tabs {
+                flex-wrap: wrap;
+                margin-bottom: 15px;
+            }
+            .tab-button {
+                flex-grow: 1;
+                margin-right: 0;
+                margin-bottom: 5px;
+                border-radius: var(--border-radius);
+            }
+            .tab-button.active {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+            }
+            .section-subtitle {
+                font-size: 1.1em;
+            }
+            .detail-item strong {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .data-table thead {
+                display: none;
+            }
+            .data-table, .data-table tbody, .data-table tr, .data-table td {
+                display: block;
+                width: 100%;
+            }
+            .data-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .data-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .data-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-top: 5px;
+                margin-left: 0;
+            }
+            .action-link {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-wrench"></i> Detalle de Activo del Parque</h1>
+
+        <!-- Asset Summary -->
+        <div class="asset-summary">
+            <div class="asset-summary-info">
+                <h2>Luminaria Calle Central - Poste 15</h2>
+                <p><strong>Tipo:</strong> Luminaria <span class="status-badge malo">Malo</span></p>
+                <p><strong>Código Interno:</strong> LUM-CEN-015</p>
+                <p><strong>Ubicación:</strong> Av. Roca, Sector Pymes 2, cerca de Parcela 08705E-M10-P06</p>
+            </div>
+            <div class="asset-summary-actions">
+                <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Editar Activo</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Registrar Mantenimiento</a>
+            </div>
+        </div>
+
+        <!-- Tabs for Asset Details -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'generales')">Datos Generales</button>
+            <button class="tab-button" onclick="openTab(event, 'mantenimiento')">Historial de Mantenimiento</button>
+            <button class="tab-button" onclick="openTab(event, 'incidencias')">Incidencias Asociadas</button>
+            <button class="tab-button" onclick="openTab(event, 'notas')">Notas</button>
+        </div>
+
+        <!-- Tab Content: Datos Generales -->
+        <div id="generales" class="tab-content">
+            <div class="section-subtitle">Información Básica del Activo</div>
+            <div class="detail-item"><strong>Parque Industrial:</strong> COMIRSA</div>
+            <div class="detail-item"><strong>Sector Comercial:</strong> Pymes 2</div>
+            <div class="detail-item"><strong>Parcela Asociada:</strong> 08705E-M10-P06 <a href="detalle_parcela.html" class="action-link" style="margin-left: 15px;"><i class="fas fa-eye"></i> Ver Parcela</a></div>
+            <div class="detail-item"><strong>Superficie/ML:</strong> N/A (Polo)</div>
+            <div class="detail-item"><strong>Fecha de Instalación:</strong> 2018-05-10</div>
+            <div class="detail-item"><strong>Último Mantenimiento:</strong> 2023-10-01</div>
+            <div class="detail-item"><strong>Costo Mantenimiento Estimado Anual:</strong> $1.500</div>
+            <div class="detail-item"><strong>Responsabilidad Mantenimiento:</strong> Propio COMIRSA</div>
+        </div>
+
+        <!-- Tab Content: Historial de Mantenimiento (Oculto inicialmente) -->
+        <div id="mantenimiento" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Intervenciones Registradas</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID OT / Tarea</th>
+                        <th>Tipo de Mantenimiento</th>
+                        <th>Fecha Realización</th>
+                        <th>Descripción</th>
+                        <th>Costo Real</th>
+                        <th>Responsable</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="ID OT / Tarea">OT-005</td>
+                        <td data-label="Tipo de Mantenimiento">Correctivo</td>
+                        <td data-label="Fecha Realización">2023-10-01</td>
+                        <td data-label="Descripción">Reemplazo de foco y balasto</td>
+                        <td data-label="Costo Real">$850</td>
+                        <td data-label="Responsable">Juan Pérez</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver OT</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="ID OT / Tarea">T-010 (Plan 2023)</td>
+                        <td data-label="Tipo de Mantenimiento">Preventivo</td>
+                        <td data-label="Fecha Realización">2023-04-15</td>
+                        <td data-label="Descripción">Revisión general y limpieza de poste</td>
+                        <td data-label="Costo Real">$200</td>
+                        <td data-label="Responsable">Equipo Externo A</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Tarea</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Incidencias Asociadas (Oculto inicialmente) -->
+        <div id="incidencias" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Reclamos o Problemas Reportados</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Reclamo</th>
+                        <th>Título del Reclamo</th>
+                        <th>Fecha Creación</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="ID Reclamo">1001</td>
+                        <td data-label="Título del Reclamo">Luminaria no enciende</td>
+                        <td data-label="Fecha Creación">2023-09-28</td>
+                        <td data-label="Estado"><span class="status-badge resuelto">Resuelto</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Reclamo</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="ID Reclamo">1007</td>
+                        <td data-label="Título del Reclamo">Falla intermitente de luz</td>
+                        <td data-label="Fecha Creación">2024-01-10</td>
+                        <td data-label="Estado"><span class="status-badge abierto">Abierto</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Reclamo</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Notas (Oculto inicialmente) -->
+        <div id="notas" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Notas Adicionales sobre este Activo</div>
+            <div class="detail-item">
+                <p><strong>2024-05-28 (Personal Mantenimiento):</strong> Necesita inspección mensual por vandalismo frecuente en esta zona.</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>2023-01-05 (Gerencia):</strong> Considerar reemplazar por modelo LED de mayor potencia en próxima inversión.</p>
+            </div>
+            <a href="#" class="btn btn-primary" style="margin-top:15px;"><i class="fas fa-plus"></i> Añadir Nota</a>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open the first tab on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-button.active').click();
+        });
+    </script>
+</body>
+</html>

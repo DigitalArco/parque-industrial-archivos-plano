@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Reclamo - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .form-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .form-section-title {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-group .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        .form-group .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .info-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .form-header {
+                font-size: 1.6em;
+            }
+            .form-section-title {
+                font-size: 1.1em;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .btn-secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-header"><i class="fas fa-exclamation-circle"></i> Carga de Reclamo / Incidencia</h1>
+
+        <form action="#" method="post">
+            <div class="form-section-title">Información Principal del Reclamo</div>
+            
+            <div class="form-group">
+                <label for="tituloReclamo">Título del Reclamo:</label>
+                <input type="text" id="tituloReclamo" name="tituloReclamo" placeholder="Ej: Bache en Calle 5" required>
+                <div class="info-text">Resumen corto y conciso del problema.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcionDetallada">Descripción Detallada:</label>
+                <textarea id="descripcionDetallada" name="descripcionDetallada" placeholder="Describa el problema con el mayor detalle posible."></textarea>
+                <div class="info-text">Incluya ubicación exacta, magnitud, si afecta a otras áreas, etc.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaCreacion">Fecha de Creación:</label>
+                <input type="date" id="fechaCreacion" name="fechaCreacion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="prioridad">Prioridad:</label>
+                <select id="prioridad" name="prioridad" required>
+                    <option value="BAJA">Baja</option>
+                    <option value="MEDIA" selected>Media</option>
+                    <option value="ALTA">Alta</option>
+                    <option value="CRITICA">Crítica (Riesgo de Seguridad/Operación)</option>
+                </select>
+            </div>
+
+            <div class="form-section-title">Origen y Ubicación del Problema</div>
+            
+            <div class="form-group">
+                <label for="empresaSolicitante">Empresa Solicitante:</label>
+                <select id="empresaSolicitante" name="empresaSolicitante" required>
+                    <option value="">-- Seleccione la Empresa --</option>
+                    <option value="EMP001">Metalúrgica ABC S.A.</option>
+                    <option value="EMP002">Logística del Norte S.R.L.</option>
+                    <option value="EMP003">Manufacturas del Sur Ltda.</option>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <div class="info-text">Empresa que reporta el problema.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoReclamo">Tipo de Reclamo:</label>
+                <select id="tipoReclamo" name="tipoReclamo">
+                    <option value="">-- Seleccione el Tipo --</option>
+                    <option value="BACHEO">Bacheo / Vialidad</option>
+                    <option value="ILUMINACION">Iluminación</option>
+                    <option value="SEGURIDAD">Seguridad</option>
+                    <option value="AGUA">Agua (Redes Físicas)</option>
+                    <option value="GAS">Gas (Redes Físicas)</option>
+                    <option value="ESPACIO_VERDE">Espacio Verde / Forestal</option>
+                    <option value="DESAGUE_PLUVIAL">Desagüe Pluvial</option>
+                    <option value="OTROS">Otros / General</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="parcelaAfectada">Parcela Afectada (Opcional):</label>
+                <select id="parcelaAfectada" name="parcelaAfectada">
+                    <option value="">-- Seleccione la Parcela --</option>
+                    <option value="PARC001">08705E-M10-P06</option>
+                    <option value="PARC002">08705E-F50-P02</option>
+                    <!-- Opciones cargadas dinámicamente -->
+                </select>
+                <div class="info-text">Si el problema está en o cerca de una parcela específica.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="activoAfectado">Activo Afectado (Opcional):</label>
+                <select id="activoAfectado" name="activoAfectado">
+                    <option value="">-- Seleccione un Activo --</option>
+                    <option value="ACT001">Luminaria Calle 5 - Poste 12</option>
+                    <option value="ACT002">Tramo Calle 3 (entre 5 y 7)</option>
+                    <option value="ACT003">Garita de Seguridad Principal</option>
+                    <!-- Opciones cargadas dinámicamente según el tipo de reclamo -->
+                </select>
+                <div class="info-text">Elemento físico específico afectado (ej. un poste de luz, un tramo de calle).</div>
+            </div>
+
+            <div class="form-section-title">Notas Internas (para personal de COMIRSA)</div>
+            <div class="form-group">
+                <label for="notasInternas">Notas:</label>
+                <textarea id="notasInternas" name="notasInternas" placeholder="Cualquier observación interna sobre el reclamo."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Reclamo</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-fill Fecha de Creación with today's date
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('fechaCreacion').value = `${yyyy}-${mm}-${dd}`;
+        });
+    </script>
+</body>
+</html>

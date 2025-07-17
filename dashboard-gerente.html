@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Gestión - COMIRSA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    
+    <style>
+        /* Estilos específicos del Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-full { grid-column: 1 / -1; }
+        .card-title { font-size: 1.3em; font-weight: 700; color: var(--primary-color); margin: 0 0 20px 0; display: flex; align-items: center; gap: 10px; }
+        .kpi-main { font-size: 3em; font-weight: 700; color: var(--text-color); text-align: center; margin: 10px 0; }
+        .kpi-label { text-align: center; color: var(--text-muted); font-size: 1em; margin-bottom: 20px; }
+        .kpi-details { display: flex; justify-content: space-around; text-align: center; margin-top: auto; }
+        .kpi-sub { font-size: 1.5em; font-weight: 700; }
+        .kpi-sub-label { font-size: 0.9em; color: var(--text-muted); }
+        .progress-bar-container { width: 100%; background-color: #e9ecef; border-radius: 5px; height: 20px; margin-top: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #28a745; border-radius: 5px; text-align: center; color: white; font-weight: bold; line-height: 20px; font-size: 0.8em; }
+        .list { list-style: none; padding: 0; margin: 0; }
+        .list-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 1em; }
+        .list-item:last-child { border-bottom: none; }
+        .list-item-value { font-weight: 700; }
+        .list-item-value.danger { color: #dc3545; }
+        .list-item-value.warning { color: #ffc107; }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; } /* Opcional, para simplificar en móvil */
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-gerente.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-activos.html"><i class="fas fa-hammer"></i> Activos</a></li>
+                <li><a href="listado-solicitudes.html"><i class="fas fa-handshake"></i> Solicitudes</a></li>
+                <li><a href="listado-ordenes.html"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a></li>
+                <li><a href="planes.html"><i class="fas fa-calendar-alt"></i> Planificación</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="user-info">
+                    <span>Bienvenido, Sergio Romá (Gerente)</span>
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html">Salir</a>
+                </div>
+            </header>
+            <main class="content-area">
+                <div class="dashboard-grid">
+                     <!-- Contenido del Dashboard del Gerente (copiado de la versión anterior) -->
+                     <div class="card">
+                        <h3 class="card-title"><i class="fas fa-chart-pie"></i> Ocupación y Desarrollo Comercial</h3>
+                        <div class="kpi-main">82.5%</div>
+                        <div class="kpi-label">Tasa de Ocupación Neta</div>
+                        <div class="kpi-details">
+                            <div>
+                                <div class="kpi-sub" style="color: #007bff;">220 ha</div>
+                                <div class="kpi-sub-label">Pymes 2 (97% Ocup.)</div>
+                            </div>
+                            <div>
+                                <div class="kpi-sub" style="color: #6c757d;">100 ha</div>
+                                <div class="kpi-sub-label">Pymes 1 (58% Ocup.)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-tools"></i> Mantenimiento e Infraestructura</h3>
+                        <div class="kpi-main" style="color: var(--warning-color);">12</div>
+                        <div class="kpi-label">Reclamos Abiertos</div>
+                        <div class="kpi-details">
+                            <div>
+                                <div class="kpi-sub">72hs</div>
+                                <div class="kpi-sub-label">Tiempo Prom. Resolución</div>
+                            </div>
+                            <div>
+                                <div class="kpi-sub" style="color: var(--success-color);">85%</div>
+                                <div class="kpi-sub-label">Activos en Buen Estado</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-gavel"></i> Cumplimiento Legal y Obligaciones</h3>
+                        <div class="kpi-main" style="color: var(--success-color);">92%</div>
+                        <div class="kpi-label">Cumplimiento Plazos de Radicación</div>
+                        <div class="kpi-details">
+                            <div>
+                                <div class="kpi-sub" style="color: var(--danger-color);">3</div>
+                                <div class="kpi-sub-label">Plazos Vencidos</div>
+                            </div>
+                             <div>
+                                <div class="kpi-sub" style="color: var(--danger-color);">8%</div>
+                                <div class="kpi-sub-label">Tasa de Morosidad</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-full">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Alertas y Tareas Críticas</h3>
+                        <ul class="list">
+                            <li class="list-item">
+                                <span>Habilitación Municipal de "Logística Rápido SRL"</span>
+                                <span class="list-item-value warning">Vence en 25 días</span>
+                            </li>
+                            <li class="list-item">
+                                <span>Plazo de Obra de "Manufacturas del Norte S.A."</span>
+                                <span class="list-item-value danger">VENCIDO HACE 10 DÍAS</span>
+                            </li>
+                            <li class="list-item">
+                                <span>Reclamo #1134 (Bache en Calle 2)</span>
+                                <span class="list-item-value">Abierto hace 7 días</span>
+                            </li>
+                            <li class="list-item">
+                                <span>Solicitud de Prórroga de "Inversiones Ramallo SA"</span>
+                                <span class="list-item-value">Pendiente de Aprobación</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card card-full">
+                         <h3 class="card-title"><i class="fas fa-tasks"></i> Progreso Plan Quinquenal 2025-2030</h3>
+                         <ul class="list">
+                             <li class="list-item">
+                                <span><b>Proyecto:</b> Modernización de Iluminación a LED</span>
+                                <div class="progress-bar-container" style="width: 50%;">
+                                    <div class="progress-bar" style="width: 65%; background-color: var(--success-color);">65%</div>
+                                </div>
+                             </li>
+                             <li class="list-item">
+                                 <span><b>Proyecto:</b> Apertura y Pavimentación Avenida Ramallo</span>
+                                 <div class="progress-bar-container" style="width: 50%;">
+                                     <div class="progress-bar" style="width: 20%; background-color: var(--secondary-color);">20%</div>
+                                 </div>
+                             </li>
+                             <li class="list-item">
+                                <span><b>Proyecto:</b> Implementación Fase 1 del ERP</span>
+                                 <div class="progress-bar-container" style="width: 50%;">
+                                     <div class="progress-bar" style="width: 90%; background-color: var(--warning-color);">90%</div>
+                                 </div>
+                             </li>
+                         </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Parcelas - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.25em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-add {
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+        /* Table Section */
+        .table-section {
+            margin-top: 30px;
+        }
+
+        .table-section h3 {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .parcels-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .parcels-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .parcels-table tbody td {
+            background-color: var(--card-background);
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .parcels-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        .status-badge.activa { background-color: #d4edda; color: var(--success-color); }
+        .status-badge.inactiva { background-color: #f8d7da; color: var(--danger-color); }
+        .status-badge.disponible { background-color: #cce5ff; color: var(--secondary-color); } /* Blue */
+        .status-badge.vendida { background-color: #fff3cd; color: var(--warning-color); } /* Yellow */
+        .status-badge.alquilada { background-color: #d1ecf1; color: var(--info-color); } /* Teal */
+        
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                text-align: center;
+            }
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .table-section h3 {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .table-section h3 .btn-add {
+                margin-top: 10px;
+            }
+            .parcels-table thead {
+                display: none; /* Hide table header on small screens */
+            }
+            .parcels-table, .parcels-table tbody, .parcels-table tr, .parcels-table td {
+                display: block; /* Make table elements stack */
+                width: 100%;
+            }
+            .parcels-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .parcels-table td {
+                text-align: right;
+                padding-left: 50%; /* Space for pseudo-element label */
+                position: relative;
+            }
+            .parcels-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            .action-link {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-secretaria.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-activos.html"><i class="fas fa-hammer"></i> Activos</a></li>
+                <li><a href="listado-solicitudes.html"><i class="fas fa-handshake"></i> Solicitudes</a></li>
+                <li><a href="listado-ordenes.html"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a></li>
+            </ul>
+        </aside>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-map-marker-alt"></i> Listado y Gestión de Parcelas</h1>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h3><i class="fas fa-filter"></i> Filtros de Búsqueda</h3>
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label for="searchNomenclaturePartida">Nomenclatura / Partida ARBA:</label>
+                    <input type="text" id="searchNomenclaturePartida" name="searchNomenclaturePartida" placeholder="Buscar por Nomenclatura o Partida">
+                </div>
+                <div class="form-group">
+                    <label for="typeFilter">Tipo de Unidad:</label>
+                    <select id="typeFilter" name="typeFilter">
+                        <option value="">Todas</option>
+                        <option value="FRACCION">Fracción</option>
+                        <option value="MANZANA">Manzana</option>
+                        <option value="PARCELA">Parcela</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="catastralStatusFilter">Estado Catastral:</label>
+                    <select id="catastralStatusFilter" name="catastralStatusFilter">
+                        <option value="">Todos</option>
+                        <option value="ACTIVA">Activa</option>
+                        <option value="INACTIVA">Inactiva (Sub/Fusionada)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="commercialStatusFilter">Estado Comercial:</label>
+                    <select id="commercialStatusFilter" name="commercialStatusFilter">
+                        <option value="">Todos</option>
+                        <option value="DISPONIBLE">Disponible</option>
+                        <option value="VENDIDA">Vendida</option>
+                        <option value="ALQUILADA">Alquilada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sectorFilter">Sector Comercial:</label>
+                    <select id="sectorFilter" name="sectorFilter">
+                        <option value="">Todos</option>
+                        <option value="PYMES_1">Pymes 1</option>
+                        <option value="PYMES_2">Pymes 2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ownerTenantFilter">Propietario / Inquilino:</label>
+                    <input type="text" id="ownerTenantFilter" name="ownerTenantFilter" placeholder="Buscar por Empresa">
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button type="button" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                <button type="button" class="btn btn-secondary"><i class="fas fa-redo"></i> Limpiar Filtros</button>
+            </div>
+        </div>
+
+        <!-- Parcels Table Section -->
+        <div class="table-section">
+            <h3>
+                Unidades Catastrales Registradas
+                <a href="carga_nueva_parcela.html" class="btn-add"><i class="fas fa-plus"></i> Nueva Parcela</a>
+            </h3>
+            <table class="parcels-table">
+                <thead>
+                    <tr>
+                        <th>Nomenclatura Completa</th>
+                        <th>Tipo</th>
+                        <th>Superficie (m²)</th>
+                        <th>Partida ARBA</th>
+                        <th>Estado Catastral</th>
+                        <th>Estado Comercial</th>
+                        <th>Sector</th>
+                        <th>Propietario</th>
+                        <th>Inquilinos (N°)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nomenclatura Completa">087050E0000010000000006</td>
+                        <td data-label="Tipo">Parcela</td>
+                        <td data-label="Superficie (m²)">2097.50</td>
+                        <td data-label="Partida ARBA">22045</td>
+                        <td data-label="Estado Catastral"><span class="status-badge activa">Activa</span></td>
+                        <td data-label="Estado Comercial"><span class="status-badge vendida">Vendida</span></td>
+                        <td data-label="Sector">Pymes 2</td>
+                        <td data-label="Propietario">Metalúrgica ABC S.A.</td>
+                        <td data-label="Inquilinos (N°)">2</td>
+                        <td data-label="Acciones">
+                            <a href="detalle_parcela.html?id=PARC001" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="carga_nueva_parcela.html?edit=PARC001" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nomenclatura Completa">087050E00000005000000002</td>
+                        <td data-label="Tipo">Parcela</td>
+                        <td data-label="Superficie (m²)">5500.00</td>
+                        <td data-label="Partida ARBA">18900</td>
+                        <td data-label="Estado Catastral"><span class="status-badge activa">Activa</span></td>
+                        <td data-label="Estado Comercial"><span class="status-badge disponible">Disponible</span></td>
+                        <td data-label="Sector">Pymes 1</td>
+                        <td data-label="Propietario">N/A</td>
+                        <td data-label="Inquilinos (N°)">0</td>
+                        <td data-label="Acciones">
+                            <a href="detalle_parcela.html?id=PARC002" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="carga_nueva_parcela.html?edit=PARC002" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nomenclatura Completa">087050E00000005000000000</td>
+                        <td data-label="Tipo">Fracción</td>
+                        <td data-label="Superficie (m²)">100000.00</td>
+                        <td data-label="Partida ARBA">18000</td>
+                        <td data-label="Estado Catastral"><span class="status-badge activa">Activa</span></td>
+                        <td data-label="Estado Comercial">N/A</td>
+                        <td data-label="Sector">Pymes 1</td>
+                        <td data-label="Propietario">N/A</td>
+                        <td data-label="Inquilinos (N°)">N/A</td>
+                        <td data-label="Acciones">
+                            <a href="detalle_parcela.html?id=FRAC001" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="carga_nueva_parcela.html?edit=FRAC001" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nomenclatura Completa">087050E00000110000000000</td>
+                        <td data-label="Tipo">Manzana</td>
+                        <td data-label="Superficie (m²)">15000.00</td>
+                        <td data-label="Partida ARBA">23000</td>
+                        <td data-label="Estado Catastral"><span class="status-badge inactiva">Inactiva (Subd.)</span></td>
+                        <td data-label="Estado Comercial">N/A</td>
+                        <td data-label="Sector">Pymes 2</td>
+                        <td data-label="Propietario">N/A</td>
+                        <td data-label="Inquilinos (N°)">N/A</td>
+                        <td data-label="Acciones">
+                            <a href="detalle_parcela.html?id=MANZ001" class="action-link"><i class="fas fa-eye action-icon"></i> Ver Detalle</a>
+                            <a href="carga_nueva_parcela.html?edit=MANZ001" class="action-link"><i class="fas fa-edit action-icon"></i> Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+	</div>
+    </div>
+</body>
+</html>

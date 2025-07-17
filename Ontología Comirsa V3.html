@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visión de Alto Nivel de la Ontología - ERP COMIRSA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 12px;
+            --shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            --line-color: #007bff;
+            --line-thickness: 2px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Para asegurar que las líneas no generen scroll si se salen un poco */
+        }
+
+        .diagram-page-container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .page-title {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        .diagram-container {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr; /* Columna central más ancha para ERP */
+            grid-template-rows: 1fr 1.5fr 1fr; /* Fila central más alta para ERP */
+            gap: 20px;
+            min-height: 600px; /* Altura mínima para el diagrama */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .diagram-box {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .diagram-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .diagram-box-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .diagram-box-subtitle {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+
+        /* Specific positioning for grid areas */
+        .module-1 { grid-area: 1 / 1 / 2 / 2; } /* Top-Left */
+        .module-2 { grid-area: 1 / 3 / 2 / 4; } /* Top-Right */
+        .module-3 { grid-area: 3 / 1 / 4 / 2; } /* Bottom-Left */
+        .module-4 { grid-area: 3 / 3 / 4 / 4; } /* Bottom-Right */
+        .erp-center {
+            grid-area: 2 / 2 / 3 / 3;
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: #005fcc;
+            transform: scale(1.05);
+        }
+        .erp-center .diagram-box-title {
+            color: white;
+            font-size: 1.5em;
+        }
+        .erp-center .diagram-box-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Connectors (Lines with arrows) */
+        /* Each connector needs to be absolutely positioned relative to .diagram-container */
+        .connector {
+            position: absolute;
+            background-color: var(--line-color);
+            height: var(--line-thickness);
+            z-index: 1; /* Para que estén por debajo de las cajas */
+        }
+
+        .connector::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 12px; /* Triángulo hacia la derecha */
+            border-color: transparent transparent transparent var(--line-color);
+        }
+        
+        /* Specific connector styles (adjust top, left, width, transform based on visual needs) */
+        /* Connectors will start from the center of module edge to center of ERP edge */
+
+        /* Top-Left to ERP */
+        .conn-1 {
+            width: calc(100% / 3 - 10px); /* Aproximado */
+            top: 25%; /* Centro vertical del módulo */
+            left: calc(100% / 3 - 10px); /* Borde derecho del módulo */
+            transform-origin: left center;
+            transform: rotate(30deg); /* Ajustar el ángulo */
+        }
+        .conn-1::after { right: -12px; transform: rotate(-30deg); } /* Flecha al final de la línea */
+
+        /* Top-Right to ERP */
+        .conn-2 {
+            width: calc(100% / 3 - 10px);
+            top: 25%;
+            right: calc(100% / 3 - 10px);
+            transform-origin: right center;
+            transform: rotate(-30deg);
+        }
+        .conn-2::after { left: -12px; transform: rotate(30deg); }
+
+        /* Bottom-Left to ERP */
+        .conn-3 {
+            width: calc(100% / 3 - 10px);
+            bottom: 25%;
+            left: calc(100% / 3 - 10px);
+            transform-origin: left center;
+            transform: rotate(-30deg);
+        }
+        .conn-3::after { right: -12px; transform: rotate(30deg); }
+
+        /* Bottom-Right to ERP */
+        .conn-4 {
+            width: calc(100% / 3 - 10px);
+            bottom: 25%;
+            right: calc(100% / 3 - 10px);
+            transform-origin: right center;
+            transform: rotate(30deg);
+        }
+        .conn-4::after { left: -12px; transform: rotate(-30deg); }
+
+        /* General adjustments for connectors to point towards the center */
+        /* These are rough estimates and might need fine-tuning based on exact box sizes and gaps */
+        .conn-1 { top: 35%; left: 20%; width: 25%; transform: rotate(15deg); }
+        .conn-1::after { right: -12px; transform: rotate(-15deg); }
+
+        .conn-2 { top: 35%; right: 20%; width: 25%; transform: rotate(-15deg); }
+        .conn-2::after { left: -12px; transform: rotate(15deg); }
+
+        .conn-3 { bottom: 35%; left: 20%; width: 25%; transform: rotate(-15deg); }
+        .conn-3::after { right: -12px; transform: rotate(15deg); }
+
+        .conn-4 { bottom: 35%; right: 20%; width: 25%; transform: rotate(15deg); }
+        .conn-4::after { left: -12px; transform: rotate(-15deg); }
+
+        /* Make arrowheads point towards ERP center */
+        .conn-1::after { border-color: transparent transparent transparent var(--line-color); right: -12px; } /* points right */
+        .conn-2::after { border-color: transparent var(--line-color) transparent transparent; left: -12px; } /* points left */
+        .conn-3::after { border-color: transparent transparent transparent var(--line-color); right: -12px; }
+        .conn-4::after { border-color: transparent var(--line-color) transparent transparent; left: -12px; }
+
+        /* Adjusting arrow direction from module to ERP */
+        .conn-1::after { transform: rotate(0deg); border-width: 0 0 8px 12px; /* Pointing right relative to line */ } /* M1 -> ERP */
+        .conn-2::after { transform: rotate(180deg); border-width: 0 0 8px 12px; /* Pointing left relative to line */ left: -12px; } /* M2 -> ERP */
+        .conn-3::after { transform: rotate(0deg); border-width: 0 0 8px 12px; } /* M3 -> ERP */
+        .conn-4::after { transform: rotate(180deg); border-width: 0 0 8px 12px; left: -12px; } /* M4 -> ERP */
+
+        /* Final adjustments for position and width to make lines connect better */
+        .conn-1 { top: 25%; left: 22%; width: 28%; transform: rotate(15deg); }
+        .conn-2 { top: 25%; right: 22%; width: 28%; transform: rotate(-15deg); }
+        .conn-3 { bottom: 25%; left: 22%; width: 28%; transform: rotate(-15deg); }
+        .conn-4 { bottom: 25%; right: 22%; width: 28%; transform: rotate(15deg); }
+
+        /* The arrowheads need to be positioned at the 'end' of the visual line, so it's tricky with rotation.
+           A simpler visual might be better if complex lines are hard.
+           Let's make them simpler and just imply direction by being closer to the ERP.
+           Or perhaps just straight lines to the ERP's bounding box center and arrows on the ERP side.
+           Let's stick with the angled lines but position arrows carefully.
+           The `transform-origin` and `transform` on the pseudo-element itself might be needed.
+        */
+        
+        /* Let's try simpler direct lines from center of module to center of ERP */
+        .connector { background-color: var(--line-color); height: var(--line-thickness); }
+        .connector::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 6px 0 6px 10px; /* Small arrow pointing right */
+            border-color: transparent transparent transparent var(--line-color);
+            transform: translate(-50%, -50%) rotate(0deg); /* Default for central arrow */
+            top: 50%; /* Center of connector */
+            left: 100%; /* End of connector */
+        }
+
+        /* Adjust position of connectors more accurately */
+        /* M1 (Top-Left) to ERP */
+        .conn-1 { 
+            left: calc(100% / 3 - 50px); /* X de M1 */
+            top: calc(100% / 3 - 50px); /* Y de M1 */
+            width: 150px; /* Ancho estimado para llegar al centro */
+            height: 2px;
+            transform: rotate(45deg);
+            transform-origin: 0% 0%; /* Rotar desde la esquina superior izquierda */
+        }
+        .conn-1::after { transform: translate(-50%, -50%) rotate(45deg); top: 100%; left: 100%; }
+
+
+        /* M2 (Top-Right) to ERP */
+        .conn-2 { 
+            right: calc(100% / 3 - 50px); /* X de M2 */
+            top: calc(100% / 3 - 50px); /* Y de M2 */
+            width: 150px;
+            height: 2px;
+            transform: rotate(-45deg);
+            transform-origin: 100% 0%; /* Rotar desde la esquina superior derecha */
+        }
+        .conn-2::after { transform: translate(-50%, -50%) rotate(-45deg); top: 100%; left: 0%; }
+
+        /* M3 (Bottom-Left) to ERP */
+        .conn-3 { 
+            left: calc(100% / 3 - 50px); /* X de M3 */
+            bottom: calc(100% / 3 - 50px); /* Y de M3 */
+            width: 150px;
+            height: 2px;
+            transform: rotate(-45deg);
+            transform-origin: 0% 100%; /* Rotar desde la esquina inferior izquierda */
+        }
+        .conn-3::after { transform: translate(-50%, -50%) rotate(-45deg); top: 0%; left: 100%; }
+
+
+        /* M4 (Bottom-Right) to ERP */
+        .conn-4 { 
+            right: calc(100% / 3 - 50px); /* X de M4 */
+            bottom: calc(100% / 3 - 50px); /* Y de M4 */
+            width: 150px;
+            height: 2px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%; /* Rotar desde la esquina inferior derecha */
+        }
+        .conn-4::after { transform: translate(-50%, -50%) rotate(45deg); top: 0%; left: 0%; }
+
+        /* Adjust arrowhead direction after rotation */
+        .connector.point-in::after { /* General style for arrows pointing INWARDS to ERP */
+            border-width: 8px 0 8px 12px; /* Arrowhead size */
+            border-color: transparent transparent transparent var(--line-color);
+            transform: translate(-50%, -50%); /* Base positioning */
+            /* Specific transform for rotation is applied per connector */
+        }
+
+        /* Adjustments to make lines originate closer to the center of the module box's edge */
+        .conn-1 { top: 20%; left: 20%; width: 200px; transform: rotate(20deg); }
+        .conn-2 { top: 20%; right: 20%; width: 200px; transform: rotate(-20deg); }
+        .conn-3 { bottom: 20%; left: 20%; width: 200px; transform: rotate(-20deg); }
+        .conn-4 { bottom: 20%; right: 20%; width: 200px; transform: rotate(20deg); }
+
+        /* Fine-tuning arrowhead positioning for rotated lines */
+        .conn-1.point-in::after { left: 100%; top: 50%; transform: translate(-100%, -50%) rotate(0deg); } /* Points left, aligned with line end */
+        .conn-2.point-in::after { left: 0%; top: 50%; transform: translate(0%, -50%) rotate(180deg); } /* Points right, aligned with line start */
+        .conn-3.point-in::after { left: 100%; top: 50%; transform: translate(-100%, -50%) rotate(0deg); }
+        .conn-4.point-in::after { left: 0%; top: 50%; transform: translate(0%, -50%) rotate(180deg); }
+
+        /* Simpler arrowheads */
+        .connector::after {
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 6px;
+            border-color: transparent;
+            position: absolute;
+            /* Common properties */
+        }
+
+        /* Final simplified connectors */
+        .connector { 
+            position: absolute; background-color: var(--line-color);
+            transform-origin: center center;
+            height: 2px; /* Line thickness */
+            z-index: 1;
+        }
+
+        /* Top-Left to ERP */
+        .conn-1 { top: 30%; left: 27%; width: 20%; transform: rotate(15deg); }
+        .conn-1::after { border-color: transparent transparent transparent var(--line-color); left: 100%; transform: translateY(-50%); }
+
+        /* Top-Right to ERP */
+        .conn-2 { top: 30%; right: 27%; width: 20%; transform: rotate(-15deg); }
+        .conn-2::after { border-color: transparent var(--line-color) transparent transparent; left: -10px; transform: translateY(-50%); }
+
+        /* Bottom-Left to ERP */
+        .conn-3 { bottom: 30%; left: 27%; width: 20%; transform: rotate(-15deg); }
+        .conn-3::after { border-color: transparent transparent transparent var(--line-color); left: 100%; transform: translateY(-50%); }
+
+        /* Bottom-Right to ERP */
+        .conn-4 { bottom: 30%; right: 27%; width: 20%; transform: rotate(15deg); }
+        .conn-4::after { border-color: transparent var(--line-color) transparent transparent; left: -10px; transform: translateY(-50%); }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 900px) {
+            .diagram-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto;
+                min-height: auto;
+            }
+            .module-1, .module-2, .module-3, .module-4, .erp-center {
+                grid-area: auto !important; /* Reset grid-area for mobile */
+                width: 90%;
+                margin: 0 auto 20px auto;
+            }
+            .erp-center { order: 0; } /* ERP first on mobile */
+            .module-1 { order: 1; }
+            .module-2 { order: 2; }
+            .module-3 { order: 3; }
+            .module-4 { order: 4; }
+
+            .connector { display: none; } /* Hide connectors on small screens */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="diagram-page-container">
+        <h1 class="page-title">Visión de Alto Nivel de la Ontología - ERP COMIRSA</h1>
+
+        <div class="diagram-container">
+            <!-- Módulo 1: Gestión de Ocupación y Desarrollo -->
+            <div class="diagram-box module-1">
+                <div class="diagram-box-title"><i class="fas fa-map-marked-alt"></i> Gestión de Ocupación y Desarrollo</div>
+                <div class="diagram-box-subtitle">
+                    Inventario y Transacciones de Tierras<br>
+                    (Parcelas, Empresas Propietarias/Inquilinas)
+                </div>
+            </div>
+
+            <!-- Módulo 2: Gestión de Cumplimiento y Plazos -->
+            <div class="diagram-box module-2">
+                <div class="diagram-box-title"><i class="fas fa-check-circle"></i> Gestión de Cumplimiento y Plazos</div>
+                <div class="diagram-box-subtitle">
+                    Control de Radicación Industrial<br>
+                    (Plazos de Obra, Prórrogas, Habilitaciones)
+                </div>
+            </div>
+
+            <!-- ERP Central -->
+            <div class="diagram-box erp-center">
+                <div class="diagram-box-title"><i class="fas fa-brain"></i> Sistema de Gestión Integral (ERP)</div>
+                <div class="diagram-box-subtitle">El Cerebro Digital de COMIRSA</div>
+            </div>
+
+            <!-- Módulo 3: Gestión de Infraestructura y Operaciones -->
+            <div class="diagram-box module-3">
+                <div class="diagram-box-title"><i class="fas fa-tools"></i> Gestión de Infraestructura y Operaciones</div>
+                <div class="diagram-box-subtitle">
+                    Mantenimiento de Activos del Parque<br>
+                    (Calles, Iluminación, Reclamos, Servicios)
+                </div>
+            </div>
+
+            <!-- Módulo 4: Gestión Estratégica y Financiera -->
+            <div class="diagram-box module-4">
+                <div class="diagram-box-title"><i class="fas fa-chart-line"></i> Gestión Estratégica y Financiera</div>
+                <div class="diagram-box-subtitle">
+                    Planificación (Anual/Quinquenal), KPIs<br>
+                    (Presupuesto, Proyectos, Usuarios y Roles)
+                </div>
+            </div>
+
+            <!-- Conectores (Líneas y Flechas) -->
+            <div class="connector conn-1 point-in"></div>
+            <div class="connector conn-2 point-in"></div>
+            <div class="connector conn-3 point-in"></div>
+            <div class="connector conn-4 point-in"></div>
+
+        </div>
+    </div>
+
+</body>
+</html>

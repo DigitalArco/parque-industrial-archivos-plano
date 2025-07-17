@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Abogado - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        /* Estilos específicos del Dashboard Abogado */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); padding: 25px; display: flex; flex-direction: column; }
+        .card-full { grid-column: 1 / -1; }
+        .card-title { font-size: 1.3em; font-weight: 700; color: var(--primary-color); margin: 0 0 20px 0; display: flex; align-items: center; gap: 10px; }
+        .kpi-main { font-size: 3em; font-weight: 700; color: var(--text-color); text-align: center; margin: 10px 0; }
+        .kpi-label { text-align: center; color: var(--text-muted); font-size: 1em; margin-bottom: 20px; }
+        .kpi-action { display: block; background-color: var(--secondary-color); color: white; padding: 10px 15px; text-align: center; border-radius: 8px; text-decoration: none; margin-top: auto; font-weight: bold; transition: background-color 0.2s ease; }
+        .kpi-action:hover { background-color: #005fcc; }
+        .list { list-style: none; padding: 0; margin: 0; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95em; }
+        .list-item:last-child { border-bottom: none; }
+        .list-item-value { font-weight: 700; font-size: 1em; }
+        .list-item-value.danger { color: #dc3545; }
+        .list-item-value.warning { color: #ffc107; }
+        .list-item-value.success { color: #28a745; }
+        .action-link { color: var(--secondary-color); text-decoration: none; font-weight: bold; }
+        .action-link:hover { text-decoration: underline; }
+        
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">COMIRSA</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard-abogado.html" class="active"><i class="fas fa-gavel"></i> Dashboard Legal</a></li>
+                <li><a href="listado-empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                <li><a href="listado-parcelas.html"><i class="fas fa-map-marker-alt"></i> Parcelas</a></li>
+                <li><a href="listado-documentos.html"><i class="fas fa-file-contract"></i> Documentos</a></li>
+                <li><a href="listado-sanciones.html"><i class="fas fa-exclamation-triangle"></i> Sanciones</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <header class="top-header">
+                <div class="user-info">
+                    <span>Bienvenido, Abogado Gustavo</span>
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html">Salir</a>
+                </div>
+            </header>
+            <main class="content-area">
+                <div class="dashboard-grid">
+
+                    <!-- KPI: Plazos de Radicación Vencidos -->
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-hourglass-end"></i> Plazos de Radicación</h3>
+                        <div class="kpi-main" style="color: var(--danger-color);">3</div>
+                        <div class="kpi-label">Empresas con plazos vencidos</div>
+                        <a href="reporte-cumplimiento.html" class="kpi-action">Ver Informe de Cumplimiento</a>
+                    </div>
+
+                    <!-- KPI: Contratos/Habilitaciones por Vencer -->
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-calendar-alt"></i> Contratos y Permisos</h3>
+                        <div class="kpi-main" style="color: var(--warning-color);">7</div>
+                        <div class="kpi-label">Contratos/Hab. por vencer (90 días)</div>
+                        <a href="listado-documentos.html?status=por_vencer" class="kpi-action">Ver Listado</a>
+                    </div>
+
+                    <!-- KPI: Empresas con Deuda Significativa -->
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-hand-holding-usd"></i> Morosidad Relevante</h3>
+                        <div class="kpi-main" style="color: var(--danger-color);">5</div>
+                        <div class="kpi-label">Empresas con deuda >90 días</div>
+                        <a href="reporte-morosidad.html" class="kpi-action">Ver Informe de Morosidad</a>
+                    </div>
+                    
+                    <!-- Lista: Documentos Legales Pendientes de Revisión -->
+                    <div class="card card-full">
+                        <h3 class="card-title"><i class="fas fa-file-signature"></i> Documentos Pendientes de Revisión Legal</h3>
+                        <ul class="list">
+                            <li class="list-item">
+                                <span>Contrato de Alquiler de "Logística Y S.R.L."</span>
+                                <a href="#" class="action-link">Revisar y Aprobar</a>
+                            </li>
+                            <li class="list-item">
+                                <span>Solicitud de Prórroga de "Inversiones Ramallo SA"</span>
+                                <a href="carga-prorroga.html?id=PROR001" class="action-link">Gestionar Aprobación</a>
+                            </li>
+                            <li class="list-item">
+                                <span>Boleto de Compra Venta de "Nueva Industria S.A."</span>
+                                <a href="carga-boleto.html?id=BCV002" class="action-link">Revisar Cláusulas</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Lista: Casos de Incumplimiento Activos -->
+                    <div class="card card-full">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Casos de Incumplimiento Activos</h3>
+                        <ul class="list">
+                            <li class="list-item">
+                                <span>"Manufacturas X S.A." - Incumplimiento de Plazo de Obra</span>
+                                <span class="list-item-value danger">Acción legal iniciada</span>
+                            </li>
+                            <li class="list-item">
+                                <span>"Servicios Z Ltda." - Falta de Habilitación Municipal</span>
+                                <span class="list-item-value warning">Notificación enviada</span>
+                            </li>
+                        </ul>
+                        <div style="text-align: right; margin-top: 15px;">
+                             <a href="carga-sancion.html" class="btn btn-primary"><i class="fas fa-plus"></i> Registrar Nueva Sanción</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

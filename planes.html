@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #ced4da;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-button {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-right: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .item-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+        }
+
+        .item-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .item-card-subtitle {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .item-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .item-card-actions .btn-small {
+            padding: 6px 12px;
+            font-size: 0.8em;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background-color: var(--secondary-color);
+        }
+        .item-card-actions .btn-small:hover {
+            background-color: #005fcc;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+            font-size: 0.8em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .status-badge.planificado { background-color: #bbdefb; color: #2196f3; } /* Blue */
+        .status-badge.en-ejecucion { background-color: #ffe0b2; color: #fb8c00; } /* Orange */
+        .status-badge.finalizado { background-color: #c8e6c9; color: #43a047; } /* Green */
+        .status-badge.cancelado { background-color: #ffcdd2; color: #e53935; } /* Red */
+        .status-badge.en-pausa { background-color: #e0e0e0; color: #757575; } /* Gray */
+
+        .add-button-section {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .btn-add {
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab-button {
+                margin-right: 0;
+                margin-bottom: 5px;
+                border-radius: var(--border-radius);
+            }
+            .tab-button.active {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+            }
+            .section-title {
+                font-size: 1.3em;
+            }
+            .item-card-title {
+                font-size: 1.1em;
+            }
+            .item-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-card-actions {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-calendar-alt"></i> Planificación Estratégica</h1>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openPlan(event, 'quinquenal')">Plan Quinquenal</button>
+            <button class="tab-button" onclick="openPlan(event, 'anual')">Plan Anual</button>
+        </div>
+
+        <!-- Contenido del Plan Quinquenal -->
+        <div id="quinquenal" class="tab-content">
+            <div class="section-title">Objetivos Estratégicos (2025-2030)</div>
+            <div class="add-button-section">
+                <button class="btn-add"><i class="fas fa-plus"></i> Nuevo Objetivo</button>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">1. Alcanzar el 95% de Ocupación del Parque</h3>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Proyectos</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>KPI:</strong> Tasa de Ocupación Neta | <strong>Meta:</strong> 95% para Dic. 2030</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 82.5%;">82.5%</div>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">2. Modernizar la Infraestructura Vial y de Iluminación</h3>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Proyectos</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>KPI:</strong> % Calles Pavimentadas / % Iluminación LED | <strong>Meta:</strong> 100% para Dic. 2028</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 65%;">65%</div>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">3. Consolidar COMIRSA como Hub Logístico Regional</h3>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Proyectos</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>KPI:</strong> Empresas Logísticas Radicadas | <strong>Meta:</strong> +10 nuevas para Dic. 2030</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 30%;">30%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido del Plan Anual (Inicialmente oculto) -->
+        <div id="anual" class="tab-content" style="display: none;">
+            <div class="section-title">Proyectos de Desarrollo (2024)</div>
+            <div class="add-button-section">
+                <button class="btn-add"><i class="fas fa-plus"></i> Nuevo Proyecto</button>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">1. Implementación Fase 1 del ERP</h3>
+                    <span class="status-badge en-ejecucion">En Ejecución</span>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Tareas</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>Presupuesto:</strong> $3.000.000/mes | <strong>Fin Previsto:</strong> Sep. 2024</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 75%;">75%</div>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">2. Repavimentación Calle 7 y Desagües</h3>
+                    <span class="status-badge planificado">Planificado</span>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Tareas</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>Presupuesto:</strong> $5.000.000 | <strong>Fin Previsto:</strong> Nov. 2024</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">3. Reorganización Cortinas Forestales Pymes 2</h3>
+                    <span class="status-badge en-ejecucion">En Ejecución</span>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Tareas</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>Presupuesto:</strong> $800.000 | <strong>Fin Previsto:</strong> Jul. 2024</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 50%;">50%</div>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="item-card-title">4. Estudio de Factibilidad Nuevo Sector Logístico</h3>
+                    <span class="status-badge finalizado">Finalizado</span>
+                    <div class="item-card-actions">
+                        <a href="#" class="btn-small">Editar</a>
+                        <a href="#" class="btn-small">Ver Tareas</a>
+                    </div>
+                </div>
+                <div class="item-card-subtitle"><strong>Presupuesto:</strong> $1.200.000 | <strong>Fin Previsto:</strong> May. 2024</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%;">100%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPlan(evt, planName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tab-button" and remove the class "active"
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(planName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open the Quinquenal tab on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-button.active').click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Empresa - Metalúrgica ABC S.A. - COMIRSA ERP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --font-family: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .page-header {
+            font-size: 2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eef2f5;
+        }
+
+        /* Company Summary */
+        .company-summary {
+            background-color: #e6f2ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .company-summary-info {
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+
+        .company-summary-info h2 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+        }
+        .company-summary-info p {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+        .company-summary-info strong {
+            font-weight: bold;
+        }
+
+        .company-summary-actions {
+            flex-shrink: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* For anchor tag */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #004085; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-secondary:hover { background-color: #5a6268; }
+
+        /* Tabs styling */
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-button {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: bold;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-right: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .section-subtitle {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .detail-item strong {
+            display: inline-block;
+            width: 180px; /* Adjust as needed for alignment */
+            color: var(--text-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .data-table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .data-table tbody td {
+            background-color: var(--card-background);
+            padding: 8px 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.85em;
+        }
+
+        .data-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        /* Specific badge colors */
+        .status-badge.propietaria { background-color: #d1ecf1; color: #0c5460; }
+        .status-badge.inquilina { background-color: #cce5ff; color: #004085; }
+        .status-badge.ambas { background-color: #d4edda; color: #155724; }
+        .status-badge.activo { background-color: var(--success-color); color: white; }
+        .status-badge.inactivo { background-color: var(--danger-color); color: white; }
+        .status-badge.pagado { background-color: var(--success-color); color: white; }
+        .status-badge.pendiente { background-color: var(--warning-color); color: white; }
+        .status-badge.vencido { background-color: var(--danger-color); color: white; }
+        .status-badge.abierto { background-color: #ffe0b2; color: #fb8c00; }
+        .status-badge.resuelto { background-color: #c8e6c9; color: #43a047; }
+
+
+        .action-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-icon {
+            color: var(--secondary-color);
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            .page-header {
+                font-size: 1.6em;
+            }
+            .company-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .company-summary-info {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .company-summary-info h2 {
+                font-size: 1.5em;
+            }
+            .company-summary-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 5px;
+            }
+            .btn {
+                width: 100%;
+            }
+            .tabs {
+                flex-wrap: wrap;
+                margin-bottom: 15px;
+            }
+            .tab-button {
+                flex-grow: 1;
+                margin-right: 0;
+                margin-bottom: 5px;
+                border-radius: var(--border-radius);
+            }
+            .tab-button.active {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+            }
+            .section-subtitle {
+                font-size: 1.1em;
+            }
+            .detail-item strong {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .data-table thead {
+                display: none;
+            }
+            .data-table, .data-table tbody, .data-table tr, .data-table td {
+                display: block;
+                width: 100%;
+            }
+            .data-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #e9ecef;
+                border-radius: var(--border-radius);
+                box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+            }
+            .data-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .data-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            .status-badge {
+                margin-top: 5px;
+                margin-left: 0;
+            }
+            .action-link {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-header"><i class="fas fa-building"></i> Detalle de Empresa</h1>
+
+        <!-- Company Summary -->
+        <div class="company-summary">
+            <div class="company-summary-info">
+                <h2>Metalúrgica ABC S.A.</h2>
+                <p><strong>CUIT:</strong> 30-12345678-9</p>
+                <p><strong>Actividad Principal:</strong> Fabricación de autopartes</p>
+                <p><strong>Tipo de Empresa:</strong> <span class="status-badge propietaria">Propietaria</span></p>
+            </div>
+            <div class="company-summary-actions">
+                <a href="carga_nueva_empresa.html?edit=EMP001" class="btn btn-primary"><i class="fas fa-edit"></i> Editar Empresa</a>
+                <a href="carga_reclamo.html?empresa=EMP001" class="btn btn-secondary"><i class="fas fa-exclamation-circle"></i> Nuevo Reclamo</a>
+            </div>
+        </div>
+
+        <!-- Tabs for Company Details -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'generales')">Datos Generales</button>
+            <button class="tab-button" onclick="openTab(event, 'propiedades')">Propiedades</button>
+            <button class="tab-button" onclick="openTab(event, 'alquileres')">Alquileres</button>
+            <button class="tab-button" onclick="openTab(event, 'obligaciones')">Obligaciones</button>
+            <button class="tab-button" onclick="openTab(event, 'reclamos')">Reclamos</button>
+            <button class="tab-button" onclick="openTab(event, 'documentos')">Documentos</button>
+            <button class="tab-button" onclick="openTab(event, 'notas')">Notas</button>
+        </div>
+
+        <!-- Tab Content: Datos Generales -->
+        <div id="generales" class="tab-content">
+            <div class="section-subtitle">Información Básica</div>
+            <div class="detail-item"><strong>Nombre de Fantasía:</strong> ABC Metales</div>
+            <div class="detail-item"><strong>Email de Contacto:</strong> contacto@abcmetales.com</div>
+            <div class="detail-item"><strong>Teléfono de Contacto:</strong> +54 9 11 4567-8900</div>
+            <div class="detail-item"><strong>Persona de Contacto Principal:</strong> Ing. Ana García</div>
+            <div class="detail-item"><strong>Domicilio Legal/Fiscal:</strong> Av. San Martín 1234, CABA</div>
+            <div class="detail-item"><strong>Sector Comercial Primario:</strong> Pymes 2</div>
+            <div class="detail-item"><strong>Estado de Cumplimiento:</strong> <span class="status-badge activo">En Cumplimiento</span></div>
+        </div>
+
+        <!-- Tab Content: Propiedades (Oculto inicialmente) -->
+        <div id="propiedades" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Parcelas de Propiedad</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nomenclatura Parcela</th>
+                        <th>Fecha Compra</th>
+                        <th>N° Boleto</th>
+                        <th>Estado Pago Boleto</th>
+                        <th>Escritura Realizada</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nomenclatura Parcela">08705E-M10-P06</td>
+                        <td data-label="Fecha Compra">2022-01-15</td>
+                        <td data-label="N° Boleto">BCV-2022-001</td>
+                        <td data-label="Estado Pago Boleto"><span class="status-badge pagado">TOTALMENTE PAGADO</span></td>
+                        <td data-label="Escritura Realizada">Sí</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Boleto</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nomenclatura Parcela">08705E-F51-P01</td>
+                        <td data-label="Fecha Compra">2023-03-20</td>
+                        <td data-label="N° Boleto">BCV-2023-005</td>
+                        <td data-label="Estado Pago Boleto"><span class="status-badge pendiente">PAGOS PENDIENTES</span></td>
+                        <td data-label="Escritura Realizada">No</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Boleto</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="carga_boleto_compra_venta.html" class="btn btn-primary" style="margin-top:15px;"><i class="fas fa-plus"></i> Añadir Boleto de Compra Venta</a>
+        </div>
+
+        <!-- Tab Content: Alquileres (Oculto inicialmente) -->
+        <div id="alquileres" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Parcelas Alquiladas por la Empresa</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nomenclatura Parcela</th>
+                        <th>Fecha Inicio Alquiler</th>
+                        <th>Fecha Fin Alquiler</th>
+                        <th>N° Contrato</th>
+                        <th>Monto Mensual</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nomenclatura Parcela">08705E-M10-P06 (Subsector B)</td>
+                        <td data-label="Fecha Inicio Alquiler">2023-08-01</td>
+                        <td data-label="Fecha Fin Alquiler">2025-07-31</td>
+                        <td data-label="N° Contrato">ALQ-2023-010</td>
+                        <td data-label="Monto Mensual">$25.000</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Contrato</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" class="btn btn-primary" style="margin-top:15px;"><i class="fas fa-plus"></i> Añadir Contrato de Alquiler</a>
+        </div>
+
+        <!-- Tab Content: Obligaciones (Oculto inicialmente) -->
+        <div id="obligaciones" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Obligaciones Económicas Pendientes</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tipo Obligación</th>
+                        <th>Monto Adeudado</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Estado Pago</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Tipo Obligación">Expensa Jul 2024</td>
+                        <td data-label="Monto Adeudado">$15.000</td>
+                        <td data-label="Fecha Vencimiento">2024-07-10</td>
+                        <td data-label="Estado Pago"><span class="status-badge pendiente">PENDIENTE</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Registrar Pago</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo Obligación">Cuota #5 Adquisición Parcela 08705E-F51-P01</td>
+                        <td data-label="Monto Adeudado">$500.000</td>
+                        <td data-label="Fecha Vencimiento">2024-06-01</td>
+                        <td data-label="Estado Pago"><span class="status-badge vencido">VENCIDO</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Registrar Pago</a></td>
+                    </tr>
+                </tbody>
+            </table>
+             <div class="section-subtitle">Cronogramas de Obras</div>
+             <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Proyecto</th>
+                        <th>Plazo Original (días)</th>
+                        <th>Fecha Inicio Plazo</th>
+                        <th>Fecha Fin (Estimada)</th>
+                        <th>Fecha Fin (Real)</th>
+                        <th>Estado Cumplimiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Proyecto">Construcción Nave Principal</td>
+                        <td data-label="Plazo Original (días)">1095</td>
+                        <td data-label="Fecha Inicio Plazo">2022-02-01</td>
+                        <td data-label="Fecha Fin (Estimada)">2025-02-01</td>
+                        <td data-label="Fecha Fin (Real)">--</td>
+                        <td data-label="Estado Cumplimiento">EN PLAZO</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Detalle</a> | <a href="#" class="action-link">Gestionar Prórroga</a></td>
+                    </tr>
+                </tbody>
+             </table>
+        </div>
+
+        <!-- Tab Content: Reclamos (Oculto inicialmente) -->
+        <div id="reclamos" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Historial de Reclamos e Incidencias</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Reclamo</th>
+                        <th>Título</th>
+                        <th>Fecha Creación</th>
+                        <th>Estado</th>
+                        <th>Responsable</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="ID Reclamo">1001</td>
+                        <td data-label="Título">Bache en Calle Central</td>
+                        <td data-label="Fecha Creación">2024-05-20</td>
+                        <td data-label="Estado"><span class="status-badge abierto">Abierto</span></td>
+                        <td data-label="Responsable">Juan Pérez</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="ID Reclamo">1004</td>
+                        <td data-label="Título">Incidente de Seguridad Portón Sur</td>
+                        <td data-label="Fecha Creación">2024-05-10</td>
+                        <td data-label="Estado"><span class="status-badge resuelto">Resuelto</span></td>
+                        <td data-label="Responsable">Equipo Seguridad</td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Documentos (Oculto inicialmente) -->
+        <div id="documentos" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Documentos Asociados</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Documento</th>
+                        <th>N° Expediente / Contrato</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Tipo de Documento">Habilitación Municipal</td>
+                        <td data-label="N° Expediente / Contrato">HM-2023-045</td>
+                        <td data-label="Fecha">2023-11-01</td>
+                        <td data-label="Estado"><span class="status-badge activo">Vigente</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Documento</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo de Documento">Certificado Libre Deuda</td>
+                        <td data-label="N° Expediente / Contrato">CLLD-0051</td>
+                        <td data-label="Fecha">2024-05-27</td>
+                        <td data-label="Estado"><span class="status-badge activo">Vigente</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Documento</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo de Documento">Plano de Obra (Nave 2)</td>
+                        <td data-label="N° Expediente / Contrato">PLN-2024-002</td>
+                        <td data-label="Fecha">2024-03-10</td>
+                        <td data-label="Estado"><span class="status-badge activo">Aprobado</span></td>
+                        <td data-label="Acciones"><a href="#" class="action-link">Ver Documento</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Notas (Oculto inicialmente) -->
+        <div id="notas" class="tab-content" style="display: none;">
+            <div class="section-subtitle">Notas Adicionales</div>
+            <div class="detail-item">
+                <p><strong>2024-05-28 (Secretaria):</strong> Contacto telefónico para verificar datos de facturación.</p>
+            </div>
+            <div class="detail-item">
+                <p><strong>2024-03-15 (Gerencia):</strong> Reunión para discutir expansión en parcela contigua.</p>
+            </div>
+            <a href="#" class="btn btn-primary" style="margin-top:15px;"><i class="fas fa-plus"></i> Añadir Nota</a>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open the first tab on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tab-button.active').click();
+        });
+    </script>
+</body>
+</html>
