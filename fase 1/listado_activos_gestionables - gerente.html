@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Activos del Parque | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .filter-bar input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .filter-bar button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-bar button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        table td a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* Colores para el estado de conservación */
+        .status-bueno { color: #28a745; font-weight: bold; } /* Verde */
+        .status-regular { color: #ffc107; font-weight: bold; } /* Amarillo */
+        .status-malo { color: #dc3545; font-weight: bold; } /* Rojo */
+        .status-requiere-reparacion { color: #17a2b8; font-weight: bold; } /* Azul claro */
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables - gerente.html" class="active">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Activos del Parque</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="table-container">
+            <h2>Inventario General de Activos</h2>
+            <div class="filter-bar">
+                <input type="text" placeholder="Buscar por Nombre, Tipo, Ubicación...">
+                <a href="formulario_nuevo_activo_gerente.html">
+                <button> Nuevo Activo</button>
+                </a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre del Activo</th>
+                        <th>Tipo de Activo</th>
+                        <th>Ubicación Específica</th>
+                        <th>Superficie / Metros Lineales</th>
+                        <th>Estado de Conservación</th>
+                        <th>Último Mant.</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Calle 5 - Tramo Principal</td>
+                        <td>CALLE</td>
+                        <td>Entre Av. Roca y Calle 10</td>
+                        <td>1200 ML</td>
+                        <td class="status-regular">REGULAR</td>
+                        <td>2024-03-15</td>
+                        <td><a href="detalle_activo.html?id=C001">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Luminaria Av. Roca - Poste 25</td>
+                        <td>LUMINARIA</td>
+                        <td>Frente a Nave Industrias del Centro S.A.</td>
+                        <td>N/A</td>
+                        <td class="status-malo">MALO</td>
+                        <td>2023-11-20</td>
+                        <td><a href="detalle_activo.html?id=L025">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Espacio Verde Sector Pymes 1 Sur</td>
+                        <td>ESPACIO_VERDE</td>
+                        <td>Entre Calle 2 y Calle 3</td>
+                        <td>5000 m²</td>
+                        <td class="status-bueno">BUENO</td>
+                        <td>2024-05-10</td>
+                        <td><a href="detalle_activo.html?id=EV001">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Cerco Perimetral Oeste</td>
+                        <td>CERCO_PERIMETRAL</td>
+                        <td>Límite con Ruta 9</td>
+                        <td>2500 ML</td>
+                        <td class="status-requiere-reparacion">REQUIERE_REPARACION</td>
+                        <td>2024-01-05</td>
+                        <td><a href="detalle_activo.html?id=CP001">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Red Desagüe Pluvial Principal</td>
+                        <td>DESAGUE_PLUVIAL</td>
+                        <td>Bajo Av. de la Energía</td>
+                        <td>800 ML</td>
+                        <td class="status-regular">REGULAR</td>
+                        <td>2023-09-01</td>
+                        <td><a href="detalle_activo.html?id=DP001">Ver Detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

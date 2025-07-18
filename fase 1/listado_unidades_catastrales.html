@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Unidades Catastrales | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366; /* Azul oscuro corporativo */
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3; /* Azul más claro al pasar el ratón o activo */
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545; /* Rojo para salir */
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .filter-bar input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .filter-bar button {
+            background-color: #28a745; /* Verde para acciones positivas */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-bar button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        table td a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
+            <li><a href="listado_unidades_catastrales.html" class="active">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Unidades Catastrales</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="table-container">
+            <h2>Listado General de Unidades</h2>
+            <div class="filter-bar">
+                <input type="text" placeholder="Buscar por Nomenclatura, Propietario, Estado...">
+                <button>Nueva Unidad Catastral</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nomenclatura Completa</th>
+                        <th>Tipo</th>
+                        <th>Superficie (m²)</th>
+                        <th>Estado Comercial</th>
+                        <th>Propietario / Uso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>087-05-E-50-002</td>
+                        <td>Parcela</td>
+                        <td>5,000</td>
+                        <td>VENDIDA</td>
+                        <td>Empresa A S.A.</td>
+                        <td><a href="detalle_unidad_catastral.html?id=002">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-10-006</td>
+                        <td>Parcela</td>
+                        <td>2,500</td>
+                        <td>ALQUILADA</td>
+                        <td>Logística B S.A.</td>
+                        <td><a href="detalle_unidad_catastral.html?id=006">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-50-003</td>
+                        <td>Parcela</td>
+                        <td>7,500</td>
+                        <td>DISPONIBLE</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_unidad_catastral.html?id=003">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-MZN-10</td>
+                        <td>Manzana</td>
+                        <td>50,000</td>
+                        <td>N/A (Contenedora)</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_unidad_catastral.html?id=MZN10">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-FRAC-50</td>
+                        <td>Fracción</td>
+                        <td>120,000</td>
+                        <td>N/A (Contenedora)</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_unidad_catastral.html?id=FRAC50">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-50-004</td>
+                        <td>Parcela</td>
+                        <td>6,000</td>
+                        <td>VENDIDA</td>
+                        <td>Manufacturas del Oeste S.R.L.</td>
+                        <td><a href="detalle_unidad_catastral.html?id=004">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-10-007</td>
+                        <td>Parcela</td>
+                        <td>3,000</td>
+                        <td>DISPONIBLE</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_unidad_catastral.html?id=007">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>087-05-E-10-008</td>
+                        <td>Parcela</td>
+                        <td>2,800</td>
+                        <td>VENDIDA</td>
+                        <td>Industrias del Centro S.A.</td>
+                        <td><a href="detalle_unidad_catastral.html?id=008">Ver Detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                // Default para la demo si se accede directamente
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

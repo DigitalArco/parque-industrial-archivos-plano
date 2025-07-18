@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Documento de Proyecto | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .detail-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .detail-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .detail-section {
+            margin-bottom: 1.5em;
+            padding-bottom: 1.5em;
+            border-bottom: 1px dashed #eee;
+        }
+        .detail-section:last-child {
+            border-bottom: none;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .detail-item {
+            padding: 10px 0;
+        }
+        .detail-item label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .detail-item p {
+            margin: 0;
+            font-size: 1em;
+            color: #333;
+        }
+        /* Colores para el estado de aprobación */
+        .status-aprobado { color: #28a745; font-weight: bold; } /* Verde */
+        .status-pendiente { color: #ffc107; font-weight: bold; } /* Amarillo */
+        .status-rechazado { color: #dc3545; font-weight: bold; } /* Rojo */
+        .status-observado { color: #17a2b8; font-weight: bold; } /* Azul claro */
+        
+        .detail-actions {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .detail-actions button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+        .detail-actions button:hover {
+            background-color: #0056b3;
+        }
+        .detail-actions button.edit {
+            background-color: #ffc107;
+            color: #333;
+        }
+        .detail-actions button.edit:hover {
+            background-color: #e0a800;
+        }
+        .detail-actions button.approve {
+            background-color: #28a745;
+        }
+        .detail-actions button.approve:hover {
+            background-color: #218838;
+        }
+        .detail-actions button.reject {
+            background-color: #dc3545;
+        }
+        .detail-actions button.reject:hover {
+            background-color: #c82333;
+        }
+        .detail-actions button.delete {
+            background-color: #dc3545;
+        }
+        .detail-actions button.delete:hover {
+            background-color: #c82333;
+        }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Detalle de Documento de Proyecto</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="detail-container">
+            <h2>Detalle de Documento: PLANO-ARQ-001</h2>
+
+            <div class="detail-section">
+                <h3>Información del Documento</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Número de Expediente:</label>
+                        <p>EXP-2023-01-ARQ</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Tipo de Documento:</label>
+                        <p>PLANO_OBRA</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Título / Descripción:</label>
+                        <p>Plano Arquitectónico de Nave Industrial Lote 002</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Empresa Solicitante:</label>
+                        <p><a href="detalle_empresa.html?id=1">Empresa A S.A.</a></p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Parcela Asociada:</label>
+                        <p><a href="detalle_unidad_catastral.html?id=002">087-05-E-50-002</a></p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Fecha de Presentación:</label>
+                        <p>2023-02-15</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Fecha de Aprobación:</label>
+                        <p>2023-04-01</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Estado de Aprobación:</label>
+                        <p class="status-aprobado">APROBADO</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Archivo Adjunto:</label>
+                        <p><a href="#" target="_blank">PLANO-ARQ-001.pdf</a> (Simulado)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Relaciones Adicionales</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Cronograma de Obras Asociado:</label>
+                        <ul class="sub-entity-list">
+                            <li>CRO-2023-001 (En Plazo) <a href="detalle_cronograma.html?id=CR001">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Notas Internas:</label>
+                        <ul class="sub-entity-list">
+                            <li>Observaciones de la Dirección de Obras (2023-03-05). <a href="detalle_nota.html?id=N005">Ver</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <button class="edit">Editar Documento</button>
+                <button class="approve">Aprobar Documento</button>
+                <button class="reject">Rechazar Documento</button>
+                <button class="delete">Eliminar Documento</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral (ajustado para vistas de detalle)
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                const hrefPath = link.getAttribute('href').split('/').pop();
+                // Activa el listado de cronogramas o empresas/unidades catastrales ya que esta es una vista de detalle enlazada
+                if (currentPath === 'detalle_documento.html' && (hrefPath === 'listado_cronogramas.html' || hrefPath === 'listado_empresas.html' || hrefPath === 'listado_unidades_catastrales.html')) {
+                    link.classList.add('active'); 
+                } else if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
