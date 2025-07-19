@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Orden de Trabajo | COMIRSA</title>
+    <title>Detalle de Activo Gestionable | COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,11 +123,12 @@
             font-size: 1em;
             color: #333;
         }
-        /* Colores para el estado de la tarea */
-        .status-pendiente { color: #ffc107; font-weight: bold; } /* Amarillo */
-        .status-en-progreso { color: #17a2b8; font-weight: bold; } /* Azul claro */
-        .status-completada { color: #28a745; font-weight: bold; } /* Verde */
-        
+        /* Colores para el estado de conservación */
+        .status-bueno { color: #28a745; font-weight: bold; } /* Verde */
+        .status-regular { color: #ffc107; font-weight: bold; } /* Amarillo */
+        .status-malo { color: #dc3545; font-weight: bold; } /* Rojo */
+        .status-requiere-reparacion { color: #17a2b8; font-weight: bold; } /* Azul claro */
+
         .detail-actions {
             margin-top: 20px;
             text-align: right;
@@ -153,18 +154,43 @@
         .detail-actions button.edit:hover {
             background-color: #e0a800;
         }
-        .detail-actions button.mark-completed {
-            background-color: #28a745;
-        }
-        .detail-actions button.mark-completed:hover {
-            background-color: #218838;
-        }
         .detail-actions button.delete {
             background-color: #dc3545;
         }
         .detail-actions button.delete:hover {
             background-color: #c82333;
         }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
+        }
+        .status-abierto { color: #17a2b8; }
+        .status-en-progreso { color: #ffc107; }
+        .status-resuelto { color: #28a745; }
     </style>
 </head>
 <body>
@@ -174,7 +200,7 @@
             <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
             <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
             <li><a href="listado_empresas.html">Empresas</a></li>
-            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_activos_gestionables.html" class="active">Activos del Parque</a></li>
             <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
             <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
         </ul>
@@ -185,89 +211,82 @@
 
     <div class="main-content">
         <header>
-            <h1>Detalle de Orden de Trabajo</h1>
+            <h1>Detalle de Activo Gestionable</h1>
             <div class="user-info">
                 Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
             </div>
         </header>
 
         <div class="detail-container">
-            <h2>Detalle de Orden de Trabajo: OT-2024-001</h2>
+            <h2>Información del Activo: Calle 5 - Tramo Principal</h2>
 
             <div class="detail-section">
-                <h3>Información de la Orden de Trabajo</h3>
+                <h3>Datos Generales del Activo</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>ID de Orden de Trabajo:</label>
-                        <p>OT001</p>
+                        <label>Nombre del Activo:</label>
+                        <p>Calle 5 - Tramo Principal</p>
                     </div>
                     <div class="detail-item">
-                        <label>Descripción de la Tarea:</label>
-                        <p>Bacheo en Calle 5 - Tramo Principal</p>
+                        <label>Código Interno:</label>
+                        <p>CLL-005-TP</p>
                     </div>
                     <div class="detail-item">
-                        <label>Reclamo Origen:</label>
-                        <p><a href="detalle_reclamo.html?id=R001">R001 - Bache grande Calle 5</a></p>
+                        <label>Tipo de Activo:</label>
+                        <p>CALLE</p>
                     </div>
                     <div class="detail-item">
-                        <label>Activo Afectado:</label>
-                        <p><a href="detalle_activo_gestionable.html?id=C001">Calle 5 - Tramo Principal</a></p>
+                        <label>Ubicación Específica:</label>
+                        <p>Entre Av. Roca y Calle 10</p>
                     </div>
                     <div class="detail-item">
-                        <label>Responsable Asignado:</label>
-                        <p>Equipo de Mantenimiento Vial</p>
+                        <label>Sector Comercial:</label>
+                        <p>Pymes 2</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha de Asignación:</label>
-                        <p>2024-05-21</p>
+                        <label>Superficie / Metros Lineales:</label>
+                        <p>1200 ML</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha Límite:</label>
-                        <p>2024-05-28</p>
+                        <label>Fecha de Instalación:</label>
+                        <p>2010-08-01</p>
                     </div>
                     <div class="detail-item">
-                        <label>Estado de la Tarea:</label>
-                        <p class="status-en-progreso">EN_PROGRESO</p>
+                        <label>Estado de Conservación:</label>
+                        <p class="status-regular">REGULAR</p>
                     </div>
                     <div class="detail-item">
-                        <label>Costo Estimado:</label>
-                        <p>$ 25,000.00</p>
+                        <label>Responsabilidad Mantenimiento:</label>
+                        <p>PROPIO</p>
                     </div>
                 </div>
             </div>
 
             <div class="detail-section">
-                <h3>Registro de Avance y Notas</h3>
+                <h3>Historial de Mantenimiento e Incidencias</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>Fecha de Inicio Real:</label>
-                        <p>2024-05-23</p>
+                        <label>Último Mantenimiento:</label>
+                        <p>2024-03-15 (Reparación de baches menores)</p>
                     </div>
                     <div class="detail-item">
-                        <label>Avance Actual (%):</label>
-                        <p>50%</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Costo Real Acumulado:</label>
-                        <p>$ 12,000.00</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Notas Internas del Equipo:</label>
+                        <label>Historial de Incidencias/Reclamos:</label>
                         <ul class="sub-entity-list">
-                            <li>Materiales recibidos. Inicio de excavación. (2024-05-23) <a href="detalle_nota.html?id=N006">Ver</a></li>
-                            <li>Clima adverso ha ralentizado el trabajo. (2024-05-24) <a href="detalle_nota.html?id=N007">Ver</a></li>
+                            <li>Bache grande Calle 5 (Abierto) <a href="detalle_reclamo.html?id=R001">Ver</a></li>
+                            <li>Hundimiento cerca de boca de tormenta (Resuelto) <a href="detalle_reclamo.html?id=R010">Ver</a></li>
                         </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Tareas de Proyecto Asociadas:</label>
+                        <p>No aplica en esta fase (Fase 2)</p>
+                        <!-- En Fase 2, se mostrarían tareas de mantenimiento preventivo o correctivo de proyectos -->
                     </div>
                 </div>
             </div>
 
             <div class="detail-actions">
-                <a href="formulario_edicion_ot.html">
-
-                    <button class="edit">Editar OT</button>
-                </a>
-                <button class="mark-completed">Marcar como Completada</button>
-                <button class="delete">Eliminar OT</button>
+                <button class="edit">Editar Activo</button>
+                <button class="delete">Eliminar Activo</button>
             </div>
         </div>
     </main>
@@ -286,15 +305,11 @@
                 userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
             }
 
-            // Simular el estado activo de la barra lateral (ajustado para vistas de detalle)
+            // Simular el estado activo de la barra lateral
             const currentPath = window.location.pathname.split('/').pop();
             const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
             sidebarLinks.forEach(link => {
-                const hrefPath = link.getAttribute('href').split('/').pop();
-                // Activa el listado de reclamos o activos gestionables ya que esta es una vista de detalle enlazada
-                if (currentPath === 'detalle_ot.html' && (hrefPath === 'listado_reclamos.html' || hrefPath === 'listado_activos_gestionables.html')) {
-                    link.classList.add('active'); 
-                } else if (link.getAttribute('href') === currentPath) {
+                if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');

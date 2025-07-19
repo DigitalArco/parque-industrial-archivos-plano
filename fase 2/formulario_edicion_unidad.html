@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Unidad Catastral | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-container h2 {
+            color: #0056b3;
+            font-size: 1.8em;
+            margin-bottom: 1.5em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .form-grid.full-width {
+            grid-template-columns: 1fr;
+        }
+        .form-actions {
+            text-align: right;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .form-actions button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+        .form-actions button:hover {
+            background-color: #0056b3;
+        }
+        .form-actions button.cancel {
+            background-color: #6c757d;
+        }
+        .form-actions button.cancel:hover {
+            background-color: #5a6268;
+        }
+        .section-header {
+            grid-column: 1 / -1;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            color: #0056b3;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .info-text {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="secretaria_dashboard.html">Dashboard Principal</a></li>
+            <li><a href="listado_unidades_catastrales.html" class="active">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Editar Unidad Catastral</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="form-container">
+            <h2>Datos de la Unidad Catastral: 087-05-E-50-002</h2>
+            <form action="#" method="post">
+                <div class="form-grid">
+                    <div class="section-header">Información Catastral</div>
+                    
+                    <div class="form-group">
+                        <label for="tipo_unidad">Tipo de Unidad:</label>
+                        <select id="tipo_unidad" name="tipo_unidad" required>
+                            <option value="Parcela" selected>Parcela</option>
+                            <option value="Manzana">Manzana</option>
+                            <option value="Fraccion">Fracción</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomenclatura_completa">Nomenclatura Catastral Completa:</label>
+                        <input type="text" id="nomenclatura_completa" name="nomenclatura_completa" required value="087-05-E-50-002" placeholder="Ej: 087-05-E-50-002">
+                        <p class="info-text">Formato: Partido-Circunscripción-Sección-Fracción/Manzana-Parcela</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="partida_arba">Partida ARBA:</label>
+                        <input type="text" id="partida_arba" name="partida_arba" value="12345678-01" placeholder="Opcional: N° de Partida ARBA">
+                    </div>
+                    <div class="form-group">
+                        <label for="superficie_m2">Superficie (m²):</label>
+                        <input type="number" id="superficie_m2" name="superficie_m2" required min="1" value="5000" placeholder="Ej: 5000">
+                    </div>
+                    <div class="form-group">
+                        <label for="geometria_wkt">Geometría (WKT):</label>
+                        <textarea id="geometria_wkt" name="geometria_wkt" placeholder="Ej: POLYGON ((...)) - Opcional">POLYGON ((simulado geometry))</textarea>
+                        <p class="info-text">Formato Well-Known Text para representación geográfica.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado_catastral">Estado Catastral:</label>
+                        <select id="estado_catastral" name="estado_catastral" required>
+                            <option value="ACTIVA" selected>ACTIVA</option>
+                            <option value="INACTIVA_SUBDIVIDIDA">INACTIVA (Subdividida)</option>
+                            <option value="INACTIVA_FUSIONADA">INACTIVA (Fusionada)</option>
+                        </select>
+                    </div>
+
+                    <div class="section-header">Información Comercial y Relaciones</div>
+
+                    <div class="form-group">
+                        <label for="estado_comercial">Estado Comercial (Solo para Parcelas):</label>
+                        <select id="estado_comercial" name="estado_comercial">
+                            <option value="">No aplica</option>
+                            <option value="DISPONIBLE">DISPONIBLE</option>
+                            <option value="VENDIDA" selected>VENDIDA</option>
+                            <option value="ALQUILADA">ALQUILADA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sector_comercial">Sector Comercial:</label>
+                        <select id="sector_comercial" name="sector_comercial" required>
+                            <option value="">Seleccione el sector</option>
+                            <option value="Pymes1">Pymes 1</option>
+                            <option value="Pymes2" selected>Pymes 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="propietario">Propietario (Solo para Parcelas Vendidas/Alquiladas):</label>
+                        <select id="propietario" name="propietario">
+                            <option value="">N/A (Sin propietario o no es parcela)</option>
+                            <option value="1" selected>Empresa A S.A.</option>
+                            <option value="3">Manufacturas del Oeste S.R.L.</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="parent_unidad">Unidad Padre (Fracción/Manzana):</label>
+                        <select id="parent_unidad" name="parent_unidad">
+                            <option value="">Ninguna (Para Fracción/Manzana raíz)</option>
+                            <option value="FRAC50" selected>087-05-E-FRAC-50</option>
+                            <option value="MZN10">087-05-E-MZN-10</option>
+                        </select>
+                        <p class="info-text">Seleccione la Fracción o Manzana de la que deriva esta unidad.</p>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel" onclick="window.history.back();">Cancelar</button>
+                    <button type="submit">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`; // Gerente por defecto para la demo de edición
+            }
+
+            // Simular el estado activo de la barra lateral (ajustado para vistas de detalle/formulario)
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                const hrefPath = link.getAttribute('href').split('/').pop();
+                if (currentPath === 'formulario_edicion_unidad.html' && (hrefPath === 'listado_unidades_catastrales.html' || hrefPath === 'detalle_unidad_catastral.html')) {
+                    link.classList.add('active'); 
+                } else if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Función para simular precarga de datos en modo edición
+            // En una aplicación real, esto se haría con JavaScript cargando datos desde un backend
+            function loadUnitData(unitId) {
+                // Datos de ejemplo para simular la precarga
+                const demoData = {
+                    '002': { // ID de la parcela de ejemplo que estamos editando
+                        tipo_unidad: 'Parcela',
+                        nomenclatura_completa: '087-05-E-50-002',
+                        partida_arba: '12345678-01',
+                        superficie_m2: '5000',
+                        geometria_wkt: 'POLYGON ((simulado geometry))',
+                        estado_catastral: 'ACTIVA',
+                        estado_comercial: 'VENDIDA',
+                        sector_comercial: 'Pymes2',
+                        propietario: '1', // ID de Empresa A S.A.
+                        parent_unidad: 'FRAC50' // ID de la Fracción 50
+                    }
+                    // Aquí podrías agregar más datos para otras unidades si tuvieras más ejemplos en la URL
+                };
+
+                const data = demoData[unitId];
+                if (data) {
+                    document.getElementById('tipo_unidad').value = data.tipo_unidad;
+                    document.getElementById('nomenclatura_completa').value = data.nomenclatura_completa;
+                    document.getElementById('partida_arba').value = data.partida_arba;
+                    document.getElementById('superficie_m2').value = data.superficie_m2;
+                    document.getElementById('geometria_wkt').value = data.geometria_wkt;
+                    document.getElementById('estado_catastral').value = data.estado_catastral;
+                    document.getElementById('estado_comercial').value = data.estado_comercial;
+                    document.getElementById('sector_comercial').value = data.sector_comercial;
+                    document.getElementById('propietario').value = data.propietario;
+                    document.getElementById('parent_unidad').value = data.parent_unidad;
+                }
+            }
+
+            // Llamar a la función de precarga si hay un ID en la URL
+            const unitId = urlParams.get('id');
+            if (unitId) {
+                loadUnitData(unitId);
+                document.querySelector('h2').textContent = `Datos de la Unidad Catastral: ${unitId}`;
+            } else {
+                document.querySelector('h1').textContent = 'Registrar Nueva Unidad Catastral';
+                document.querySelector('h2').textContent = 'Datos de la Nueva Unidad';
+                document.querySelector('.form-actions button[type="submit"]').textContent = 'Guardar Unidad Catastral';
+                // Si es un nuevo registro, por defecto no seleccionar un propietario ni unidad padre
+                document.getElementById('propietario').value = '';
+                document.getElementById('parent_unidad').value = '';
+                document.getElementById('estado_comercial').value = 'DISPONIBLE'; // Por defecto, si es nueva y es parcela
+                document.getElementById('estado_catastral').value = 'ACTIVA';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceder al Sistema | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        .login-container h1 {
+            color: #003366;
+            margin-bottom: 1.5em;
+            font-size: 2em;
+        }
+        .login-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5em;
+            color: #555;
+            font-weight: bold;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 1.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .login-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .login-form button:hover {
+            background-color: #0056b3;
+        }
+        .role-access {
+            margin-top: 2.5em;
+            border-top: 1px solid #eee;
+            padding-top: 1.5em;
+        }
+        .role-access h2 {
+            color: #0056b3;
+            font-size: 1.3em;
+            margin-bottom: 1em;
+        }
+        .role-access-links a {
+            display: block;
+            background-color: #e6f0fa; /* Un azul muy claro */
+            color: #003366;
+            padding: 0.8em 1.5em;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 0.8em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .role-access-links a:hover {
+            background-color: #d1e2f3;
+            transform: translateY(-2px);
+        }
+        .role-access-links a:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Acceso al Sistema de Gestión de COMIRSA</h1>
+        <form class="login-form" action="#" method="post">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" placeholder="Ingrese su usuario">
+
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Ingrese su contraseña">
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <div class="role-access">
+            <h2>Modo Demostración (Acceso Directo por Rol)</h2>
+            <p>Seleccione un perfil para explorar las vistas del sistema:</p>
+            <div class="role-access-links">
+                <a href="gerente_dashboard.html">Acceder como Gerente (Sergio Romá)</a>
+                <a href="abogado_dashboard.html">Acceder como Abogado</a>
+                <a href="secretaria_dashboard.html">Acceder como Secretaria</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

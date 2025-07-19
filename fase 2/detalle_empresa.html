@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Orden de Trabajo | COMIRSA</title>
+    <title>Detalle de Empresa | COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,10 +123,8 @@
             font-size: 1em;
             color: #333;
         }
-        /* Colores para el estado de la tarea */
-        .status-pendiente { color: #ffc107; font-weight: bold; } /* Amarillo */
-        .status-en-progreso { color: #17a2b8; font-weight: bold; } /* Azul claro */
-        .status-completada { color: #28a745; font-weight: bold; } /* Verde */
+        .detail-item p.status-propietaria { color: #003366; font-weight: bold; }
+        .detail-item p.status-inquilina { color: #555; font-weight: bold; }
         
         .detail-actions {
             margin-top: 20px;
@@ -153,18 +151,44 @@
         .detail-actions button.edit:hover {
             background-color: #e0a800;
         }
-        .detail-actions button.mark-completed {
-            background-color: #28a745;
-        }
-        .detail-actions button.mark-completed:hover {
-            background-color: #218838;
-        }
         .detail-actions button.delete {
             background-color: #dc3545;
         }
         .detail-actions button.delete:hover {
             background-color: #c82333;
         }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
+        }
+        .status-vencido { color: #dc3545; }
+        .status-pendiente { color: #ffc107; }
+        .status-abierto { color: #17a2b8; }
+        .status-en-plazo { color: #28a745; }
     </style>
 </head>
 <body>
@@ -173,7 +197,7 @@
         <ul>
             <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
             <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
-            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_empresas.html" class="active">Empresas</a></li>
             <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
             <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
             <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
@@ -185,89 +209,135 @@
 
     <div class="main-content">
         <header>
-            <h1>Detalle de Orden de Trabajo</h1>
+            <h1>Detalle de Empresa</h1>
             <div class="user-info">
                 Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
             </div>
         </header>
 
         <div class="detail-container">
-            <h2>Detalle de Orden de Trabajo: OT-2024-001</h2>
+            <h2>Información de Empresa: Empresa A S.A.</h2>
 
             <div class="detail-section">
-                <h3>Información de la Orden de Trabajo</h3>
+                <h3>Datos Generales</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>ID de Orden de Trabajo:</label>
-                        <p>OT001</p>
+                        <label>Razón Social:</label>
+                        <p>Empresa A S.A.</p>
                     </div>
                     <div class="detail-item">
-                        <label>Descripción de la Tarea:</label>
-                        <p>Bacheo en Calle 5 - Tramo Principal</p>
+                        <label>Nombre de Fantasía:</label>
+                        <p>MetalCom</p>
                     </div>
                     <div class="detail-item">
-                        <label>Reclamo Origen:</label>
-                        <p><a href="detalle_reclamo.html?id=R001">R001 - Bache grande Calle 5</a></p>
+                        <label>CUIT:</label>
+                        <p>30-12345678-9</p>
                     </div>
                     <div class="detail-item">
-                        <label>Activo Afectado:</label>
-                        <p><a href="detalle_activo_gestionable.html?id=C001">Calle 5 - Tramo Principal</a></p>
+                        <label>Tipo de Empresa:</label>
+                        <p class="status-propietaria">Propietaria</p>
                     </div>
                     <div class="detail-item">
-                        <label>Responsable Asignado:</label>
-                        <p>Equipo de Mantenimiento Vial</p>
+                        <label>Actividad Principal:</label>
+                        <p>Fabricación de estructuras metálicas</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha de Asignación:</label>
-                        <p>2024-05-21</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Fecha Límite:</label>
-                        <p>2024-05-28</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Estado de la Tarea:</label>
-                        <p class="status-en-progreso">EN_PROGRESO</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Costo Estimado:</label>
-                        <p>$ 25,000.00</p>
+                        <label>Domicilio Legal:</label>
+                        <p>Calle Falsa 123, San Nicolás, Bs. As.</p>
                     </div>
                 </div>
             </div>
 
             <div class="detail-section">
-                <h3>Registro de Avance y Notas</h3>
+                <h3>Contactos</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>Fecha de Inicio Real:</label>
-                        <p>2024-05-23</p>
+                        <label>Contacto Principal:</label>
+                        <p>Juan Pérez</p>
                     </div>
                     <div class="detail-item">
-                        <label>Avance Actual (%):</label>
-                        <p>50%</p>
+                        <label>Teléfono:</label>
+                        <p>(0336) 444-1234</p>
                     </div>
                     <div class="detail-item">
-                        <label>Costo Real Acumulado:</label>
-                        <p>$ 12,000.00</p>
+                        <label>Email:</label>
+                        <p>contacto@empresaasa.com.ar</p>
                     </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Parcelas y Propiedad</h3>
+                <div class="detail-grid">
                     <div class="detail-item">
-                        <label>Notas Internas del Equipo:</label>
+                        <label>Parcelas en Propiedad:</label>
                         <ul class="sub-entity-list">
-                            <li>Materiales recibidos. Inicio de excavación. (2024-05-23) <a href="detalle_nota.html?id=N006">Ver</a></li>
-                            <li>Clima adverso ha ralentizado el trabajo. (2024-05-24) <a href="detalle_nota.html?id=N007">Ver</a></li>
+                            <li>087-05-E-50-002 (5000 m²) <a href="detalle_unidad_catastral.html?id=002">Ver</a></li>
+                            <li>087-05-E-10-008 (2800 m²) <a href="detalle_unidad_catastral.html?id=008">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Boleto de Compra Venta:</label>
+                        <ul class="sub-entity-list">
+                            <li>BCV-2022-001 (Pagado) <a href="detalle_boleto.html?id=BCV001">Ver</a></li>
+                            <li>BCV-2023-005 (Pendiente) <a href="detalle_boleto.html?id=BCV005">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Escrituras Realizadas:</label>
+                        <ul class="sub-entity-list">
+                            <li>ESC-2023-001 (Parcela 087-05-E-50-002) <a href="detalle_escritura.html?id=ESC001">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Inquilinos Asociados (en sus Parcelas):</label>
+                        <p>Ninguno para esta empresa (dueño directo o no subalquila)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Obligaciones y Cumplimiento</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Obligaciones Económicas Pendientes:</label>
+                        <ul class="sub-entity-list">
+                            <li>Expensa Febrero 2024 <span class="status-vencido">Vencido</span> <a href="detalle_pago.html?id=P001">Ver</a></li>
+                            <li>Cuota Adq. Mar 2024 <span class="status-pendiente">Pendiente</span> <a href="detalle_pago.html?id=P006">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Reclamos Abiertos:</label>
+                        <ul class="sub-entity-list">
+                            <li>Bache grande Calle 5 <span class="status-abierto">Abierto</span> <a href="detalle_reclamo.html?id=R001">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Cronogramas de Obra:</label>
+                        <ul class="sub-entity-list">
+                            <li>CRO-2023-001 (Parcela 087-05-E-50-002) <span class="status-en-plazo">EN_PLAZO</span> <a href="detalle_cronograma.html?id=CR001">Ver</a></li>
+                            <li>CRO-2024-002 (Parcela 087-05-E-10-008) <span class="status-en-plazo">EN_PLAZO</span> <a href="detalle_cronograma.html?id=CR002">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Habilitación Municipal:</label>
+                        <p><a href="detalle_habilitacion.html?id=HM001">HM-2023-001</a> (Vencimiento: 2028-12-31)</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Notas Adicionales:</label>
+                        <ul class="sub-entity-list">
+                            <li>Comentarios sobre reunión (2024-05-25) <a href="detalle_nota.html?id=N002">Ver</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="detail-actions">
-                <a href="formulario_edicion_ot.html">
+                <a href="formulario_edicion_empresa.html">
 
-                    <button class="edit">Editar OT</button>
+                    <button class="edit">Editar Empresa</button>
                 </a>
-                <button class="mark-completed">Marcar como Completada</button>
-                <button class="delete">Eliminar OT</button>
+                <button class="delete">Eliminar Empresa</button>
             </div>
         </div>
     </main>
@@ -286,15 +356,11 @@
                 userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
             }
 
-            // Simular el estado activo de la barra lateral (ajustado para vistas de detalle)
+            // Simular el estado activo de la barra lateral
             const currentPath = window.location.pathname.split('/').pop();
             const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
             sidebarLinks.forEach(link => {
-                const hrefPath = link.getAttribute('href').split('/').pop();
-                // Activa el listado de reclamos o activos gestionables ya que esta es una vista de detalle enlazada
-                if (currentPath === 'detalle_ot.html' && (hrefPath === 'listado_reclamos.html' || hrefPath === 'listado_activos_gestionables.html')) {
-                    link.classList.add('active'); 
-                } else if (link.getAttribute('href') === currentPath) {
+                if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Orden de Trabajo | COMIRSA</title>
+    <title>Detalle de Documento de Proyecto | COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,10 +123,11 @@
             font-size: 1em;
             color: #333;
         }
-        /* Colores para el estado de la tarea */
+        /* Colores para el estado de aprobación */
+        .status-aprobado { color: #28a745; font-weight: bold; } /* Verde */
         .status-pendiente { color: #ffc107; font-weight: bold; } /* Amarillo */
-        .status-en-progreso { color: #17a2b8; font-weight: bold; } /* Azul claro */
-        .status-completada { color: #28a745; font-weight: bold; } /* Verde */
+        .status-rechazado { color: #dc3545; font-weight: bold; } /* Rojo */
+        .status-observado { color: #17a2b8; font-weight: bold; } /* Azul claro */
         
         .detail-actions {
             margin-top: 20px;
@@ -153,17 +154,51 @@
         .detail-actions button.edit:hover {
             background-color: #e0a800;
         }
-        .detail-actions button.mark-completed {
+        .detail-actions button.approve {
             background-color: #28a745;
         }
-        .detail-actions button.mark-completed:hover {
+        .detail-actions button.approve:hover {
             background-color: #218838;
+        }
+        .detail-actions button.reject {
+            background-color: #dc3545;
+        }
+        .detail-actions button.reject:hover {
+            background-color: #c82333;
         }
         .detail-actions button.delete {
             background-color: #dc3545;
         }
         .detail-actions button.delete:hover {
             background-color: #c82333;
+        }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -185,89 +220,80 @@
 
     <div class="main-content">
         <header>
-            <h1>Detalle de Orden de Trabajo</h1>
+            <h1>Detalle de Documento de Proyecto</h1>
             <div class="user-info">
                 Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
             </div>
         </header>
 
         <div class="detail-container">
-            <h2>Detalle de Orden de Trabajo: OT-2024-001</h2>
+            <h2>Detalle de Documento: PLANO-ARQ-001</h2>
 
             <div class="detail-section">
-                <h3>Información de la Orden de Trabajo</h3>
+                <h3>Información del Documento</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>ID de Orden de Trabajo:</label>
-                        <p>OT001</p>
+                        <label>Número de Expediente:</label>
+                        <p>EXP-2023-01-ARQ</p>
                     </div>
                     <div class="detail-item">
-                        <label>Descripción de la Tarea:</label>
-                        <p>Bacheo en Calle 5 - Tramo Principal</p>
+                        <label>Tipo de Documento:</label>
+                        <p>PLANO_OBRA</p>
                     </div>
                     <div class="detail-item">
-                        <label>Reclamo Origen:</label>
-                        <p><a href="detalle_reclamo.html?id=R001">R001 - Bache grande Calle 5</a></p>
+                        <label>Título / Descripción:</label>
+                        <p>Plano Arquitectónico de Nave Industrial Lote 002</p>
                     </div>
                     <div class="detail-item">
-                        <label>Activo Afectado:</label>
-                        <p><a href="detalle_activo_gestionable.html?id=C001">Calle 5 - Tramo Principal</a></p>
+                        <label>Empresa Solicitante:</label>
+                        <p><a href="detalle_empresa.html?id=1">Empresa A S.A.</a></p>
                     </div>
                     <div class="detail-item">
-                        <label>Responsable Asignado:</label>
-                        <p>Equipo de Mantenimiento Vial</p>
+                        <label>Parcela Asociada:</label>
+                        <p><a href="detalle_unidad_catastral.html?id=002">087-05-E-50-002</a></p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha de Asignación:</label>
-                        <p>2024-05-21</p>
+                        <label>Fecha de Presentación:</label>
+                        <p>2023-02-15</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha Límite:</label>
-                        <p>2024-05-28</p>
+                        <label>Fecha de Aprobación:</label>
+                        <p>2023-04-01</p>
                     </div>
                     <div class="detail-item">
-                        <label>Estado de la Tarea:</label>
-                        <p class="status-en-progreso">EN_PROGRESO</p>
+                        <label>Estado de Aprobación:</label>
+                        <p class="status-aprobado">APROBADO</p>
                     </div>
                     <div class="detail-item">
-                        <label>Costo Estimado:</label>
-                        <p>$ 25,000.00</p>
+                        <label>Archivo Adjunto:</label>
+                        <p><a href="#" target="_blank">PLANO-ARQ-001.pdf</a> (Simulado)</p>
                     </div>
                 </div>
             </div>
 
             <div class="detail-section">
-                <h3>Registro de Avance y Notas</h3>
+                <h3>Relaciones Adicionales</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>Fecha de Inicio Real:</label>
-                        <p>2024-05-23</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Avance Actual (%):</label>
-                        <p>50%</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Costo Real Acumulado:</label>
-                        <p>$ 12,000.00</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Notas Internas del Equipo:</label>
+                        <label>Cronograma de Obras Asociado:</label>
                         <ul class="sub-entity-list">
-                            <li>Materiales recibidos. Inicio de excavación. (2024-05-23) <a href="detalle_nota.html?id=N006">Ver</a></li>
-                            <li>Clima adverso ha ralentizado el trabajo. (2024-05-24) <a href="detalle_nota.html?id=N007">Ver</a></li>
+                            <li>CRO-2023-001 (En Plazo) <a href="detalle_cronograma.html?id=CR001">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Notas Internas:</label>
+                        <ul class="sub-entity-list">
+                            <li>Observaciones de la Dirección de Obras (2023-03-05). <a href="detalle_nota.html?id=N005">Ver</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="detail-actions">
-                <a href="formulario_edicion_ot.html">
-
-                    <button class="edit">Editar OT</button>
-                </a>
-                <button class="mark-completed">Marcar como Completada</button>
-                <button class="delete">Eliminar OT</button>
+                <button class="edit">Editar Documento</button>
+                <button class="approve">Aprobar Documento</button>
+                <button class="reject">Rechazar Documento</button>
+                <button class="delete">Eliminar Documento</button>
             </div>
         </div>
     </main>
@@ -291,8 +317,8 @@
             const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
             sidebarLinks.forEach(link => {
                 const hrefPath = link.getAttribute('href').split('/').pop();
-                // Activa el listado de reclamos o activos gestionables ya que esta es una vista de detalle enlazada
-                if (currentPath === 'detalle_ot.html' && (hrefPath === 'listado_reclamos.html' || hrefPath === 'listado_activos_gestionables.html')) {
+                // Activa el listado de cronogramas o empresas/unidades catastrales ya que esta es una vista de detalle enlazada
+                if (currentPath === 'detalle_documento.html' && (hrefPath === 'listado_cronogramas.html' || hrefPath === 'listado_empresas.html' || hrefPath === 'listado_unidades_catastrales.html')) {
                     link.classList.add('active'); 
                 } else if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Orden de Trabajo | COMIRSA</title>
+    <title>Detalle de Boleto de Compra Venta | COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -123,11 +123,10 @@
             font-size: 1em;
             color: #333;
         }
-        /* Colores para el estado de la tarea */
-        .status-pendiente { color: #ffc107; font-weight: bold; } /* Amarillo */
-        .status-en-progreso { color: #17a2b8; font-weight: bold; } /* Azul claro */
-        .status-completada { color: #28a745; font-weight: bold; } /* Verde */
-        
+        /* Colores para el estado de pago */
+        .status-pagado { color: #28a745; font-weight: bold; } /* Verde */
+        .status-pendiente { color: #17a2b8; font-weight: bold; } /* Azul claro */
+
         .detail-actions {
             margin-top: 20px;
             text-align: right;
@@ -153,10 +152,10 @@
         .detail-actions button.edit:hover {
             background-color: #e0a800;
         }
-        .detail-actions button.mark-completed {
+        .detail-actions button.mark-escriturado {
             background-color: #28a745;
         }
-        .detail-actions button.mark-completed:hover {
+        .detail-actions button.mark-escriturado:hover {
             background-color: #218838;
         }
         .detail-actions button.delete {
@@ -164,6 +163,34 @@
         }
         .detail-actions button.delete:hover {
             background-color: #c82333;
+        }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -185,89 +212,76 @@
 
     <div class="main-content">
         <header>
-            <h1>Detalle de Orden de Trabajo</h1>
+            <h1>Detalle de Boleto de Compra Venta</h1>
             <div class="user-info">
                 Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
             </div>
         </header>
 
         <div class="detail-container">
-            <h2>Detalle de Orden de Trabajo: OT-2024-001</h2>
+            <h2>Detalle de Boleto: BCV-2022-001</h2>
 
             <div class="detail-section">
-                <h3>Información de la Orden de Trabajo</h3>
+                <h3>Información del Boleto</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>ID de Orden de Trabajo:</label>
-                        <p>OT001</p>
+                        <label>Número de Boleto:</label>
+                        <p>BCV-2022-001</p>
                     </div>
                     <div class="detail-item">
-                        <label>Descripción de la Tarea:</label>
-                        <p>Bacheo en Calle 5 - Tramo Principal</p>
+                        <label>Empresa Compradora:</label>
+                        <p><a href="detalle_empresa.html?id=1">Empresa A S.A.</a></p>
                     </div>
                     <div class="detail-item">
-                        <label>Reclamo Origen:</label>
-                        <p><a href="detalle_reclamo.html?id=R001">R001 - Bache grande Calle 5</a></p>
+                        <label>Parcela Asociada:</label>
+                        <p><a href="detalle_unidad_catastral.html?id=002">087-05-E-50-002</a></p>
                     </div>
                     <div class="detail-item">
-                        <label>Activo Afectado:</label>
-                        <p><a href="detalle_activo_gestionable.html?id=C001">Calle 5 - Tramo Principal</a></p>
+                        <label>Fecha de Firma:</label>
+                        <p>2022-01-15</p>
                     </div>
                     <div class="detail-item">
-                        <label>Responsable Asignado:</label>
-                        <p>Equipo de Mantenimiento Vial</p>
+                        <label>Precio Acordado:</label>
+                        <p>$ 1,500,000.00</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha de Asignación:</label>
-                        <p>2024-05-21</p>
+                        <label>Estado de Pago:</label>
+                        <p class="status-pagado">PAGADO</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha Límite:</label>
-                        <p>2024-05-28</p>
+                        <label>Escritura Realizada:</label>
+                        <p>Sí</p>
                     </div>
                     <div class="detail-item">
-                        <label>Estado de la Tarea:</label>
-                        <p class="status-en-progreso">EN_PROGRESO</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Costo Estimado:</label>
-                        <p>$ 25,000.00</p>
+                        <label>Documento Escritura:</label>
+                        <p><a href="detalle_escritura.html?id=ESC001">ESC-2023-001</a></p>
                     </div>
                 </div>
             </div>
 
             <div class="detail-section">
-                <h3>Registro de Avance y Notas</h3>
+                <h3>Obligaciones de Pago Asociadas</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>Fecha de Inicio Real:</label>
-                        <p>2024-05-23</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Avance Actual (%):</label>
-                        <p>50%</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Costo Real Acumulado:</label>
-                        <p>$ 12,000.00</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Notas Internas del Equipo:</label>
+                        <label>Cuotas de Adquisición:</label>
                         <ul class="sub-entity-list">
-                            <li>Materiales recibidos. Inicio de excavación. (2024-05-23) <a href="detalle_nota.html?id=N006">Ver</a></li>
-                            <li>Clima adverso ha ralentizado el trabajo. (2024-05-24) <a href="detalle_nota.html?id=N007">Ver</a></li>
+                            <li>Cuota #1 Boleto BCV-2022-001 (Pagado) <a href="detalle_pago.html?id=P010">Ver</a></li>
+                            <li>Cuota #2 Boleto BCV-2022-001 (Pagado) <a href="detalle_pago.html?id=P011">Ver</a></li>
+                            <li>Cuota #3 Boleto BCV-2022-001 (Pagado) <a href="detalle_pago.html?id=P012">Ver</a></li>
+                            <!-- Se listarían todas las cuotas -->
                         </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Condiciones Especiales:</label>
+                        <p>Plazo especial de 18 meses para finalizar la construcción.</p>
                     </div>
                 </div>
             </div>
 
             <div class="detail-actions">
-                <a href="formulario_edicion_ot.html">
-
-                    <button class="edit">Editar OT</button>
-                </a>
-                <button class="mark-completed">Marcar como Completada</button>
-                <button class="delete">Eliminar OT</button>
+                <button class="edit">Editar Boleto</button>
+                <button class="mark-escriturado">Marcar como Escriturado</button>
+                <button class="delete">Eliminar Boleto</button>
             </div>
         </div>
     </main>
@@ -291,9 +305,8 @@
             const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
             sidebarLinks.forEach(link => {
                 const hrefPath = link.getAttribute('href').split('/').pop();
-                // Activa el listado de reclamos o activos gestionables ya que esta es una vista de detalle enlazada
-                if (currentPath === 'detalle_ot.html' && (hrefPath === 'listado_reclamos.html' || hrefPath === 'listado_activos_gestionables.html')) {
-                    link.classList.add('active'); 
+                if (currentPath === 'detalle_boleto.html' && hrefPath === 'listado_empresas.html') {
+                    link.classList.add('active'); // O el listado de donde se suele llegar
                 } else if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');
                 } else {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Orden de Trabajo | COMIRSA</title>
+    <title>Detalle de Unidad Catastral | COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -105,7 +105,7 @@
         }
         .detail-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
         .detail-item {
@@ -123,11 +123,9 @@
             font-size: 1em;
             color: #333;
         }
-        /* Colores para el estado de la tarea */
-        .status-pendiente { color: #ffc107; font-weight: bold; } /* Amarillo */
-        .status-en-progreso { color: #17a2b8; font-weight: bold; } /* Azul claro */
-        .status-completada { color: #28a745; font-weight: bold; } /* Verde */
-        
+        .detail-item p.status-vendida { color: #28a745; font-weight: bold; }
+        .detail-item p.status-alquilada { color: #17a2b8; font-weight: bold; }
+        .detail-item p.status-disponible { color: #ffc107; font-weight: bold; }
         .detail-actions {
             margin-top: 20px;
             text-align: right;
@@ -153,17 +151,38 @@
         .detail-actions button.edit:hover {
             background-color: #e0a800;
         }
-        .detail-actions button.mark-completed {
-            background-color: #28a745;
-        }
-        .detail-actions button.mark-completed:hover {
-            background-color: #218838;
-        }
         .detail-actions button.delete {
             background-color: #dc3545;
         }
         .detail-actions button.delete:hover {
             background-color: #c82333;
+        }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -172,7 +191,7 @@
         <h2>COMIRSA</h2>
         <ul>
             <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
-            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_unidades_catastrales.html" class="active">Unidades Catastrales</a></li>
             <li><a href="listado_empresas.html">Empresas</a></li>
             <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
             <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
@@ -185,89 +204,145 @@
 
     <div class="main-content">
         <header>
-            <h1>Detalle de Orden de Trabajo</h1>
+            <h1>Detalle de Unidad Catastral</h1>
             <div class="user-info">
                 Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
             </div>
         </header>
 
         <div class="detail-container">
-            <h2>Detalle de Orden de Trabajo: OT-2024-001</h2>
+            <h2>Información de la Parcela: 087-05-E-50-002</h2>
 
             <div class="detail-section">
-                <h3>Información de la Orden de Trabajo</h3>
+                <h3>Datos Catastrales</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>ID de Orden de Trabajo:</label>
-                        <p>OT001</p>
+                        <label>Nomenclatura Completa:</label>
+                        <p>087-05-E-50-002</p>
                     </div>
                     <div class="detail-item">
-                        <label>Descripción de la Tarea:</label>
-                        <p>Bacheo en Calle 5 - Tramo Principal</p>
+                        <label>Partida ARBA:</label>
+                        <p>12345678-01</p>
                     </div>
                     <div class="detail-item">
-                        <label>Reclamo Origen:</label>
-                        <p><a href="detalle_reclamo.html?id=R001">R001 - Bache grande Calle 5</a></p>
+                        <label>Tipo de Unidad:</label>
+                        <p>Parcela</p>
                     </div>
                     <div class="detail-item">
-                        <label>Activo Afectado:</label>
-                        <p><a href="detalle_activo_gestionable.html?id=C001">Calle 5 - Tramo Principal</a></p>
+                        <label>Superficie (m²):</label>
+                        <p>5000</p>
                     </div>
                     <div class="detail-item">
-                        <label>Responsable Asignado:</label>
-                        <p>Equipo de Mantenimiento Vial</p>
+                        <label>Geometría (WKT):</label>
+                        <p>POLYGON ((...))</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha de Asignación:</label>
-                        <p>2024-05-21</p>
+                        <label>Estado Catastral:</label>
+                        <p>ACTIVA</p>
                     </div>
                     <div class="detail-item">
-                        <label>Fecha Límite:</label>
-                        <p>2024-05-28</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Estado de la Tarea:</label>
-                        <p class="status-en-progreso">EN_PROGRESO</p>
-                    </div>
-                    <div class="detail-item">
-                        <label>Costo Estimado:</label>
-                        <p>$ 25,000.00</p>
+                        <label>Sector Comercial:</label>
+                        <p>Pymes 2</p>
                     </div>
                 </div>
             </div>
 
             <div class="detail-section">
-                <h3>Registro de Avance y Notas</h3>
+                <h3>Estado Comercial y Propietario/Inquilinos</h3>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <label>Fecha de Inicio Real:</label>
-                        <p>2024-05-23</p>
+                        <label>Estado Comercial:</label>
+                        <p class="status-vendida">VENDIDA</p>
                     </div>
                     <div class="detail-item">
-                        <label>Avance Actual (%):</label>
-                        <p>50%</p>
+                        <label>Propietario:</label>
+                        <p><a href="detalle_empresa.html?id=1">Empresa A S.A.</a></p>
                     </div>
                     <div class="detail-item">
-                        <label>Costo Real Acumulado:</label>
-                        <p>$ 12,000.00</p>
+                        <label>Fecha de Compra (Boleto):</label>
+                        <p>2022-01-15</p>
                     </div>
                     <div class="detail-item">
-                        <label>Notas Internas del Equipo:</label>
+                        <label>Boleto de Compra Venta:</label>
+                        <p><a href="detalle_boleto.html?id=BCV001">BCV-2022-001</a> (Estado: PAGADO)</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Escritura Realizada:</label>
+                        <p>Sí</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Documento Escritura:</label>
+                        <p><a href="detalle_escritura.html?id=ESC001">ESC-2023-001</a></p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Inquilinos:</label>
+                        <p>No aplica para esta parcela (propietario directo)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Documentos y Plazos de Radicación</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Cronograma de Obras:</label>
+                        <p><a href="detalle_cronograma.html?id=CR001">CRO-2023-001</a> (Estado: EN_PLAZO)</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Fecha Límite Radicación:</label>
+                        <p>2026-01-15</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Prórrogas Concedidas:</label>
                         <ul class="sub-entity-list">
-                            <li>Materiales recibidos. Inicio de excavación. (2024-05-23) <a href="detalle_nota.html?id=N006">Ver</a></li>
-                            <li>Clima adverso ha ralentizado el trabajo. (2024-05-24) <a href="detalle_nota.html?id=N007">Ver</a></li>
+                            <li>PR-2025-001 (Aprobada) <a href="detalle_prorroga.html?id=PR001">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Documentos de Proyecto (Planos):</label>
+                        <ul class="sub-entity-list">
+                            <li>PLANO-ARQ-001 (APROBADO) <a href="detalle_documento.html?id=DP001">Ver</a></li>
+                            <li>EIA-2023-001 (APROBADO) <a href="detalle_documento.html?id=DP002">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Habilitación Municipal:</label>
+                        <p><a href="detalle_habilitacion.html?id=HM001">HM-2023-001</a> (Vencimiento: 2028-12-31)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Activos y Servicios Asociados a la Parcela</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Activos en la Parcela:</label>
+                        <ul class="sub-entity-list">
+                            <li>Medidor Agua Lote 087-05-E-50-002 <a href="detalle_activo.html?id=M001">Ver</a></li>
+                            <li>Medidor Luz Lote 087-05-E-50-002 <a href="detalle_activo.html?id=M002">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Servicios Contratados:</label>
+                        <ul class="sub-entity-list">
+                            <li>Conexión Agua (CONECTADO) <a href="detalle_servicio_contratado.html?id=SC001">Ver</a></li>
+                            <li>Conexión Eléctrica (CONECTADO) <a href="detalle_servicio_contratado.html?id=SC002">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Notas Adicionales:</label>
+                        <ul class="sub-entity-list">
+                            <li>Solicitud de extensión de plazo (2024-03-01) <a href="detalle_nota.html?id=N001">Ver</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="detail-actions">
-                <a href="formulario_edicion_ot.html">
-
-                    <button class="edit">Editar OT</button>
+                <a href="formulario_edicion_unidad.html">
+                    <button class="edit">Editar Parcela</button>
                 </a>
-                <button class="mark-completed">Marcar como Completada</button>
-                <button class="delete">Eliminar OT</button>
+                <button class="delete">Eliminar Parcela</button>
             </div>
         </div>
     </main>
@@ -286,15 +361,11 @@
                 userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
             }
 
-            // Simular el estado activo de la barra lateral (ajustado para vistas de detalle)
+            // Simular el estado activo de la barra lateral
             const currentPath = window.location.pathname.split('/').pop();
             const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
             sidebarLinks.forEach(link => {
-                const hrefPath = link.getAttribute('href').split('/').pop();
-                // Activa el listado de reclamos o activos gestionables ya que esta es una vista de detalle enlazada
-                if (currentPath === 'detalle_ot.html' && (hrefPath === 'listado_reclamos.html' || hrefPath === 'listado_activos_gestionables.html')) {
-                    link.classList.add('active'); 
-                } else if (link.getAttribute('href') === currentPath) {
+                if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');

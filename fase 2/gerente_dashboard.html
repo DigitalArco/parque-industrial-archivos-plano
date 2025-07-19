@@ -48,6 +48,15 @@
         .sidebar ul li a:hover {
             background-color: #0056b3; /* Azul más claro al pasar el ratón */
         }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff; /* Azul claro para los títulos de sección */
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
+        }
         .logout {
             margin-top: auto; /* Empuja el botón de logout al final de la barra lateral */
         }
@@ -141,31 +150,34 @@
         .widget-card ul li:last-child {
             border-bottom: none;
         }
-        .widget-card ul li span.status-pending {
-            color: #ffc107; /* Amarillo para pendiente */
-            font-weight: bold;
+        .widget-card .progress-bar-container {
+            background-color: #e9ecef;
+            border-radius: .25rem;
+            margin-top: 5px;
         }
-        .widget-card ul li span.status-open {
-            color: #17a2b8; /* Azul claro para abierto */
-            font-weight: bold;
+        .widget-card .progress-bar {
+            height: 10px;
+            background-color: #007bff;
+            border-radius: .25rem;
         }
-        .widget-card ul li span.status-vencido {
-            color: #dc3545; /* Rojo para vencido */
-            font-weight: bold;
-        }
+        .status-vencido { color: #dc3545; font-weight: bold; }
+        .status-abierto { color: #17a2b8; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <h2>COMIRSA</h2>
         <ul>
-            <li><a href="gerente_dashboard.html" class="active">Dashboard Principal</a></li>
+            <li><a href="gerente_dashboard_fase2.html" class="active">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
             <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
             <li><a href="listado_empresas.html">Empresas</a></li>
             <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
             <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
             <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
-            <!-- Los links de Fase 2 se agregarán aquí en la siguiente fase -->
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
         </ul>
         <div class="logout">
             <a href="login.html">Cerrar Sesión</a>
@@ -174,7 +186,7 @@
 
     <div class="main-content">
         <header>
-            <h1>Dashboard del Gerente</h1>
+            <h1>Dashboard del Gerente (Fase 2)</h1>
             <div class="user-info">
                 Bienvenido, **Sergio Romá** | Rol: Gerente / Interventor
             </div>
@@ -182,42 +194,48 @@
 
         <div class="kpi-grid">
             <div class="kpi-card">
-                <h3>Tasa de Ocupación Neta del Parque</h3>
+                <h3>Tasa de Ocupación Neta</h3>
                 <p class="kpi-value">85.3%</p>
             </div>
             <div class="kpi-card">
-                <h3>Hectáreas Disponibles para Venta (Pymes 1)</h3>
-                <p class="kpi-value">25.5 Ha</p>
+                <h3>% Cumplimiento Plazos de Obra</h3>
+                <p class="kpi-value">92%</p>
             </div>
             <div class="kpi-card">
-                <h3>Reclamos de Infraestructura Abiertos</h3>
+                <h3>Reclamos Abiertos</h3>
                 <p class="kpi-value">12</p>
             </div>
             <div class="kpi-card">
-                <h3>Empresas Nuevas Radicadas (Últ. 12 meses)</h3>
-                <p class="kpi-value">5</p>
+                <h3>Monto Morosidad Vencida</h3>
+                <p class="kpi-value">$1,250,000</p>
             </div>
         </div>
 
         <div class="widget-grid">
             <div class="widget-card">
-                <h3>Top 5 Obligaciones Económicas Pendientes Más Antiguas</h3>
+                <h3>Progreso de Proyectos Estratégicos (Plan 2024)</h3>
                 <ul>
-                    <li>Empresa A S.A. - Expensa Feb '24 <span class="status-vencido">Vencido</span></li>
-                    <li>Logística X SRL - Alquiler Mar '24 <span class="status-vencido">Vencido</span></li>
-                    <li>Manufacturas del Sur - Expensa Abr '24 <span class="status-vencido">Vencido</span></li>
-                    <li>Metalúrgica Delta - Cuota Adq. May '24 <span class="status-pending">Pendiente</span></li>
-                    <li>Servicios Alfa - Expensa Jun '24 <span class="status-pending">Pendiente</span></li>
+                    <li>
+                        <div>Apertura Avenida Ramallo</div>
+                        <div class="progress-bar-container"><div class="progress-bar" style="width: 40%;"></div></div>
+                    </li>
+                    <li>
+                        <div>Implementación Fase 1 del ERP</div>
+                        <div class="progress-bar-container"><div class="progress-bar" style="width: 90%;"></div></div>
+                    </li>
+                    <li>
+                        <div>Renovación Iluminación LED Sector Pymes 1</div>
+                        <div class="progress-bar-container"><div class="progress-bar" style="width: 15%;"></div></div>
+                    </li>
                 </ul>
             </div>
             <div class="widget-card">
-                <h3>Top 5 Reclamos de Infraestructura Abiertos (Prioridad/Antigüedad)</h3>
+                <h3>Alertas Críticas</h3>
                 <ul>
-                    <li>Bache grande Calle 5 <span class="status-open">Abierto</span></li>
-                    <li>Luminaria defectuosa Acceso Principal <span class="status-open">Abierto</span></li>
-                    <li>Falla en bomba de desagüe Sector Pymes 2 <span class="status-open">Abierto</span></li>
-                    <li>Cartel de señalización dañado (Av. Roca) <span class="status-open">Abierto</span></li>
-                    <li>Limpieza de cuneta (Calle 3, tramo X) <span class="status-open">Abierto</span></li>
+                    <li>Empresa X S.A. <span class="status-vencido">Cronograma Vencido</span></li>
+                    <li>Servicios B S.R.L. <span class="status-vencido">Deuda > 90 días</span></li>
+                    <li>Activo CLL-003 <span class="status-abierto">Reclamo Urgente</span></li>
+                    <li>Industrias Y <span class="status-vencido">Habilitación Vencida</span></li>
                 </ul>
             </div>
         </div>

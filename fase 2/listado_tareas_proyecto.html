@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Unidades Catastrales | COMIRSA</title>
+    <title>Listado de Tareas de Proyecto | COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@
         }
         .sidebar {
             width: 250px;
-            background-color: #003366; /* Azul oscuro corporativo */
+            background-color: #003366;
             color: white;
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
@@ -46,13 +46,22 @@
             transition: background-color 0.3s ease;
         }
         .sidebar ul li a:hover, .sidebar ul li a.active {
-            background-color: #0056b3; /* Azul más claro al pasar el ratón o activo */
+            background-color: #0056b3;
+        }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
         }
         .logout {
             margin-top: auto;
         }
         .logout a {
-            background-color: #dc3545; /* Rojo para salir */
+            background-color: #dc3545;
             text-align: center;
         }
         .logout a:hover {
@@ -109,7 +118,7 @@
             font-size: 1em;
         }
         .filter-bar button {
-            background-color: #28a745; /* Verde para acciones positivas */
+            background-color: #28a745;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -152,18 +161,27 @@
             color: #0056b3;
             text-decoration: underline;
         }
+        /* Colores para el estado de las tareas */
+        .status-pendiente { color: #ffc107; font-weight: bold; }
+        .status-en-progreso { color: #17a2b8; font-weight: bold; }
+        .status-completada { color: #28a745; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <h2>COMIRSA</h2>
         <ul>
-            <li><a href="gerente_dashboard.html">Dashboard Principal</a></li>
-            <li><a href="listado_unidades_catastrales.html" class="active">Unidades Catastrales</a></li>
+            <li><a href="gerente_dashboard_fase2.html">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
             <li><a href="listado_empresas.html">Empresas</a></li>
             <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
             <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
             <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
+            <li><a href="listado_tareas_proyecto.html" class="active">Tareas de Proyecto</a></li>
         </ul>
         <div class="logout">
             <a href="login.html">Cerrar Sesión</a>
@@ -172,96 +190,75 @@
 
     <div class="main-content">
         <header>
-            <h1>Unidades Catastrales</h1>
+            <h1>Tareas de Proyecto</h1>
             <div class="user-info">
                 Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
             </div>
         </header>
 
         <div class="table-container">
-            <h2>Listado General de Unidades</h2>
+            <h2>Listado de Tareas de Proyectos de Desarrollo</h2>
             <div class="filter-bar">
-                <input type="text" placeholder="Buscar por Nomenclatura, Propietario, Estado...">
-                <a href="formulario_nueva_unidad.html">
-
-                    <button>Nueva Unidad Catastral</button>
-                </a>
+                <input type="text" placeholder="Buscar por Descripción, Proyecto, Responsable...">
+                <button>Nueva Tarea</button>
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th>Nomenclatura Completa</th>
-                        <th>Tipo</th>
-                        <th>Superficie (m²)</th>
-                        <th>Estado Comercial</th>
-                        <th>Propietario / Uso</th>
+                        <th>Descripción de Tarea</th>
+                        <th>Proyecto Asociado</th>
+                        <th>Responsable</th>
+                        <th>Fecha Límite</th>
+                        <th>Estado</th>
+                        <th>Costo Real</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>087-05-E-50-002</td>
-                        <td>Parcela</td>
-                        <td>5,000</td>
-                        <td>VENDIDA</td>
-                        <td>Empresa A S.A.</td>
-                        <td><a href="detalle_unidad_catastral.html?id=002">Ver Detalle</a></td>
+                        <td>Realizar estudio de suelo</td>
+                        <td>Apertura Avenida Ramallo</td>
+                        <td>Equipo Ingeniería</td>
+                        <td>2024-06-30</td>
+                        <td class="status-en-progreso">EN_PROGRESO</td>
+                        <td>$ 50,000</td>
+                        <td><a href="detalle_tarea_proyecto.html?id=T001">Ver Detalle</a></td>
                     </tr>
                     <tr>
-                        <td>087-05-E-10-006</td>
-                        <td>Parcela</td>
-                        <td>2,500</td>
-                        <td>ALQUILADA</td>
-                        <td>Logística B S.A.</td>
-                        <td><a href="detalle_unidad_catastral.html?id=006">Ver Detalle</a></td>
+                        <td>Contratar empresa de pavimentación</td>
+                        <td>Apertura Avenida Ramallo</td>
+                        <td>Compras</td>
+                        <td>2024-07-15</td>
+                        <td class="status-pendiente">PENDIENTE</td>
+                        <td>$ 0</td>
+                        <td><a href="detalle_tarea_proyecto.html?id=T002">Ver Detalle</a></td>
                     </tr>
                     <tr>
-                        <td>087-05-E-50-003</td>
-                        <td>Parcela</td>
-                        <td>7,500</td>
-                        <td>DISPONIBLE</td>
-                        <td>N/A</td>
-                        <td><a href="detalle_unidad_catastral.html?id=003">Ver Detalle</a></td>
+                        <td>Auditoría interna de sistema ERP</td>
+                        <td>Implementación Fase 1 del ERP</td>
+                        <td>Equipo IT</td>
+                        <td>2024-05-31</td>
+                        <td class="status-completada">COMPLETADA</td>
+                        <td>$ 20,000</td>
+                        <td><a href="detalle_tarea_proyecto.html?id=T003">Ver Detalle</a></td>
                     </tr>
                     <tr>
-                        <td>087-05-E-MZN-10</td>
-                        <td>Manzana</td>
-                        <td>50,000</td>
-                        <td>N/A (Contenedora)</td>
-                        <td>N/A</td>
-                        <td><a href="detalle_unidad_catastral.html?id=MZN10">Ver Detalle</a></td>
+                        <td>Adquisición de luminarias LED</td>
+                        <td>Renovación Iluminación LED Sector Pymes 1</td>
+                        <td>Compras</td>
+                        <td>2024-06-01</td>
+                        <td class="status-pendiente">PENDIENTE</td>
+                        <td>$ 0</td>
+                        <td><a href="detalle_tarea_proyecto.html?id=T004">Ver Detalle</a></td>
                     </tr>
                     <tr>
-                        <td>087-05-E-FRAC-50</td>
-                        <td>Fracción</td>
-                        <td>120,000</td>
-                        <td>N/A (Contenedora)</td>
-                        <td>N/A</td>
-                        <td><a href="detalle_unidad_catastral.html?id=FRAC50">Ver Detalle</a></td>
-                    </tr>
-                    <tr>
-                        <td>087-05-E-50-004</td>
-                        <td>Parcela</td>
-                        <td>6,000</td>
-                        <td>VENDIDA</td>
-                        <td>Manufacturas del Oeste S.R.L.</td>
-                        <td><a href="detalle_unidad_catastral.html?id=004">Ver Detalle</a></td>
-                    </tr>
-                    <tr>
-                        <td>087-05-E-10-007</td>
-                        <td>Parcela</td>
-                        <td>3,000</td>
-                        <td>DISPONIBLE</td>
-                        <td>N/A</td>
-                        <td><a href="detalle_unidad_catastral.html?id=007">Ver Detalle</a></td>
-                    </tr>
-                    <tr>
-                        <td>087-05-E-10-008</td>
-                        <td>Parcela</td>
-                        <td>2,800</td>
-                        <td>VENDIDA</td>
-                        <td>Industrias del Centro S.A.</td>
-                        <td><a href="detalle_unidad_catastral.html?id=008">Ver Detalle</a></td>
+                        <td>Instalación de cámaras de seguridad (Etapa 1)</td>
+                        <td>Proyecto Seguridad Integral</td>
+                        <td>Personal de Seguridad</td>
+                        <td>2024-08-30</td>
+                        <td class="status-en-progreso">EN_PROGRESO</td>
+                        <td>$ 300,000</td>
+                        <td><a href="detalle_tarea_proyecto.html?id=T005">Ver Detalle</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -279,11 +276,10 @@
             if (user && role) {
                 userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
             } else {
-                // Default para la demo si se accede directamente
                 userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
             }
 
-            // Simular el estado activo de la barra lateral
+            // Simular el estado activo de la barra lateral (ajustado para vistas de listado)
             const currentPath = window.location.pathname.split('/').pop();
             const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
             sidebarLinks.forEach(link => {
