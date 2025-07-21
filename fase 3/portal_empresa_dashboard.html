@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Portal de Empresas COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366; /* Azul oscuro corporativo */
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .kpi-card h3 {
+            color: #0056b3;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 0;
+        }
+        .widget-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas para los widgets */
+            gap: 25px;
+        }
+        .widget-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .widget-card h3 {
+            color: #0056b3;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        .widget-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .widget-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.95em;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .widget-card ul li:last-child {
+            border-bottom: none;
+        }
+        .widget-card ul li span.status-pending {
+            color: #ffc107; /* Amarillo para pendiente */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-open {
+            color: #17a2b8; /* Azul claro para abierto */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-vencido {
+            color: #dc3545; /* Rojo para vencido */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-vigente {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .action-button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .action-button {
+            background-color: #007bff;
+            color: white;
+            padding: 1.5em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>PORTAL EMPRESAS</h2>
+        <ul>
+            <li><a href="portal_empresa_dashboard.html" class="active">Mi Dashboard</a></li>
+            <li><a href="portal_empresa_mis_pagos.html">Mis Pagos</a></li>
+            <li><a href="portal_empresa_mis_reclamos.html">Mis Reclamos y Solicitudes</a></li>
+            <li><a href="portal_empresa_mis_servicios.html">Mis Servicios Contratados</a></li>
+            <li><a href="portal_empresa_mis_plazos_obra.html">Mis Plazos de Obra</a></li>
+        </ul>
+        <div class="logout">
+            <a href="portal_empresa_login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Bienvenido, Empresa A S.A.</h1>
+            <div class="user-info">
+                CUIT: 30-12345678-9 | Parcela: 087-05-E-50-002
+            </div>
+        </header>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <h3>Saldo Pendiente de Pagos</h3>
+                <p class="kpi-value">$1,250,000</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Reclamos Abiertos</h3>
+                <p class="kpi-value">2</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Solicitudes de Servicio Pendientes</h3>
+                <p class="kpi-value">1</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Habilitación Municipal</h3>
+                <p class="kpi-value status-vigente">Vigente</p>
+            </div>
+        </div>
+
+        <div class="widget-grid">
+            <div class="widget-card">
+                <h3>Últimos Movimientos de Pagos</h3>
+                <ul>
+                    <li>Expensa Febrero 2024 <span class="status-vencido">Vencido</span></li>
+                    <li>Cuota Adq. Enero 2024 <span class="status-pagado">Pagado</span></li>
+                    <li>Alquiler Diciembre 2023 <span class="status-pagado">Pagado</span></li>
+                </ul>
+            </div>
+            <div class="widget-card">
+                <h3>Estado de Mis Reclamos</h3>
+                <ul>
+                    <li>Bache grande Calle 5 <span class="status-open">Abierto</span></li>
+                    <li>Luminaria defectuosa Acceso Principal <span class="status-open">Abierto</span></li>
+                    <li>Problema con medidor de gas <span class="status-pending">En Proceso</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="action-button-grid">
+            <a href="portal_empresa_crear_reclamo.html" class="action-button">Crear Nuevo Reclamo</a>
+            <a href="portal_empresa_solicitar_servicio.html" class="action-button">Solicitar Nuevo Servicio</a>
+            <a href="portal_empresa_mis_pagos.html" class="action-button">Ver Historial de Pagos</a>
+            <a href="portal_empresa_mis_plazos_obra.html" class="action-button">Ver Mis Plazos de Obra</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Servicios Contratados | Portal de Empresas COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .filter-bar input[type="text"], .filter-bar select {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .filter-bar select {
+            width: 25%;
+        }
+        .filter-bar button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-bar button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        table td a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* Colores para el estado de servicio */
+        .status-pendiente { color: #ffc107; font-weight: bold; }
+        .status-conectado { color: #28a745; font-weight: bold; }
+        .status-en-progreso { color: #17a2b8; font-weight: bold; }
+        .status-rechazada { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>PORTAL EMPRESAS</h2>
+        <ul>
+            <li><a href="portal_empresa_dashboard.html">Mi Dashboard</a></li>
+            <li><a href="portal_empresa_mis_pagos.html">Mis Pagos</a></li>
+            <li><a href="portal_empresa_mis_reclamos.html">Mis Reclamos y Solicitudes</a></li>
+            <li><a href="portal_empresa_mis_servicios.html" class="active">Mis Servicios Contratados</a></li>
+            <li><a href="portal_empresa_mis_plazos_obra.html">Mis Plazos de Obra</a></li>
+        </ul>
+        <div class="logout">
+            <a href="portal_empresa_login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Mis Servicios Contratados</h1>
+            <div class="user-info">
+                Empresa: **Empresa A S.A.** | Parcela: 087-05-E-50-002
+            </div>
+        </header>
+
+        <div class="table-container">
+            <h2>Listado de Servicios Activos</h2>
+            <div class="filter-bar">
+                <input type="text" placeholder="Buscar por Tipo de Servicio, Medidor...">
+                <select>
+                    <option value="">Filtrar por Estado</option>
+                    <option value="PENDIENTE">PENDIENTE</option>
+                    <option value="CONECTADO">CONECTADO</option>
+                    <option value="EN_PROGRESO">EN PROGRESO</option>
+                    <option value="RECHAZADA">RECHAZADA</option>
+                </select>
+                <button>Solicitar Nuevo Servicio</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de Servicio</th>
+                        <th>Parcela Destino</th>
+                        <th>Fecha de Solicitud</th>
+                        <th>Estado Actual</th>
+                        <th>N° Medidor / Conexión</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CONEXION_AGUA</td>
+                        <td>087-05-E-50-002</td>
+                        <td>2024-01-10</td>
+                        <td class="status-conectado">CONECTADO</td>
+                        <td>MA-123456</td>
+                        <td><a href="detalle_servicio_contratado.html?id=SC001">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>CONEXION_LUZ</td>
+                        <td>087-05-E-50-002</td>
+                        <td>2024-01-15</td>
+                        <td class="status-conectado">CONECTADO</td>
+                        <td>EL-789012</td>
+                        <td><a href="detalle_servicio_contratado.html?id=SC002">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>CONEXION_GAS</td>
+                        <td>087-05-E-50-002</td>
+                        <td>2024-05-01</td>
+                        <td class="status-pendiente">PENDIENTE</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_servicio_contratado.html?id=SC003">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>SEGURIDAD</td>
+                        <td>087-05-E-50-002</td>
+                        <td>2024-03-01</td>
+                        <td class="status-en-progreso">EN_PROGRESO</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_servicio_contratado.html?id=SC004">Ver Detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar la información de la empresa (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simular la información de la empresa logueada
+            const companyName = "Empresa A S.A.";
+            const companyCUIT = "30-12345678-9";
+            const companyParcela = "087-05-E-50-002"; // Asumiendo una parcela principal
+
+            document.querySelector('.user-info').innerHTML = `Empresa: **${companyName}** | Parcela: ${companyParcela}`;
+            
+            // Simular el estado activo de la barra lateral
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
