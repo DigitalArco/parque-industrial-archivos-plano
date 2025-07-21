@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Cronogramas de Obras | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .filter-bar input[type="text"], .filter-bar select {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .filter-bar select {
+            width: 20%;
+        }
+        .filter-bar button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-bar button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        table td a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* Colores para el estado de cumplimiento */
+        .status-en-plazo { color: #28a745; font-weight: bold; }
+        .status-vencido { color: #dc3545; font-weight: bold; }
+        .status-cumplido { color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard_fase2.html">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
+            <li><a href="listado_tareas_proyecto.html">Tareas de Proyecto</a></li>
+            <li><a href="listado_objetivos_estrategicos.html">Objetivos Estratégicos</a></li>
+            <li class="section-title">Control de Cumplimiento</li>
+            <li><a href="listado_cronogramas_obras.html" class="active">Cronogramas de Obras</a></li>
+            <li><a href="listado_prorrogas.html">Prórrogas</a></li>
+            <li><a href="listado_documentos_proyecto.html">Documentos de Proyecto</a></li>
+            <li><a href="listado_habilitaciones_municipales.html">Habilitaciones Municipales</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Cronogramas de Obras</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="table-container">
+            <h2>Listado de Cronogramas de Obras y Radicación</h2>
+            <div class="filter-bar">
+                <input type="text" placeholder="Buscar por Empresa, Parcela, Estado...">
+                <select>
+                    <option value="">Filtrar por Estado</option>
+                    <option value="EN_PLAZO">EN_PLAZO</option>
+                    <option value="VENCIDO">VENCIDO</option>
+                    <option value="CUMPLIDO">CUMPLIDO</option>
+                </select>
+                <button>Nuevo Cronograma</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Empresa Propietaria</th>
+                        <th>Parcela</th>
+                        <th>Fecha Inicio Plazo</th>
+                        <th>Fecha Fin Original</th>
+                        <th>Fecha Fin con Prórroga</th>
+                        <th>Estado de Cumplimiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Empresa A S.A.</td>
+                        <td>087-05-E-50-002</td>
+                        <td>2023-03-20</td>
+                        <td>2026-03-20</td>
+                        <td>2027-03-20</td>
+                        <td class="status-en-plazo">EN_PLAZO</td>
+                        <td><a href="detalle_cronograma.html?id=CR001">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturas del Oeste S.R.L.</td>
+                        <td>087-05-E-50-004</td>
+                        <td>2023-01-15</td>
+                        <td>2026-01-15</td>
+                        <td>N/A</td>
+                        <td class="status-vencido">VENCIDO</td>
+                        <td><a href="detalle_cronograma.html?id=CR002">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Industrias del Centro S.A.</td>
+                        <td>087-05-E-10-008</td>
+                        <td>2023-08-01</td>
+                        <td>2026-08-01</td>
+                        <td>N/A</td>
+                        <td class="status-en-plazo">EN_PLAZO</td>
+                        <td><a href="detalle_cronograma.html?id=CR003">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Construcciones D S.R.L.</td>
+                        <td>087-05-E-10-009</td>
+                        <td>2022-04-01</td>
+                        <td>2025-04-01</td>
+                        <td>N/A</td>
+                        <td class="status-cumplido">CUMPLIDO</td>
+                        <td><a href="detalle_cronograma.html?id=CR004">Ver Detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral (ajustado para vistas de listado)
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

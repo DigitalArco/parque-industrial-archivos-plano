@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Gerente | COMIRSA</title>
+    <title>Dashboard | Portal de Proveedores COMIRSA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,7 +32,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            flex-grow: 1; /* Para que la lista ocupe el espacio disponible */
+            flex-grow: 1;
         }
         .sidebar ul li {
             margin-bottom: 10px;
@@ -45,23 +45,14 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
-        .sidebar ul li a:hover {
-            background-color: #0056b3; /* Azul más claro al pasar el ratón */
-        }
-        .sidebar .section-title {
-            padding: 10px 0 5px 0;
-            margin-top: 15px;
-            color: #a0c4ff; /* Azul claro para los títulos de sección */
-            font-size: 0.9em;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-bottom: 1px solid #0056b3;
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
         }
         .logout {
-            margin-top: auto; /* Empuja el botón de logout al final de la barra lateral */
+            margin-top: auto;
         }
         .logout a {
-            background-color: #dc3545; /* Rojo para salir */
+            background-color: #dc3545;
             text-align: center;
         }
         .logout a:hover {
@@ -150,100 +141,104 @@
         .widget-card ul li:last-child {
             border-bottom: none;
         }
-        .widget-card .progress-bar-container {
-            background-color: #e9ecef;
-            border-radius: .25rem;
-            margin-top: 5px;
+        .widget-card ul li span.status-pending {
+            color: #ffc107; /* Amarillo para pendiente */
+            font-weight: bold;
         }
-        .widget-card .progress-bar {
-            height: 10px;
+        .widget-card ul li span.status-open {
+            color: #17a2b8; /* Azul claro para abierto */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-vencido {
+            color: #dc3545; /* Rojo para vencido */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-en-progreso {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        .action-button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .action-button {
             background-color: #007bff;
-            border-radius: .25rem;
+            color: white;
+            padding: 1.5em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
         }
-        .status-vencido { color: #dc3545; font-weight: bold; }
-        .status-abierto { color: #17a2b8; font-weight: bold; }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2>COMIRSA</h2>
+        <h2>PORTAL PROVEEDORES</h2>
         <ul>
-            <li><a href="gerente_dashboard.html" class="active">Dashboard Principal</a></li>
-            <li class="section-title">Gestión Operativa</li>
-            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
-            <li><a href="listado_empresas.html">Empresas</a></li>
-            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
-            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
-            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
-            <li class="section-title">Planificación Estratégica</li>
-            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
-            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
-            <li><a href="listado_tareas_proyecto.html">Tareas de Proyecto</a></li>
-            <li><a href="listado_objetivos_estrategicos.html">Objetivos Estratégicos</a></li>
-            <li class="section-title">Integración y Monitoreo</li>
-            <li><a href="monitor_sincronizacion_pagos.html">Monitor de Pagos</a></li>
-            <li><a href="monitor_cctv.html">Monitor CCTV</a></li>
-            <li><a href="listado_incidentes_seguridad.html">Incidentes de Seguridad</a></li> <!-- NUEVO ENLACE -->
+            <li><a href="portal_proveedor_dashboard.html" class="active">Mi Dashboard</a></li>
+            <li><a href="portal_proveedor_mis_ots_asignadas.html">Mis Órdenes de Trabajo</a></li>
+            <li><a href="portal_proveedor_mis_facturas.html">Mis Facturas a Cobrar</a></li>
         </ul>
         <div class="logout">
-            <a href="login.html">Cerrar Sesión</a>
+            <a href="portal_proveedor_login.html">Cerrar Sesión</a>
         </div>
     </div>
 
     <div class="main-content">
         <header>
-            <h1>Dashboard del Gerente (Fase 2)</h1>
+            <h1>Bienvenido, Contratistas del Sol S.R.L.</h1>
             <div class="user-info">
-                Bienvenido, **Sergio Romá** | Rol: Gerente / Interventor
+                CUIT: 20-98765432-1 | Servicio: Mantenimiento Vial
             </div>
         </header>
 
         <div class="kpi-grid">
             <div class="kpi-card">
-                <h3>Tasa de Ocupación Neta</h3>
-                <p class="kpi-value">85.3%</p>
+                <h3>Órdenes de Trabajo Abiertas</h3>
+                <p class="kpi-value">3</p>
             </div>
             <div class="kpi-card">
-                <h3>% Cumplimiento Plazos de Obra</h3>
-                <p class="kpi-value">92%</p>
+                <h3>Tareas Pendientes</h3>
+                <p class="kpi-value">5</p>
             </div>
             <div class="kpi-card">
-                <h3>Reclamos Abiertos</h3>
-                <p class="kpi-value">12</p>
+                <h3>Facturas Pendientes de Cobro</h3>
+                <p class="kpi-value">$500,000</p>
             </div>
             <div class="kpi-card">
-                <h3>Monto Morosidad Vencida</h3>
-                <p class="kpi-value">$1,250,000</p>
+                <h3>Tareas Completadas (Últ. 30 días)</h3>
+                <p class="kpi-value">8</p>
             </div>
         </div>
 
         <div class="widget-grid">
             <div class="widget-card">
-                <h3>Progreso de Proyectos Estratégicos (Plan 2024)</h3>
+                <h3>Órdenes de Trabajo en Curso</h3>
                 <ul>
-                    <li>
-                        <div>Apertura Avenida Ramallo</div>
-                        <div class="progress-bar-container"><div class="progress-bar" style="width: 40%;"></div></div>
-                    </li>
-                    <li>
-                        <div>Implementación Fase 1 del ERP</div>
-                        <div class="progress-bar-container"><div class="progress-bar" style="width: 90%;"></div></div>
-                    </li>
-                    <li>
-                        <div>Renovación Iluminación LED Sector Pymes 1</div>
-                        <div class="progress-bar-container"><div class="progress-bar" style="width: 15%;"></div></div>
-                    </li>
+                    <li>OT-2024-001 (Bacheo Calle 5) <span class="status-en-progreso">En Progreso</span></li>
+                    <li>OT-2024-006 (Poda Sector Pymes 1) <span class="status-en-progreso">En Progreso</span></li>
                 </ul>
             </div>
             <div class="widget-card">
-                <h3>Alertas Críticas</h3>
+                <h3>Próximas Tareas (Pendientes)</h3>
                 <ul>
-                    <li>Empresa X S.A. <span class="status-vencido">Cronograma Vencido</span></li>
-                    <li>Servicios B S.R.L. <span class="status-vencido">Deuda > 90 días</span></li>
-                    <li>Activo CLL-003 <span class="status-abierto">Reclamo Urgente</span></li>
-                    <li>Industrias Y <span class="status-vencido">Habilitación Vencida</span></li>
+                    <li>T-002 (Contratar empresa de pavimentación) <span class="status-pending">Pendiente</span></li>
+                    <li>T-004 (Adquisición de luminarias LED) <span class="status-pending">Pendiente</span></li>
                 </ul>
             </div>
+        </div>
+
+        <div class="action-button-grid">
+            <a href="portal_proveedor_mis_ots_asignadas.html" class="action-button">Ver Mis Órdenes de Trabajo</a>
+            <a href="portal_proveedor_mis_facturas.html" class="action-button">Ver Mis Facturas</a>
         </div>
     </div>
 </body>

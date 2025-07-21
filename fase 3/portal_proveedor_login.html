@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Proveedores | Portal COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f2f7; /* Un azul claro diferente */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container h1 {
+            color: #003366;
+            margin-bottom: 1.5em;
+            font-size: 2em;
+        }
+        .login-container p {
+            color: #555;
+            margin-bottom: 2em;
+        }
+        .login-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5em;
+            color: #555;
+            font-weight: bold;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 1.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .login-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .login-form button:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            margin-top: 1.5em;
+            font-size: 0.9em;
+        }
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .back-to-home {
+            margin-top: 3em;
+            font-size: 0.9em;
+        }
+        .back-to-home a {
+            color: #6c757d;
+            text-decoration: none;
+        }
+        .back-to-home a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Portal de Proveedores | COMIRSA</h1>
+        <p>Ingrese sus credenciales para gestionar sus órdenes de trabajo y servicios.</p>
+        <form class="login-form" action="#" method="post">
+            <label for="username">Usuario (CUIT del proveedor):</label>
+            <input type="text" id="username" name="username" placeholder="Ej: 20-98765432-1">
+
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Su contraseña de acceso">
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="#">¿Olvidó su contraseña?</a>
+        </div>
+        <div class="role-access">
+            <h2>Modo Demostración (Acceso Directo)</h2>
+            <div class="role-access-links">
+                <a href="portal_proveedor_dashboard.html">Acceder como Proveedor</a>
+            </div>
+        </div>
+        <div class="back-to-home">
+            <a href="index.html">← Volver al Sitio Principal de COMIRSA</a>
+        </div>
+    </div>
+</body>
+</html>

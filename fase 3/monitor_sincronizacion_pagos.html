@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Sincronización de Pagos | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .dashboard-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+        .dashboard-section h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background-color: #e6f0fa; /* Un azul muy claro */
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #cce5ff;
+        }
+        .kpi-card h3 {
+            color: #003366;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 0;
+        }
+        .kpi-value.status-ok { color: #28a745; }
+        .kpi-value.status-warning { color: #ffc107; }
+        .kpi-value.status-error { color: #dc3545; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .action-button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+        .action-button.error-button {
+            background-color: #dc3545;
+        }
+        .action-button.error-button:hover {
+            background-color: #c82333;
+        }
+        .status-success { color: #28a745; font-weight: bold; }
+        .status-fail { color: #dc3545; font-weight: bold; }
+        .status-warning { color: #ffc107; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard_fase2.html">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
+            <li><a href="listado_tareas_proyecto.html">Tareas de Proyecto</a></li>
+            <li><a href="listado_objetivos_estrategicos.html">Objetivos Estratégicos</a></li>
+            <li class="section-title">Integración y Monitoreo</li>
+            <li><a href="monitor_sincronizacion_pagos.html" class="active">Monitor de Pagos</a></li>
+            <li><a href="monitor_cctv.html">Monitor CCTV</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Monitor de Sincronización de Pagos</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="dashboard-section">
+            <h2>Estado Actual de la Sincronización</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Última Sincronización</h3>
+                    <p class="kpi-value status-ok">2024-05-28 10:00 hs</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Estado General</h3>
+                    <p class="kpi-value status-ok">OPERATIVA</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Transacciones Procesadas (Últ. Sinc.)</h3>
+                    <p class="kpi-value">125</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Errores Detectados (Últ. Sinc.)</h3>
+                    <p class="kpi-value status-error">3</p>
+                </div>
+            </div>
+            <a href="#" class="action-button">Forzar Sincronización Manual</a>
+            <a href="reporte_discrepancias_pagos.html" class="action-button error-button">Ver Discrepancias Actuales</a>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Historial de Sincronizaciones</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                        <th>Estado</th>
+                        <th>Transacciones</th>
+                        <th>Errores</th>
+                        <th>Detalle de Errores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-05-28 10:00 hs</td>
+                        <td class="status-success">COMPLETADA</td>
+                        <td>125</td>
+                        <td class="status-fail">3</td>
+                        <td><a href="#">Ver Log</a></td>
+                    </tr>
+                    <tr>
+                        <td>2024-05-28 08:00 hs</td>
+                        <td class="status-success">COMPLETADA</td>
+                        <td>98</td>
+                        <td>0</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>2024-05-27 22:00 hs</td>
+                        <td class="status-success">COMPLETADA</td>
+                        <td>150</td>
+                        <td>0</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>2024-05-27 20:00 hs</td>
+                        <td class="status-warning">CON_ADVERTENCIAS</td>
+                        <td>110</td>
+                        <td class="status-fail">1</td>
+                        <td><a href="#">Ver Log</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral (ajustado para vistas de listado)
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Facturas a Cobrar | Portal de Proveedores COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .filter-bar input[type="text"], .filter-bar select {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .filter-bar select {
+            width: 25%;
+        }
+        .filter-bar button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-bar button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        table td a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* Colores para el estado de las facturas */
+        .status-pagada { color: #28a745; font-weight: bold; }
+        .status-pendiente { color: #ffc107; font-weight: bold; }
+        .status-vencida { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>PORTAL PROVEEDORES</h2>
+        <ul>
+            <li><a href="portal_proveedor_dashboard.html">Mi Dashboard</a></li>
+            <li><a href="portal_proveedor_mis_ots_asignadas.html">Mis Órdenes de Trabajo</a></li>
+            <li><a href="portal_proveedor_mis_facturas.html" class="active">Mis Facturas a Cobrar</a></li>
+        </ul>
+        <div class="logout">
+            <a href="portal_proveedor_login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Mis Facturas a Cobrar</h1>
+            <div class="user-info">
+                Proveedor: **Contratistas del Sol S.R.L.** | CUIT: 20-98765432-1
+            </div>
+        </header>
+
+        <div class="table-container">
+            <h2>Historial de Facturas Emitidas a COMIRSA</h2>
+            <div class="filter-bar">
+                <input type="text" placeholder="Buscar por N° Factura, Concepto...">
+                <select>
+                    <option value="">Filtrar por Estado</option>
+                    <option value="PENDIENTE">PENDIENTE</option>
+                    <option value="VENCIDA">VENCIDA</option>
+                    <option value="PAGADA">PAGADA</option>
+                </select>
+                <button>Descargar Extracto</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>N° Factura</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Fecha de Emisión</th>
+                        <th>Fecha de Vencimiento</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>F001-2024</td>
+                        <td>Servicio Bacheo Calle 5 - Mayo 2024</td>
+                        <td>$ 250,000.00</td>
+                        <td>2024-05-31</td>
+                        <td>2024-06-30</td>
+                        <td class="status-pendiente">PENDIENTE</td>
+                    </tr>
+                    <tr>
+                        <td>F002-2024</td>
+                        <td>Mantenimiento Iluminación Trim. Q1</td>
+                        <td>$ 150,000.00</td>
+                        <td>2024-03-30</td>
+                        <td>2024-04-30</td>
+                        <td class="status-pagada">PAGADA</td>
+                    </tr>
+                    <tr>
+                        <td>F003-2024</td>
+                        <td>Servicio Poda Árboles - Abril 2024</td>
+                        <td>$ 80,000.00</td>
+                        <td>2024-04-20</td>
+                        <td>2024-05-20</td>
+                        <td class="status-vencida">VENCIDA</td>
+                    </tr>
+                    <tr>
+                        <td>F004-2024</td>
+                        <td>Instalación Cámaras de Seguridad (Etapa 1)</td>
+                        <td>$ 400,000.00</td>
+                        <td>2024-05-25</td>
+                        <td>2024-06-25</td>
+                        <td class="status-pendiente">PENDIENTE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar la información del proveedor (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simular la información del proveedor logueado
+            const providerName = "Contratistas del Sol S.R.L.";
+            const providerCUIT = "20-98765432-1";
+
+            document.querySelector('.user-info').innerHTML = `Proveedor: **${providerName}** | CUIT: ${providerCUIT}`;
+            
+            // Simular el estado activo de la barra lateral
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

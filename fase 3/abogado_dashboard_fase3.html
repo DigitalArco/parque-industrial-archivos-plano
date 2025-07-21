@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Abogado | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366; /* Azul oscuro corporativo */
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .kpi-card h3 {
+            color: #0056b3;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 0;
+        }
+        .kpi-value.small {
+            font-size: 1.5em;
+        }
+        .widget-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas para los widgets */
+            gap: 25px;
+        }
+        .widget-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .widget-card h3 {
+            color: #0056b3;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        .widget-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .widget-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.95em;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .widget-card ul li:last-child {
+            border-bottom: none;
+        }
+        .widget-card ul li span.status-vencido {
+            color: #dc3545; /* Rojo para vencido */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-pendiente {
+            color: #ffc107; /* Amarillo para pendiente */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-aprobado {
+            color: #28a745; /* Verde para aprobado */
+            font-weight: bold;
+        }
+        .widget-card ul li span.status-en-plazo {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .action-button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .action-button {
+            background-color: #007bff;
+            color: white;
+            padding: 1em 1.5em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+        .kpi-value.small.critical { color: #dc3545; }
+        .kpi-value.small.warning { color: #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="abogado_dashboard_fase3.html" class="active">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
+            <li><a href="listado_tareas_proyecto.html">Tareas de Proyecto</a></li>
+            <li><a href="listado_objetivos_estrategicos.html">Objetivos Estratégicos</a></li>
+            <li class="section-title">Control de Cumplimiento</li>
+            <li><a href="listado_cronogramas_obras.html">Cronogramas de Obras</a></li>
+            <li><a href="listado_prorrogas.html">Prórrogas</a></li>
+            <li><a href="listado_documentos_proyecto.html">Documentos de Proyecto</a></li>
+            <li><a href="listado_habilitaciones_municipales.html">Habilitaciones Municipales</a></li>
+            <li><a href="listado_documentos_legales.html">Documentos Legales</a></li>
+            <li class="section-title">Integración y Operaciones</li>
+            <li><a href="monitor_sincronizacion_pagos.html">Monitor Sincronización Pagos</a></li>
+            <li><a href="listado_incidentes_seguridad.html">Incidentes de Seguridad</a></li>
+            <li><a href="listado_personal_mantenimiento.html">Personal de Mantenimiento</a></li>
+            <li><a href="listado_equipos_herramientas.html">Equipos y Herramientas</a></li>
+            <li><a href="configuracion_notificaciones.html">Configuración Notificaciones</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Dashboard Abogado - Fase 3</h1>
+            <div class="user-info">
+                Usuario: **Gustavo Pérez** | Rol: Abogado
+            </div>
+        </header>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <h3>Pendientes de Escrituración</h3>
+                <p class="kpi-value">5</p>
+                <p class="kpi-value small critical">2 con boleto > 2 años</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Prórrogas Pendientes de Aprobación</h3>
+                <p class="kpi-value">1</p>
+                <p class="kpi-value small warning">Empresa B S.A.</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Certificados Libre Deuda Vencidos</h3>
+                <p class="kpi-value">2</p>
+                <p class="kpi-value small status-vencido">Actualizar: 1</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Contratos de Alquiler por Vencer (90 días)</h3>
+                <p class="kpi-value">3</p>
+                <p class="kpi-value small">Inquilino: Logística B</p>
+            </div>
+        </div>
+
+        <div class="widget-grid">
+            <div class="widget-card">
+                <h3>Documentos Legales Recientes</h3>
+                <ul>
+                    <li>Escritura ESC-2024-002 <span class="status-aprobado">Registrada</span> <a href="detalle_escritura.html?id=ESC002">Ver</a></li>
+                    <li>CLD CLD-2024-005 <span class="status-aprobado">Emitido</span> <a href="detalle_cld.html?id=CLD005">Ver</a></li>
+                    <li>Contrato Alq. CALQ-2024-003 <span class="status-aprobado">Vigente</span> <a href="detalle_contrato_alquiler.html?id=CALQ-2024-003">Ver</a></li>
+                </ul>
+            </div>
+            <div class="widget-card">
+                <h3>Cronogramas de Obra en Seguimiento</h3>
+                <ul>
+                    <li>CRO-2023-001 (Empresa A) <span class="status-en-plazo">En Plazo</span> <a href="detalle_cronograma.html?id=CR001">Ver</a></li>
+                    <li>CRO-2023-002 (Manufacturas O.) <span class="status-vencido">Vencido</span> <a href="detalle_cronograma.html?id=CR002">Ver</a></li>
+                    <li>CRO-2023-003 (Industrias C.) <span class="status-en-plazo">En Plazo</span> <a href="detalle_cronograma.html?id=CR003">Ver</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="action-button-grid">
+            <a href="formulario_edicion_escritura.html" class="action-button">Registrar Nueva Escritura</a>
+            <a href="formulario_edicion_cld.html" class="action-button">Emitir Certificado Libre Deuda</a>
+            <a href="listado_documentos_legales.html" class="action-button">Ver Todos los Documentos Legales</a>
+            <a href="listado_cronogramas_obras.html" class="action-button">Control de Plazos de Obra</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Script para mostrar el usuario y rol actual (simulado para la demo)
+            const userInfo = document.querySelector('.user-info');
+            userInfo.innerHTML = `Usuario: **Gustavo Pérez** | Rol: Abogado`;
+
+            // Simular el estado activo de la barra lateral
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

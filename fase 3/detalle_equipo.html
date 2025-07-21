@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Equipo/Herramienta | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .detail-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .detail-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .detail-section {
+            margin-bottom: 1.5em;
+            padding-bottom: 1.5em;
+            border-bottom: 1px dashed #eee;
+        }
+        .detail-section:last-child {
+            border-bottom: none;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .detail-item {
+            padding: 10px 0;
+        }
+        .detail-item label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .detail-item p {
+            margin: 0;
+            font-size: 1em;
+            color: #333;
+        }
+        /* Colores para el estado de disponibilidad */
+        .status-disponible { color: #28a745; font-weight: bold; }
+        .status-en-uso { color: #ffc107; font-weight: bold; }
+        .status-en-reparacion { color: #17a2b8; font-weight: bold; }
+        .status-fuera-servicio { color: #dc3545; font-weight: bold; }
+        
+        .detail-actions {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .detail-actions button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+        .detail-actions button:hover {
+            background-color: #0056b3;
+        }
+        .detail-actions button.edit {
+            background-color: #ffc107;
+            color: #333;
+        }
+        .detail-actions button.edit:hover {
+            background-color: #e0a800;
+        }
+        .detail-actions button.delete {
+            background-color: #dc3545;
+        }
+        .detail-actions button.delete:hover {
+            background-color: #c82333;
+        }
+        /* Listado de sub-entidades */
+        .sub-entity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em 0 0 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .sub-entity-list li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        .sub-entity-list li:last-child {
+            border-bottom: none;
+        }
+        .sub-entity-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .sub-entity-list li a:hover {
+            text-decoration: underline;
+        }
+        .status-en-progreso { color: #17a2b8; }
+        .status-pendiente { color: #ffc107; }
+        .status-completada { color: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard_fase2.html">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
+            <li><a href="listado_tareas_proyecto.html">Tareas de Proyecto</a></li>
+            <li><a href="listado_objetivos_estrategicos.html">Objetivos Estratégicos</a></li>
+            <li class="section-title">Gestión de Recursos</li>
+            <li><a href="listado_personal_mantenimiento.html">Personal de Mantenimiento</a></li>
+            <li><a href="listado_equipos_herramientas.html" class="active">Equipos y Herramientas</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Detalle de Equipo / Herramienta</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="detail-container">
+            <h2>Detalle de Equipo: Camioneta Ford Ranger (VEH-001)</h2>
+
+            <div class="detail-section">
+                <h3>Información General del Equipo</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Nombre / Modelo:</label>
+                        <p>Camioneta Ford Ranger</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Código Interno:</label>
+                        <p>VEH-001</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Tipo de Equipo:</label>
+                        <p>VEHÍCULO</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Número de Serie / Patente:</label>
+                        <p>ABC-123</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Estado Actual:</label>
+                        <p class="status-en-uso">EN USO</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Ubicación Actual:</label>
+                        <p>Mantenimiento Vial (Asignado a Juan Pérez)</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Fecha de Adquisición:</label>
+                        <p>2020-03-10</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Costo de Adquisición:</label>
+                        <p>$ 8,000,000.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Historial de Mantenimiento y Uso</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Último Mantenimiento:</label>
+                        <p>2024-02-15 (Cambio de aceite y filtros)</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Próximo Mantenimiento Programado:</label>
+                        <p>2024-08-01 (Revisión general)</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Tareas Asignadas Actualmente:</label>
+                        <ul class="sub-entity-list">
+                            <li>OT-2024-001 (Bacheo Calle 5) <span class="status-en-progreso">EN_PROGRESO</span> <a href="detalle_ot.html?id=OT001">Ver</a></li>
+                        </ul>
+                    </div>
+                    <div class="detail-item">
+                        <label>Historial de Uso/Asignaciones:</label>
+                        <p>Utilizado por Juan Pérez (Técnico Vial) desde 2024-05-20.</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Notas Adicionales:</label>
+                        <p>Ninguna.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <a href="formulario_edicion_equipo.html">
+
+                    <button class="edit">Editar Equipo</button>
+                </a>
+                <button class="delete">Eliminar Equipo</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral (ajustado para vistas de detalle)
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                const hrefPath = link.getAttribute('href').split('/').pop();
+                if (currentPath === 'detalle_equipo.html' && hrefPath === 'listado_equipos_herramientas.html') {
+                    link.classList.add('active'); 
+                } else if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

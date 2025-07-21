@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Equipos y Herramientas | COMIRSA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e6f0fa;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #0056b3;
+        }
+        .sidebar .section-title {
+            padding: 10px 0 5px 0;
+            margin-top: 15px;
+            color: #a0c4ff;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        .logout a {
+            background-color: #dc3545;
+            text-align: center;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+        }
+        .main-content header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-content header h1 {
+            margin: 0;
+            color: #003366;
+            font-size: 1.8em;
+        }
+        .user-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table-container h2 {
+            color: #0056b3;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .filter-bar input[type="text"], .filter-bar select {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .filter-bar select {
+            width: 25%;
+        }
+        .filter-bar button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .filter-bar button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        table th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        table td a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        /* Colores para el estado de disponibilidad */
+        .status-disponible { color: #28a745; font-weight: bold; }
+        .status-en-uso { color: #ffc107; font-weight: bold; }
+        .status-en-reparacion { color: #17a2b8; font-weight: bold; }
+        .status-fuera-servicio { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>COMIRSA</h2>
+        <ul>
+            <li><a href="gerente_dashboard_fase2.html">Dashboard Principal</a></li>
+            <li class="section-title">Gestión Operativa</li>
+            <li><a href="listado_unidades_catastrales.html">Unidades Catastrales</a></li>
+            <li><a href="listado_empresas.html">Empresas</a></li>
+            <li><a href="listado_activos_gestionables.html">Activos del Parque</a></li>
+            <li><a href="listado_reclamos.html">Reclamos e Incidencias</a></li>
+            <li><a href="listado_obligaciones.html">Pagos y Obligaciones</a></li>
+            <li class="section-title">Planificación Estratégica</li>
+            <li><a href="listado_planes_estrategicos.html">Planes Estratégicos</a></li>
+            <li><a href="listado_proyectos_desarrollo.html">Proyectos de Desarrollo</a></li>
+            <li><a href="listado_tareas_proyecto.html">Tareas de Proyecto</a></li>
+            <li><a href="listado_objetivos_estrategicos.html">Objetivos Estratégicos</a></li>
+            <li class="section-title">Gestión de Recursos</li>
+            <li><a href="listado_personal_mantenimiento.html">Personal de Mantenimiento</a></li>
+            <li><a href="listado_equipos_herramientas.html" class="active">Equipos y Herramientas</a></li>
+        </ul>
+        <div class="logout">
+            <a href="login.html">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Equipos y Herramientas</h1>
+            <div class="user-info">
+                Usuario: **[Nombre de Usuario]** | Rol: [Rol de Usuario]
+            </div>
+        </header>
+
+        <div class="table-container">
+            <h2>Inventario de Equipos y Herramientas de COMIRSA</h2>
+            <div class="filter-bar">
+                <input type="text" placeholder="Buscar por Nombre, Tipo, Estado...">
+                <select>
+                    <option value="">Filtrar por Estado</option>
+                    <option value="DISPONIBLE">DISPONIBLE</option>
+                    <option value="EN_USO">EN USO</option>
+                    <option value="EN_REPARACION">EN REPARACIÓN</option>
+                    <option value="FUERA_SERVICIO">FUERA DE SERVICIO</option>
+                </select>
+                <button>Nuevo Equipo/Herramienta</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre / Modelo</th>
+                        <th>Tipo</th>
+                        <th>Código Interno</th>
+                        <th>Estado</th>
+                        <th>Ubicación Actual</th>
+                        <th>Próximo Mant.</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Camioneta Ford Ranger</td>
+                        <td>VEHÍCULO</td>
+                        <td>VEH-001</td>
+                        <td class="status-en-uso">EN USO</td>
+                        <td>Mantenimiento Vial</td>
+                        <td>2024-08-01</td>
+                        <td><a href="detalle_equipo.html?id=EQ001">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Máquina Cortacésped Grande</td>
+                        <td>MAQUINARIA</td>
+                        <td>MAC-003</td>
+                        <td class="status-disponible">DISPONIBLE</td>
+                        <td>Depósito Central</td>
+                        <td>2024-06-15</td>
+                        <td><a href="detalle_equipo.html?id=EQ002">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Taladro Percutor Bosch</td>
+                        <td>HERRAMIENTA</td>
+                        <td>HER-015</td>
+                        <td class="status-en-reparacion">EN REPARACIÓN</td>
+                        <td>Taller Mecánico</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_equipo.html?id=EQ003">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Generador Eléctrico Portátil</td>
+                        <td>EQUIPO</td>
+                        <td>GEN-002</td>
+                        <td class="status-disponible">DISPONIBLE</td>
+                        <td>Depósito Central</td>
+                        <td>2024-07-01</td>
+                        <td><a href="detalle_equipo.html?id=EQ004">Ver Detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Desmalezadora Stihl</td>
+                        <td>HERRAMIENTA</td>
+                        <td>HER-022</td>
+                        <td class="status-fuera-servicio">FUERA DE SERVICIO</td>
+                        <td>Baja</td>
+                        <td>N/A</td>
+                        <td><a href="detalle_equipo.html?id=EQ005">Ver Detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Script para mostrar el usuario y rol actual (simulado para la demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            const role = urlParams.get('role');
+
+            const userInfo = document.querySelector('.user-info');
+            if (user && role) {
+                userInfo.innerHTML = `Usuario: **${user}** | Rol: ${role}`;
+            } else {
+                userInfo.innerHTML = `Usuario: **[Usuario Demo]** | Rol: Gerente`;
+            }
+
+            // Simular el estado activo de la barra lateral (ajustado para vistas de listado)
+            const currentPath = window.location.pathname.split('/').pop();
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li a');
+            sidebarLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
